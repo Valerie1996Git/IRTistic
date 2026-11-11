@@ -91,4 +91,4 @@ citation("IRTistic")
 
 ## Author
 
-Valerie Ofori Aboah
+[Valerie Ofori Aboah](https://measuredbyvalerie.netlify.app/)
