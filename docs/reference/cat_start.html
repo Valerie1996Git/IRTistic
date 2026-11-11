@@ -7,7 +7,7 @@ loads of a web application (for example in 'shiny')."><title>Run an adaptive tes
 the next item to administer, `cat_answer()` records a response and updates
 the trait estimate, and `cat_done()` says whether a stopping rule has been
 met. Sessions are ordinary R lists, so they can be stored between page
-loads of a web application (for example in 'shiny')."><meta property="og:image" content="https://YOUR-USERNAME.github.io/IRTistic/logo.png"><!-- mathjax --><script src="file:///usr/share/javascript/mathjax/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
+loads of a web application (for example in 'shiny')."><meta property="og:image" content="https://valerie1996git.github.io/IRTistic/logo.png"><!-- mathjax --><script src="file:///usr/share/javascript/mathjax/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -51,7 +51,13 @@ loads of a web application (for example in 'shiny')."><meta property="og:image" 
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
-      <ul class="navbar-nav"></ul></div>
+      <ul class="navbar-nav"><li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/Valerie1996Git/IRTistic/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul></div>
 
     
   </div>
@@ -59,7 +65,7 @@ loads of a web application (for example in 'shiny')."><meta property="og:image" 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Run an adaptive test live, one item at a time</h1>
-      
+      <small class="dont-index">Source: <a href="https://github.com/Valerie1996Git/IRTistic/blob/HEAD/R/cat.R" class="external-link"><code>R/cat.R</code></a></small>
       <div class="d-none name"><code>cat_start.Rd</code></div>
     </div>
 
@@ -120,18 +126,18 @@ loads of a web application (for example in 'shiny').</p>
 <span class="r-in"><span>  <span class="va">s</span> <span class="op">&lt;-</span> <span class="fu">cat_answer</span><span class="op">(</span><span class="va">s</span>, <span class="va">it</span>, response <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html" class="external-link">rbinom</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0.6</span><span class="op">)</span><span class="op">)</span>   <span class="co"># replace with a real answer</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span><span class="va">s</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;cat_session&gt; 10 item(s) administered | theta = -0.078, SE = 0.485 | finished: max_items</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;cat_session&gt; 10 item(s) administered | theta = 0.355, SE = 0.490 | finished: max_items</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  step item response   theta    se</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     1 I021        0 -0.4551 0.885</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     2 I016        1 -0.0763 0.793</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     3 I020        0 -0.3873 0.725</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     4 I017        1 -0.1136 0.668</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     5 I019        0 -0.3521 0.624</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     6 I018        1 -0.1349 0.585</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     7 I022        1  0.0786 0.557</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     8 I023        0 -0.0740 0.528</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     9 I024        0 -0.1915 0.506</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    10 I015        1 -0.0784 0.485</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     3 I020        1  0.2429 0.730</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     4 I022        1  0.5035 0.685</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     5 I025        0  0.2544 0.628</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     6 I023        0  0.0455 0.588</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     7 I019        1  0.2115 0.558</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     8 I024        0  0.0561 0.529</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     9 I018        1  0.1836 0.507</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    10 I026        1  0.3554 0.490</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -139,7 +145,7 @@ loads of a web application (for example in 'shiny').</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by <a href="https://YOUR-WEBSITE.com" class="external-link">Valerie Ofori Aboah</a>.</p>
+  <p></p><p>Developed by <a href="https://github.com/Valerie1996Git" class="external-link">Valerie Ofori Aboah</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

@@ -28,7 +28,7 @@ graphics system and one table system.
 
 ```r
 # install.packages("remotes")
-remotes::install_github("YOUR-USERNAME/IRTistic")
+remotes::install_github("Valerie1996Git/IRTistic")
 ```
 
 ## A two-minute tour
@@ -77,9 +77,9 @@ IRTistic stands on the shoulders of the authors of mirt, TAM, eRm, ltm,
 catR, mirtCAT, difR, lordif, DFIT, equateIRT, SNSequate, plink, WrightMap,
 ggmirt, irtQ, cacIRT, immer, mfrmr and Linacre's FACETS and Winsteps
 programs, and on the psychometric literature they implement. The
-[References and credits](https://YOUR-USERNAME.github.io/IRTistic/articles/credits.html)
+[References and credits](https://valerie1996git.github.io/IRTistic/articles/credits.html)
 article cites every method and package. The
-[Why IRTistic?](https://YOUR-USERNAME.github.io/IRTistic/articles/why-irtistic.html)
+[Why IRTistic?](https://valerie1996git.github.io/IRTistic/articles/why-irtistic.html)
 article maps the package against Choi and Asilkalkan's (2019) review of 45
 IRT packages.
 

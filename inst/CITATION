@@ -4,7 +4,7 @@ bibentry(
   author = person("Valerie", "Ofori Aboah"),
   year = "2026",
   note = paste("R package version", meta$Version),
-  url = "https://github.com/YOUR-USERNAME/IRTistic",
+  url = "https://github.com/Valerie1996Git/IRTistic",
   textVersion = paste0("Ofori Aboah, V. (2026). IRTistic: Item response theory and many-facet Rasch ",
                        "measurement with artful graphics (R package version ", meta$Version, ").")
 )

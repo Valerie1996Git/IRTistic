@@ -16,6 +16,8 @@ Description: A single toolkit for item response theory (IRT) and Rasch
     rulers, item and category curves, information functions and fit bubble
     charts.
 License: MIT + file LICENSE
+URL: https://github.com/Valerie1996Git/IRTistic, https://valerie1996git.github.io/IRTistic/
+BugReports: https://github.com/Valerie1996Git/IRTistic/issues
 Encoding: UTF-8
 Depends: R (>= 4.0)
 Imports:
