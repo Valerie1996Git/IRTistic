@@ -7,8 +7,12 @@
 plot_dif(x)
 }
 \arguments{
-\item{x}{Output of [dif_test()].}
+\item{x}{Output of [dif_test()] or [dif_irt()].}
 }
 \description{
-DIF effect-size plot
+Lollipop chart of DIF effect sizes with classification thresholds. For
+[dif_test()] output this shows the MH delta or Delta R-squared; for
+[dif_irt()] output it shows SIDS (signed expected item-score difference,
+focal minus reference) with flagged items highlighted, one panel per
+focal group.
 }

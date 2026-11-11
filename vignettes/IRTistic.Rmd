@@ -13,9 +13,9 @@ set.seed(2026)
 library(IRTistic)
 ```
 
-`IRTistic` puts model fitting, diagnostics and graphics for item response
-theory (IRT) and Rasch measurement in one place. Every analysis follows the
-same pattern:
+`IRTistic` puts model fitting, diagnostics, graphics and reporting for item
+response theory (IRT) and Rasch measurement in one place. Every analysis
+follows the same pattern:
 
 1. fit a model (`irt_fit()` or `mfrm_fit()`),
 2. inspect it with tables (`summary()`, `item_fit()`, `facet_report()`, ...),
@@ -122,3 +122,13 @@ bias <- mfrm_bias(mf, c("rater", "criterion"))
 bias
 plot_bias(bias)
 ```
+
+## Where to go next
+
+The website has an article for each part of the workflow:
+
+* **DIF, linking and equating**: `dif_irt()`, `irt_link()`, `equate_true_score()`, `score_table()`
+* **Computerized adaptive testing**: `cat_design()`, `cat_simulate()`, live testing
+* **Many-facet Rasch measurement**: FACETS-style reports, rater bias
+* **Publication-ready tables and reports**: `irt_table()`, `irt_report()`
+* **Why IRTistic?**: how the package fits into R's IRT ecosystem, and credits

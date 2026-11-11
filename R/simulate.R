@@ -8,7 +8,8 @@
 #'   Drawn from a log-normal(0, 0.25) if `NULL`.
 #' @param b Difficulties: a vector for dichotomous items or a matrix
 #'   items x (ncat - 1) of thresholds. Drawn if `NULL`.
-#' @param g Guessing parameters for 3PL items.
+#' @param g Guessing parameters for 3PL/4PL items.
+#' @param u Upper asymptotes for 4PL items.
 #' @param Q Optional loading matrix for multidimensional data.
 #' @param Sigma Latent covariance matrix.
 #' @param theta Optional matrix of true abilities.
@@ -19,7 +20,7 @@
 #' head(dat)
 #' @export
 sim_irt <- function(n, nitems = 10, model = "2pl", ncat = 4, a = NULL, b = NULL,
-                    g = NULL, Q = NULL, Sigma = NULL, theta = NULL) {
+                    g = NULL, u = NULL, Q = NULL, Sigma = NULL, theta = NULL) {
   model <- tolower(model)
   if (!is.null(b)) nitems <- NROW(b)
   if (length(model) == 1) model <- rep(model, nitems)
@@ -45,7 +46,9 @@ sim_irt <- function(n, nitems = 10, model = "2pl", ncat = 4, a = NULL, b = NULL,
     }
   }
   b <- matrix(b, nitems)
-  if (is.null(g)) g <- ifelse(model == "3pl", stats::runif(nitems, 0.1, 0.25), 0)
+  if (is.null(g)) g <- ifelse(model %in% c("3pl", "4pl"), stats::runif(nitems, 0.1, 0.25), 0)
+  if (is.null(u)) u <- ifelse(model == "4pl", stats::runif(nitems, 0.85, 0.97), 1)
+  u <- rep(u, length.out = nitems)
   g <- rep(g, length.out = nitems)
   X <- matrix(NA_integer_, n, nitems)
   for (j in seq_len(nitems)) {
@@ -55,12 +58,12 @@ sim_irt <- function(n, nitems = 10, model = "2pl", ncat = 4, a = NULL, b = NULL,
     slope <- if (D == 1) aj[1] else 1
     d <- -bj * slope
     if (D > 1) d <- -bj
-    P <- .item_probs(fam, list(a = aj, d = d, g = g[j], K = K[j]), theta)
-    u <- stats::runif(n)
-    X[, j] <- rowSums(u > t(apply(P, 1, cumsum))[, -K[j], drop = FALSE])
+    P <- .item_probs(fam, list(a = aj, d = d, g = g[j], u = u[j], K = K[j]), theta)
+    rnd <- stats::runif(n)
+    X[, j] <- rowSums(rnd > t(apply(P, 1, cumsum))[, -K[j], drop = FALSE])
   }
   colnames(X) <- sprintf("I%02d", seq_len(nitems))
   out <- as.data.frame(X)
-  attr(out, "truth") <- list(theta = theta, a = a, b = b, g = g, model = model, Q = Q)
+  attr(out, "truth") <- list(theta = theta, a = a, b = b, g = g, u = u, model = model, Q = Q)
   out
 }

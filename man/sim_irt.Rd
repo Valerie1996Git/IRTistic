@@ -12,6 +12,7 @@ sim_irt(
   a = NULL,
   b = NULL,
   g = NULL,
+  u = NULL,
   Q = NULL,
   Sigma = NULL,
   theta = NULL
@@ -32,7 +33,9 @@ Drawn from a log-normal(0, 0.25) if `NULL`.}
 \item{b}{Difficulties: a vector for dichotomous items or a matrix
 items x (ncat - 1) of thresholds. Drawn if `NULL`.}
 
-\item{g}{Guessing parameters for 3PL items.}
+\item{g}{Guessing parameters for 3PL/4PL items.}
+
+\item{u}{Upper asymptotes for 4PL items.}
 
 \item{Q}{Optional loading matrix for multidimensional data.}
 

@@ -1,0 +1,108 @@
+url: https://YOUR-USERNAME.github.io/IRTistic
+
+template:
+  bootstrap: 5
+  bslib:
+    primary: "#2a78d6"
+    base_font: "system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
+    heading_font: "system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
+
+authors:
+  Valerie Ofori Aboah:
+    href: https://YOUR-WEBSITE.com
+
+navbar:
+  structure:
+    left: [intro, reference, articles, news]
+    right: [search, github]
+  components:
+    articles:
+      text: Articles
+      menu:
+      - text: Workflows
+      - text: DIF, linking and equating
+        href: articles/dif-and-linking.html
+      - text: Computerized adaptive testing
+        href: articles/adaptive-testing.html
+      - text: Many-facet Rasch measurement
+        href: articles/many-facet-rasch.html
+      - text: Publication-ready tables and reports
+        href: articles/tables-and-reports.html
+      - text: -------
+      - text: About
+      - text: Why IRTistic?
+        href: articles/why-irtistic.html
+      - text: References and credits
+        href: articles/credits.html
+
+articles:
+- title: Workflows
+  contents:
+  - articles/dif-and-linking
+  - articles/adaptive-testing
+  - articles/many-facet-rasch
+  - articles/tables-and-reports
+- title: About
+  contents:
+  - articles/why-irtistic
+  - articles/credits
+
+reference:
+- title: Fitting models
+  contents:
+  - irt_fit
+  - mfrm_fit
+  - anova.irtfit
+  - coef.irtfit
+  - summary.irtfit
+- title: Person measures and score tables
+  contents:
+  - irt_scores
+  - score_table
+- title: Fit, reliability and assumptions
+  contents:
+  - item_fit
+  - person_fit
+  - sx2
+  - reliability
+  - local_dependence
+  - residual_pca
+  - classification_accuracy
+- title: Many-facet reports
+  contents:
+  - facet_report
+  - mfrm_bias
+  - unexpected
+- title: Differential item functioning
+  contents:
+  - dif_test
+  - dif_irt
+- title: Item banks, linking and equating
+  contents:
+  - item_bank
+  - make_bank
+  - irt_link
+  - equate_true_score
+- title: Computerized adaptive testing
+  contents:
+  - cat_design
+  - cat_start
+  - cat_simulate
+  - cat_sympson_hetter
+  - cat_conditional
+- title: Graphics
+  contents:
+  - starts_with("plot")
+  - theme_irt
+  - irt_palette
+- title: Tables and reports
+  contents:
+  - irt_table
+  - irt_report
+- title: Simulation
+  contents:
+  - sim_irt
+  - sim_mfrm
+- title: internal
+  contents:
+  - IRTistic-package

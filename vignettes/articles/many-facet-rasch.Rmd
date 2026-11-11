@@ -1,0 +1,62 @@
+---
+title: "Many-facet Rasch measurement"
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.width = 8, fig.height = 5, dpi = 110)
+library(IRTistic)
+set.seed(11)
+```
+
+When performances are scored by raters, the score depends on the person, the
+rater's severity and the difficulty of the criterion. The many-facet Rasch
+model (Linacre, 1989) puts all of these on one logit scale. IRTistic
+estimates it by marginal maximum likelihood and reports it in the layout of
+Linacre's FACETS program, so FACETS users will recognise every table.
+
+```{r}
+ratings <- sim_mfrm(n_person = 120, n_rater = 6, n_criterion = 4, ncat = 5, design = 0.7)
+head(ratings)
+mf <- mfrm_fit(ratings, person = "person", facets = c("rater", "criterion"), score = "score")
+mf
+```
+
+## Measurement reports
+
+```{r}
+rep <- facet_report(mf)
+irt_table(rep)
+irt_table(rep, facet = "rater")
+irt_table(rep, facet = "categories")
+```
+
+## The variable map
+
+```{r, fig.height = 6}
+plot(mf, "facets")
+```
+
+## Rating scale functioning and fit
+
+```{r}
+plot(mf, "categories")
+plot(mf, "fit")
+```
+
+## Rater bias
+
+```{r}
+bias <- mfrm_bias(mf, c("rater", "criterion"))
+irt_table(head(bias, 8))
+plot_bias(bias)
+```
+
+A partial credit structure for each criterion is one argument away:
+
+```{r}
+mf_pcm <- mfrm_fit(ratings, "person", c("rater", "criterion"), "score",
+                   model = "pcm", step_facet = "criterion")
+anova_like <- data.frame(model = c("RSM", "PCM"), logLik = c(mf$loglik, mf_pcm$loglik),
+                         AIC = c(AIC(mf), AIC(mf_pcm)), BIC = c(BIC(mf), BIC(mf_pcm)))
+irt_table(anova_like)
+```

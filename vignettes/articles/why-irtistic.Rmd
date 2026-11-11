@@ -1,0 +1,127 @@
+---
+title: "Why IRTistic? Mapping the gaps in R's IRT software"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+R has an extraordinary range of software for item response theory (IRT).
+Choi and Asilkalkan (2019) reviewed **45 R packages** and showed how they
+cover dichotomous and polytomous models, estimation methods, model fit,
+graphics, differential item functioning (DIF), equating, adaptive testing,
+reliability and classification. The CRAN Task View *Psychometric Models and
+Methods* (Mair, Rosseel & Gruber, last revised December 2023) lists many more,
+and several important packages have appeared since.
+
+That breadth is a strength, and it is also the problem IRTistic sets out to
+solve. A typical applied project today means juggling half a dozen packages,
+each with its own data format, parameterisation, object structure and
+plotting conventions:
+
+> *estimate in one package → compute Rasch fit statistics in another →
+> draw a Wright map with a third → run DIF with a fourth → link forms with a
+> fifth → simulate an adaptive test with a sixth → copy numbers into a
+> word processor by hand.*
+
+Every hand-off is a chance for error: a parameter in the wrong metric (the
+1.702 scaling constant, slope-intercept versus difficulty form), a
+mismatched item order, a reference group silently reversed. IRTistic's aim
+is not to replace the excellent specialised packages listed below. It is to
+give applied researchers, teachers and test developers **one consistent
+workflow**, where every object works with every function and every result
+can go straight into a table or a figure.
+
+## Where each capability lives today
+
+The table follows the structure of Choi and Asilkalkan's (2019) review,
+updated with packages released since. "Existing packages" lists
+representative packages, not every one.
+
+| Capability | Existing packages (examples) | In IRTistic |
+|---|---|---|
+| Rasch, 2PL, 3PL models | mirt, ltm, TAM, eRm, irtoys, irtQ | `irt_fit()` |
+| 4PL model | mirt, catR, PP | `irt_fit(model = "4pl")` |
+| Partial credit, rating scale, GPCM, graded response | mirt, TAM, eRm, ltm, irtQ | `irt_fit()`, mixed item types in one test |
+| Multidimensional (confirmatory) | mirt, TAM, sirt | `irt_fit(Q = )` |
+| Many-facet Rasch (FACETS-style) | TAM, immer, sirt, mfrmr, rasch, commercial FACETS | `mfrm_fit()`, `facet_report()` |
+| Person scores: ML, WLE, EAP, MAP | mirt, TAM, PP, catR | `irt_scores()` |
+| Infit / outfit, ZSTD | eRm, TAM, iarm, Winsteps (commercial) | `item_fit()`, `person_fit()` (every model) |
+| S-X² item fit | mirt, irtQ, CDM | `sx2()` |
+| Separation, reliability, alpha | eRm, ltm, mokken, pairwise | `reliability()` |
+| Local dependence (Q3), residual PCA | TAM, sirt, mirt, eRm | `local_dependence()`, `residual_pca()` |
+| DIF: Mantel-Haenszel, logistic regression | difR, lordif, difNLR | `dif_test()` |
+| DIF: Lord's chi-square, Raju's areas, effect sizes | difR, DFIT, mirt | `dif_irt()` with anchor purification, SIDS/UIDS, DTF |
+| Linking: mean-mean, mean-sigma, Haebara, Stocking-Lord | equateIRT, SNSequate, irtoys, TAM, plink | `irt_link()` |
+| IRT true-score equating | equateIRT, SNSequate | `equate_true_score()` |
+| Summed-score (Lord-Wingersky) tables | mirt, irtQ | `score_table()` |
+| Classification accuracy and consistency | cacIRT, irtQ, classify, CDM | `classification_accuracy()` (Lee; Rudner) |
+| Computerized adaptive testing | catR, mirtCAT, xxIRT, TestDesign | `cat_design()`, `cat_simulate()`, live `cat_start()`/`cat_next()`/`cat_answer()` |
+| Wright maps and item-person maps | WrightMap, ggmirt, eRm, TAM | `plot_wright()`, `plot_facets()` |
+| ggplot2-based IRT graphics | ggmirt (for mirt), mfrmr | every `plot_*()` returns a ggplot |
+| Publication tables and full reports | mfrmr (for facets models) | `irt_table()`, `irt_report()` |
+| Data simulation and recovery | mirt, catR, TAM, many others | `sim_irt()`, `sim_mfrm()` |
+
+## What is genuinely new
+
+Most individual methods in IRTistic exist somewhere in R. What is new is the
+combination:
+
+1. **One API across two measurement traditions.** The Rasch tradition
+   (infit/outfit, separation, Wright maps, FACETS-style many-facet reports)
+   and the IRT tradition (2PL-4PL, S-X², Lord's DIF, linking and equating,
+   adaptive testing, classification accuracy) usually live in different
+   packages with different vocabularies. In IRTistic, Rasch-style fit
+   statistics are available for a 3PL or graded response model, and a
+   Rasch calibration can feed straight into a CAT or an equating study.
+2. **A single, consistent graphics system.** Every figure is a `ggplot2`
+   object with the same theme and a colour-vision-deficiency-aware palette,
+   so it can be restyled, faceted and combined with ordinary ggplot code.
+3. **Results that are ready to publish.** `irt_table()` formats any result
+   in APA style, with SEs in parentheses, p-values as "< .001", captions and
+   notes, as Markdown, HTML, LaTeX or CSV. `irt_report()` writes a complete
+   analysis report in one call.
+4. **An item bank as the common currency.** Calibrations, published
+   parameters (`make_bank()`), linked forms, DIF analyses, summed-score
+   tables, classification studies and adaptive tests all share one object.
+5. **Validated estimation written from scratch.** The test suite checks
+   parameter recovery for every model and checks results against eRm
+   (Rasch difficulties and infit/outfit), lme4 (Rasch MML), simulation
+   (Lee's classification accuracy, S-X² Type I error, linking constants) and
+   internal identities (a one-facet many-facet model reproduces the rating
+   scale model's likelihood exactly).
+
+## What IRTistic does not do (yet)
+
+In the same spirit as Choi and Asilkalkan's review, here is what to use
+instead for now:
+
+* **Nominal response, mixture, testlet/bifactor and explanatory models;
+  Bayesian (MCMC) estimation; exploratory multidimensional analysis with
+  rotation:** mirt, TAM, sirt, psychomix, brms.
+* **Conditional maximum likelihood and Andersen's likelihood ratio test:**
+  eRm, psychotools, iarm.
+* **Observed-score and kernel equating:** equate, kequate, SNSequate.
+* **Multistage testing and automated test assembly:** mstR, xxIRT,
+  TestDesign.
+* **Hierarchical rater models:** immer.
+* **Nonparametric IRT and Mokken scaling:** mokken, KernSmoothIRT.
+* **Response-time models:** LNIRT.
+* **Exhaustive FACETS table coverage, anchoring, and generalizability
+  studies for rater data:** mfrmr.
+
+These are on the roadmap. Contributions are welcome.
+
+## References
+
+Choi, Y.-J., & Asilkalkan, A. (2019). R packages for item response theory
+analysis: Descriptions and features. *Measurement: Interdisciplinary
+Research and Perspectives, 17*(3), 168-175.
+https://doi.org/10.1080/15366367.2019.1586404
+
+Mair, P., Rosseel, Y., & Gruber, K. (2023). *CRAN Task View: Psychometric
+Models and Methods* (version 2023-12-15).
+https://CRAN.R-project.org/view=Psychometrics
+
+The full list of methods and software that IRTistic builds on is in
+[References and credits](credits.html).

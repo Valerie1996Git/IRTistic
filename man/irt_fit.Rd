@@ -23,7 +23,7 @@ recoded to consecutive integers starting at 0. `NA` is treated as missing
 (not presented) and is ignored in the likelihood.}
 
 \item{model}{Character, either one model for all items or one per item.
-One of `"rasch"`, `"2pl"`, `"3pl"`, `"grm"` (graded response),
+One of `"rasch"`, `"2pl"`, `"3pl"`, `"4pl"`, `"grm"` (graded response),
 `"pcm"` (partial credit), `"gpcm"` (generalized partial credit) or
 `"rsm"` (rating scale). `"rasch"` applied to a polytomous item is
 treated as `"pcm"`.}

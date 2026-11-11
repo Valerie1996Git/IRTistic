@@ -1,0 +1,16 @@
+pandoc: 3.1.3
+pkgdown: 2.0.7
+pkgdown_sha: ~
+articles:
+  IRTistic: IRTistic.html
+  adaptive-testing: adaptive-testing.html
+  credits: credits.html
+  dif-and-linking: dif-and-linking.html
+  many-facet-rasch: many-facet-rasch.html
+  tables-and-reports: tables-and-reports.html
+  why-irtistic: why-irtistic.html
+last_built: 2026-11-11T21:41Z
+urls:
+  reference: https://YOUR-USERNAME.github.io/IRTistic/reference
+  article: https://YOUR-USERNAME.github.io/IRTistic/articles
+

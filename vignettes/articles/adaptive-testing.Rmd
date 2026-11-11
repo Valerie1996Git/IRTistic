@@ -1,0 +1,95 @@
+---
+title: "Computerized adaptive testing"
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.width = 8, fig.height = 4.5, dpi = 110)
+library(IRTistic)
+set.seed(7)
+```
+
+An adaptive test chooses each item to be as informative as possible about
+the person taking it, so it reaches a target precision with far fewer items
+than a fixed form (Weiss, 1982). IRTistic covers the full workflow, taking
+ideas and defaults from catR (Magis & Barrada, 2017) and mirtCAT (Chalmers,
+2016).
+
+## 1. An item bank
+
+Use calibrated items from `item_bank(fit)` or published parameters from
+`make_bank()`. Content areas are optional.
+
+```{r}
+bank <- make_bank(b = rnorm(300), a = rlnorm(300, 0.1, 0.3), model = "2pl",
+                  content = sample(c("Algebra", "Geometry", "Number"), 300, replace = TRUE))
+bank
+```
+
+## 2. A design
+
+```{r}
+design <- cat_design(bank, select = "MFI", estimator = "EAP",
+                     min_items = 5, max_items = 30, se_target = 0.30,
+                     exposure = "randomesque", randomesque_k = 5,
+                     content_target = c(Algebra = 0.4, Geometry = 0.3, Number = 0.3))
+design
+```
+
+Selection rules: maximum Fisher information (`"MFI"`), posterior-weighted
+information (`"MPWI"`), Kullback-Leibler (`"KL"`), minimum expected posterior
+variance (`"MEPV"`) and `"random"`. Exposure control: randomesque,
+Sympson-Hetter (`cat_sympson_hetter()` calibrates the parameters) and
+a-stratification (`strata =`). Stopping rules: test length, SE target and
+classification against cut scores (`cut =`).
+
+## 3. Running it live
+
+`cat_start()`, `cat_next()` and `cat_answer()` give the item-by-item loop
+behind a web form or a 'shiny' app.
+
+```{r}
+s <- cat_start(design)
+true_theta <- 0.8
+while (!cat_done(s)) {
+  item <- cat_next(s)
+  p <- 1 / (1 + exp(-bank$items[[item]]$a * (true_theta + bank$items[[item]]$d / bank$items[[item]]$a)))
+  s <- cat_answer(s, item, rbinom(1, 1, p))
+}
+s
+plot(s)
+```
+
+## 4. Simulation studies
+
+```{r}
+sim <- cat_simulate(design, theta = rnorm(500), seed = 1)
+summary(sim)
+irt_table(sim)
+```
+
+```{r, fig.height = 5}
+plot(sim, "conditional")
+plot(sim, "exposure", r_max = 0.25)
+```
+
+## 5. Classification testing
+
+```{r}
+pass_fail <- cat_design(bank, cut = 0.5, min_items = 8, max_items = 40)
+cls <- cat_simulate(pass_fail, theta = rnorm(300), seed = 2)
+summary(cls)
+plot(cls, "trace", person = 3)
+```
+
+## 6. Post-hoc simulation with real data
+
+Pass a complete response matrix instead of `theta` to find out how short an
+adaptive version of an existing test could be.
+
+```{r}
+dat <- sim_irt(400, 40, "grm", ncat = 4)
+fit <- irt_fit(dat, "grm", se = "none")
+ph <- cat_simulate(cat_design(fit, max_items = 15, se_target = 0.35), responses = as.matrix(dat))
+summary(ph)
+cor(ph$results$theta, irt_scores(fit)$theta)   # agreement with the full 40-item test
+```

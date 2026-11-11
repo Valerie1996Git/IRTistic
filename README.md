@@ -1,94 +1,94 @@
-# IRTistic
+# IRTistic <img src="man/figures/logo.png" align="right" height="120" alt="" />
 
-**IRT + artistic: one R package for IRT and Rasch measurement, from model to publication-ready plot.**
+**IRT + artistic: item response theory and Rasch measurement in R, from model to publication-ready plot and table.**
 
-Most IRT work in R today means stitching several packages together: one to
-estimate, another for Rasch fit statistics, another for Wright maps, and
-nothing at all in R that reproduces the FACETS workflow for rater data.
-`IRTistic` does all of it with one consistent interface and a single
-`ggplot2` graphics layer.
+R has dozens of excellent IRT packages, but a real project usually means
+stitching six of them together: one to estimate, one for Rasch fit
+statistics, one for Wright maps, one for DIF, one for linking, one for
+adaptive testing, then copying numbers into a manuscript by hand. IRTistic
+brings that whole workflow under **one consistent interface**, with one
+graphics system and one table system.
 
-## What it does
+## Features
 
-| Area | Functions |
+| | |
 |---|---|
-| **Models** (MML-EM, written from scratch) | `irt_fit()` — Rasch, 2PL, 3PL, graded response, partial credit, generalized partial credit, rating scale; mixed item types; confirmatory multidimensional via a Q-matrix |
-| **Many-facet Rasch** (FACETS-style) | `mfrm_fit()` — any number of facets, rating-scale or partial-credit thresholds; `facet_report()` with measures, SEs, fair averages, infit/outfit, separation, reliability, fixed chi-square, category statistics |
-| **Person scores** | `irt_scores()` — EAP, MAP, ML, WLE |
-| **Fit** | `item_fit()`, `person_fit()` — infit/outfit MNSQ and ZSTD, point-measure correlations, observed vs expected averages |
-| **Reliability** | `reliability()` — EAP reliability, person/item separation and strata, Cronbach's alpha |
-| **Assumptions** | `local_dependence()` (Yen's Q3), `residual_pca()` (first contrast) |
-| **DIF** | `dif_test()` — Mantel-Haenszel with ETS classes; logistic / ordinal logistic regression with Jodoin-Gierl classes |
-| **Rater effects** | `mfrm_bias()` (bias/interaction terms), `unexpected()` (large residuals) |
-| **Model comparison** | `anova()`, `AIC()`, `BIC()`, `logLik()` |
-| **Simulation** | `sim_irt()`, `sim_mfrm()` |
-| **Graphics** (all return ggplot objects) | `plot_wright()`, `plot_facets()` (vertical ruler), `plot_icc()`, `plot_info()`, `plot_tcc()`, `plot_fit()` (bubble chart), `plot_ld()`, `plot_pca()`, `plot_dif()`, `plot_categories()`, `plot_bias()`, `theme_irt()` |
+| **Models** | Rasch, 2PL, 3PL, 4PL, graded response, partial credit, generalized partial credit, rating scale; mixed item types; confirmatory multidimensional (`irt_fit()`), all estimated by marginal maximum likelihood with code written from scratch |
+| **Many-facet Rasch** | FACETS-style rater models with measurement reports, fair averages, separation, bias/interaction analysis and unexpected responses (`mfrm_fit()`, `facet_report()`, `mfrm_bias()`) |
+| **Scoring** | EAP, MAP, ML, WLE (`irt_scores()`); summed-score conversion tables (`score_table()`) |
+| **Fit and assumptions** | infit/outfit + ZSTD for every model, S-X² (`item_fit()`, `person_fit()`, `sx2()`); Q3 local dependence, residual PCA (`local_dependence()`, `residual_pca()`) |
+| **Reliability and decisions** | EAP/WLE reliability, separation, strata, alpha (`reliability()`); classification accuracy and consistency, Lee and Rudner methods (`classification_accuracy()`) |
+| **DIF** | Mantel-Haenszel, logistic/ordinal regression (`dif_test()`); Lord's Wald test with anchor purification, Raju areas, SIDS/UIDS, DTF, any number of groups (`dif_irt()`) |
+| **Linking and equating** | mean-mean, mean-sigma, Haebara, Stocking-Lord (`irt_link()`); IRT true-score equating (`equate_true_score()`) |
+| **Adaptive testing** | MFI, MPWI, KL, MEPV selection; EAP/MAP/ML/WLE; randomesque, Sympson-Hetter, a-stratification; content balancing; SE and classification stopping; live sessions and Monte Carlo or post-hoc simulation (`cat_design()`, `cat_simulate()`, `cat_start()`) |
+| **Graphics** | Wright maps, FACETS rulers, ICC/category curves, information, TCC, fit bubbles, Q3 heatmaps, DIF curves, bias heatmaps, CAT traces, exposure and conditional precision plots; every one a ggplot |
+| **Output** | APA-style tables as data frame, Markdown, HTML, LaTeX or CSV (`irt_table()`); a complete HTML analysis report in one call (`irt_report()`) |
 
-## Install
+## Installation
 
 ```r
-# from the source tarball
-install.packages("IRTistic_0.1.0.tar.gz", repos = NULL, type = "source")
-# or from a local folder / GitHub checkout
-devtools::install("path/to/IRTistic")
+# install.packages("remotes")
+remotes::install_github("YOUR-USERNAME/IRTistic")
 ```
 
-## Quick tour
+## A two-minute tour
 
 ```r
 library(IRTistic)
 
-# --- IRT / Rasch ---------------------------------------------------------
-dat <- sim_irt(500, nitems = 12, model = "rasch")
-fit <- irt_fit(dat, model = "rasch")      # or "2pl", "3pl", "grm", "pcm", "gpcm", "rsm"
-summary(fit)                              # parameters, latent variance, reliability
-item_fit(fit)                             # infit / outfit / ZSTD
-irt_scores(fit, "WLE")
+dat <- sim_irt(800, nitems = 15, model = "2pl")
+fit <- irt_fit(dat, model = "2pl")
 
-plot(fit, "wright")                       # person-item map
-plot(fit, "icc")                          # faceted item curves
-plot(fit, "info")                         # test information + SE
-plot(fit, "fit")                          # fit bubble chart
+irt_table(fit)               # item parameters with SEs, ready for a manuscript
+item_fit(fit); sx2(fit)      # infit/outfit and S-X2
+plot(fit, "wright")          # person-item map
+plot(fit, "icc")             # item curves
 
-# --- Many-facet Rasch (FACETS) -------------------------------------------
-ratings <- sim_mfrm(n_person = 100, n_rater = 6, n_criterion = 4)
-mf <- mfrm_fit(ratings, person = "person",
-               facets = c("rater", "criterion"), score = "score")
-facet_report(mf)                          # FACETS-style measurement tables
-plot(mf, "facets")                        # vertical ruler
-plot(mf, "bias", facets = c("rater", "criterion"))
+group <- rep(c("A", "B"), 400)
+dif_irt(fit, group)          # Lord's test with purified anchors
+
+sim <- cat_simulate(cat_design(item_bank(fit), se_target = 0.3), theta = rnorm(500))
+summary(sim); plot(sim)      # how would an adaptive version perform?
+
+irt_report(fit, "report.html", group = group)   # everything above, in one HTML file
 ```
 
-Because every plot is a ggplot, customise freely:
+Rater data:
 
 ```r
-plot(fit, "icc") + ggplot2::facet_wrap(~item, ncol = 6) + ggplot2::labs(title = "My test")
+ratings <- sim_mfrm(n_person = 100, n_rater = 6, n_criterion = 4)
+mf <- mfrm_fit(ratings, "person", c("rater", "criterion"), "score")
+facet_report(mf)
+plot(mf, "facets")
 ```
 
 ## Validation
 
-The test suite checks parameter recovery for every model, that Rasch
-difficulties and infit/outfit statistics match `eRm`, that the one-facet
-many-facet model reproduces the IRT rating scale model's likelihood exactly,
-and that DIF screening finds planted DIF. During development the Rasch MML
-estimates were also checked against `lme4::glmer()` (equal log-likelihood
-and difficulties within 0.02).
+The test suite (over 120 checks) covers parameter recovery for every model,
+agreement with eRm for Rasch difficulties and infit/outfit, agreement with
+lme4 for Rasch MML, recovery of known linking constants, nominal Type I
+error for S-X² and Lord's DIF test, Lee classification accuracy against
+simulation, and exact equality of a one-facet many-facet model with the
+rating scale model.
 
-## Conventions
+## Credits
 
-* Responses are recoded to 0, 1, ... per item; original codes are kept in
-  `fit$labels` and used for expected-score plots.
-* MML identification: latent mean 0. Variances of dimensions measured only by
-  Rasch-family items are estimated; otherwise fixed at 1.
-* In many-facet models non-person facets are centred and the person mean is
-  estimated (the FACETS convention). Higher facet measures mean harder to
-  score highly on (more difficult criteria, more severe raters).
-* Standard errors come from the observed information matrix (numerical
-  Hessian of the marginal log-likelihood), treating the latent distribution
-  as known.
+IRTistic stands on the shoulders of the authors of mirt, TAM, eRm, ltm,
+catR, mirtCAT, difR, lordif, DFIT, equateIRT, SNSequate, plink, WrightMap,
+ggmirt, irtQ, cacIRT, immer, mfrmr and Linacre's FACETS and Winsteps
+programs, and on the psychometric literature they implement. The
+[References and credits](https://YOUR-USERNAME.github.io/IRTistic/articles/credits.html)
+article cites every method and package. The
+[Why IRTistic?](https://YOUR-USERNAME.github.io/IRTistic/articles/why-irtistic.html)
+article maps the package against Choi and Asilkalkan's (2019) review of 45
+IRT packages.
 
-## Roadmap
+## Citation
 
-Exploratory multidimensional models with rotation, bifactor/testlet models,
-S-X² item fit and M2 global fit, IRT linking and equating, anchoring of
-facet elements, and DIF via multiple-group calibration.
+```r
+citation("IRTistic")
+```
+
+## Author
+
+Valerie Ofori Aboah

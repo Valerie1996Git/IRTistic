@@ -9,6 +9,7 @@
     if (it$fam == "dich") {
       out["b"] <- -pp$d / a
       if (length(it$idx_g)) out["g"] <- pp$g
+      if (length(it$idx_u)) out["u"] <- pp$u
     } else if (it$model == "rsm") {
       out["b"] <- par[it$idx_d]
     } else {
@@ -24,6 +25,7 @@
       dd <- pp$d; names(dd) <- paste0("d", seq_along(dd)); out <- c(out, dd)
     }
     if (length(it$idx_g)) out["g"] <- pp$g
+    if (length(it$idx_u)) out["u"] <- pp$u
   }
   out
 }

@@ -328,9 +328,16 @@ plot_pca <- function(x, contrast = 1) {
 }
 
 #' DIF effect-size plot
-#' @param x Output of [dif_test()].
+#'
+#' Lollipop chart of DIF effect sizes with classification thresholds. For
+#' [dif_test()] output this shows the MH delta or Delta R-squared; for
+#' [dif_irt()] output it shows SIDS (signed expected item-score difference,
+#' focal minus reference) with flagged items highlighted, one panel per
+#' focal group.
+#' @param x Output of [dif_test()] or [dif_irt()].
 #' @export
 plot_dif <- function(x) {
+  if (inherits(x, "irt_dif_irt")) return(.plot_dif_irt(x))
   df <- as.data.frame(x); class(df) <- "data.frame"
   mh <- attr(x, "method") == "mh"
   df$effect <- if (mh) df$delta_MH else df$delta_R2
@@ -486,3 +493,137 @@ plot.mfrmfit <- function(x, type = c("facets", "categories", "fit", "bias"), fac
          fit = plot_fit(facet_report(x), ...),
          bias = plot_bias(mfrm_bias(x, if (is.null(facets)) x$facets[1:2] else facets), ...))
 }
+
+# CAT graphics ----------------------------------------------------------------------
+
+#' Trace of an adaptive test
+#'
+#' Shows how the trait estimate and its 95% interval evolve item by item,
+#' with the true value (for simulations) and any classification cut scores.
+#' Points are coloured by whether the response was in the top or bottom
+#' category.
+#'
+#' @param x A `cat_session` or `cat_sim`.
+#' @param person For a `cat_sim`, the simulee to show.
+#' @export
+plot_cat_trace <- function(x, person = 1) {
+  if (inherits(x, "cat_sim")) {
+    h <- x$history[x$history$person == person, ]
+    truth <- x$results$true_theta[x$results$person == person]
+    d <- x$design
+  } else if (inherits(x, "cat_session")) {
+    h <- x$history; truth <- NA; d <- x$design
+  } else stop("'x' must be a cat_session or cat_sim.", call. = FALSE)
+  if (!nrow(h)) stop("No items administered yet.", call. = FALSE)
+  maxs <- vapply(h$item, function(i) max(d$bank$items[[i]]$scores), numeric(1))
+  mins <- vapply(h$item, function(i) min(d$bank$items[[i]]$scores), numeric(1))
+  h$resp <- factor(ifelse(h$response == maxs, "Highest category", ifelse(h$response == mins, "Lowest category", "Middle")),
+                   levels = c("Highest category", "Middle", "Lowest category"))
+  p <- ggplot2::ggplot(h, ggplot2::aes(.data$step, .data$theta)) +
+    ggplot2::geom_ribbon(ggplot2::aes(ymin = .data$theta - 1.96 * .data$se, ymax = .data$theta + 1.96 * .data$se),
+                         fill = .pal[["blue"]], alpha = 0.15)
+  if (!is.null(d$cut)) p <- p + ggplot2::geom_hline(yintercept = d$cut, colour = .pal[["red"]], linetype = 2)
+  if (is.finite(truth)) p <- p + ggplot2::geom_hline(yintercept = truth, colour = .ink[["muted"]], linewidth = 0.5) +
+    ggplot2::annotate("text", x = max(h$step), y = truth, label = "true theta", vjust = -0.5, hjust = 1,
+                      size = 3, colour = .ink[["secondary"]])
+  p + ggplot2::geom_line(colour = .pal[["blue"]], linewidth = 0.8) +
+    ggplot2::geom_point(ggplot2::aes(fill = .data$resp), shape = 21, size = 2.6, colour = "white", stroke = 0.6) +
+    ggplot2::scale_fill_manual(values = c(`Highest category` = .pal[["aqua"]], Middle = .pal[["yellow"]],
+                                          `Lowest category` = .pal[["orange"]]), name = NULL, drop = TRUE) +
+    ggplot2::scale_x_continuous(breaks = function(l) unique(round(pretty(l)))) +
+    ggplot2::labs(x = "Items administered", y = expression(hat(theta) ~ "with 95% interval"),
+                  title = "Adaptive test trace",
+                  subtitle = sprintf("Final estimate %.2f (SE %.2f) after %d items", utils::tail(h$theta, 1),
+                                     utils::tail(h$se, 1), nrow(h))) +
+    theme_irt()
+}
+
+#' Item exposure in a CAT simulation
+#'
+#' Exposure rate of every bank item plotted against its difficulty, with
+#' bubble size proportional to discrimination and an optional target
+#' maximum exposure line.
+#'
+#' @param x A `cat_sim`.
+#' @param r_max Optional target maximum exposure rate to draw.
+#' @export
+plot_cat_exposure <- function(x, r_max = NULL) {
+  e <- x$exposure
+  e$status <- ifelse(e$exposure == 0, "Never used", if (is.null(r_max)) "Used" else
+    ifelse(e$exposure > r_max, "Over target", "Used"))
+  cols <- c(Used = .pal[["blue"]], `Over target` = .pal[["red"]], `Never used` = .ink[["neutral"]])
+  p <- ggplot2::ggplot(e, ggplot2::aes(.data$b, .data$exposure))
+  if (!is.null(r_max)) p <- p + ggplot2::geom_hline(yintercept = r_max, colour = .pal[["red"]], linetype = 2)
+  p + ggplot2::geom_point(ggplot2::aes(size = .data$a, colour = .data$status), alpha = 0.7) +
+    ggplot2::scale_colour_manual(values = cols, name = NULL) +
+    ggplot2::scale_size(range = c(1, 5), name = "Discrimination") +
+    ggplot2::labs(x = "Item difficulty (mean threshold)", y = "Exposure rate",
+                  title = "Item exposure",
+                  subtitle = sprintf("Max %.2f; %.0f%% of the bank never administered",
+                                     max(e$exposure), 100 * mean(e$exposure == 0))) +
+    theme_irt()
+}
+
+#' Conditional precision and test length in a CAT simulation
+#'
+#' Small multiples of bias, RMSE, mean SE and mean test length across bins of
+#' the true trait.
+#'
+#' @param x A `cat_sim` with known true trait values.
+#' @param bins Number of bins.
+#' @export
+plot_cat_conditional <- function(x, bins = 10) {
+  cc <- cat_conditional(x, bins)
+  long <- rbind(data.frame(theta = cc$theta, value = cc$bias, stat = "Bias"),
+                data.frame(theta = cc$theta, value = cc$rmse, stat = "RMSE"),
+                data.frame(theta = cc$theta, value = cc$mean_se, stat = "Mean SE"),
+                data.frame(theta = cc$theta, value = cc$mean_length, stat = "Mean test length"))
+  long$stat <- factor(long$stat, levels = c("Bias", "RMSE", "Mean SE", "Mean test length"))
+  ref <- data.frame(stat = factor("Bias", levels = levels(long$stat)), y = 0)
+  ggplot2::ggplot(long, ggplot2::aes(.data$theta, .data$value)) +
+    ggplot2::geom_hline(data = ref, ggplot2::aes(yintercept = .data$y), colour = .ink[["muted"]]) +
+    ggplot2::geom_line(colour = .pal[["blue"]], linewidth = 0.8) +
+    ggplot2::geom_point(colour = .pal[["blue"]], size = 2) +
+    ggplot2::facet_wrap(~stat, scales = "free_y", ncol = 2) +
+    ggplot2::labs(x = expression("True" ~ theta ~ "(bin mean)"), y = NULL,
+                  title = "Conditional CAT performance",
+                  subtitle = sprintf("%d simulees in %d equal-count bins", nrow(x$results), bins)) +
+    theme_irt()
+}
+
+#' @export
+plot.cat_sim <- function(x, type = c("conditional", "exposure", "trace"), ...) {
+  type <- match.arg(type)
+  switch(type, conditional = plot_cat_conditional(x, ...), exposure = plot_cat_exposure(x, ...),
+         trace = plot_cat_trace(x, ...))
+}
+
+#' @export
+plot.cat_session <- function(x, ...) plot_cat_trace(x, ...)
+
+.plot_dif_irt <- function(x) {
+  df <- as.data.frame(x); class(df) <- "data.frame"
+  df$status <- factor(ifelse(df$flag, "Flagged", "Not flagged"), levels = c("Flagged", "Not flagged"))
+  ord <- stats::aggregate(sids ~ item, df, mean)
+  df$item <- factor(df$item, levels = ord$item[order(ord$sids)])
+  ggplot2::ggplot(df, ggplot2::aes(.data$sids, .data$item)) +
+    ggplot2::geom_vline(xintercept = 0, colour = .ink[["muted"]]) +
+    ggplot2::geom_segment(ggplot2::aes(x = 0, xend = .data$sids, yend = .data$item), colour = .ink[["neutral"]]) +
+    ggplot2::geom_point(ggplot2::aes(colour = .data$status, shape = .data$status), size = 2.8) +
+    ggplot2::scale_colour_manual(values = c(Flagged = .pal[["red"]], `Not flagged` = .pal[["blue"]]), name = NULL, drop = FALSE) +
+    ggplot2::scale_shape_manual(values = c(Flagged = 15, `Not flagged` = 16), name = NULL, drop = FALSE) +
+    ggplot2::facet_wrap(~focal, labeller = ggplot2::labeller(focal = function(v) paste("Focal:", v))) +
+    ggplot2::labs(x = "SIDS: expected item score, focal minus reference", y = NULL,
+                  title = "Differential item functioning (IRT)",
+                  subtitle = "Negative = item harder for the focal group at equal trait levels; flagged by Lord's test") +
+    theme_irt()
+}
+
+#' @export
+plot.irt_dif_irt <- function(x, type = c("summary", "curves"), ...) {
+  type <- match.arg(type)
+  if (type == "summary") plot_dif(x) else plot_dif_curves(x, ...)
+}
+
+#' @export
+plot.irt_dif <- function(x, ...) plot_dif(x)

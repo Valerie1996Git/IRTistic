@@ -1,0 +1,145 @@
+---
+title: "References and credits"
+---
+
+IRTistic is built on decades of psychometric research and on the work of the
+authors of many R packages. Its estimation code is written from scratch, but
+its methods, conventions and many of its design ideas come from the people
+listed below. If you use IRTistic in published work, please cite IRTistic
+**and** the methodological sources for the procedures you report.
+
+```{r, eval = FALSE}
+citation("IRTistic")
+```
+
+## Software that inspired and validates IRTistic
+
+**General IRT estimation**
+
+* Chalmers, R. P. (2012). mirt: A multidimensional item response theory package for the R environment. *Journal of Statistical Software, 48*(6), 1-29. https://doi.org/10.18637/jss.v048.i06
+* Rizopoulos, D. (2006). ltm: An R package for latent variable modeling and item response theory analyses. *Journal of Statistical Software, 17*(5), 1-25. https://doi.org/10.18637/jss.v017.i05
+* Mair, P., & Hatzinger, R. (2007). Extended Rasch modeling: The eRm package for the application of IRT models in R. *Journal of Statistical Software, 20*(9), 1-20. https://doi.org/10.18637/jss.v020.i09
+* Robitzsch, A., Kiefer, T., & Wu, M. *TAM: Test analysis modules* [R package]. https://CRAN.R-project.org/package=TAM
+* Robitzsch, A. *sirt: Supplementary item response theory models* [R package]. https://CRAN.R-project.org/package=sirt
+* Partchev, I., Maris, G., & Hattori, T. *irtoys: A collection of functions related to item response theory* [R package]. https://CRAN.R-project.org/package=irtoys
+* Lim, H. *irtQ: Unidimensional item response theory modeling* [R package]. https://CRAN.R-project.org/package=irtQ
+* Bates, D., Mächler, M., Bolker, B., & Walker, S. (2015). Fitting linear mixed-effects models using lme4. *Journal of Statistical Software, 67*(1), 1-48. https://doi.org/10.18637/jss.v067.i01 (used to validate the Rasch MML estimates during development)
+
+**Rasch measurement and many-facet models**
+
+* Linacre, J. M. *Facets computer program for many-facet Rasch measurement*. Winsteps.com. https://www.winsteps.com/facets.htm (the reference implementation whose report layout IRTistic follows)
+* Linacre, J. M. *Winsteps Rasch measurement computer program*. Winsteps.com. https://www.winsteps.com
+* Robitzsch, A., & Steinfeld, J. *immer: Item response models for multiple ratings* [R package]. https://CRAN.R-project.org/package=immer
+* Komuro, R. *mfrmr: Estimation and diagnostics for many-facet measurement models* [R package]. https://CRAN.R-project.org/package=mfrmr
+* *rasch: Models and diagnostics for Rasch measurement theory* [R package]. https://CRAN.R-project.org/package=rasch
+* Johansson, M. *easyRasch* [R package]. https://pgmj.github.io/easyRasch/
+* Mueller, M. *iarm: Item analysis in Rasch models* [R package]. https://CRAN.R-project.org/package=iarm
+
+**Differential item functioning**
+
+* Magis, D., Béland, S., Tuerlinckx, F., & De Boeck, P. (2010). A general framework and an R package for the detection of dichotomous differential item functioning. *Behavior Research Methods, 42*(3), 847-862. https://doi.org/10.3758/BRM.42.3.847
+* Choi, S. W., Gibbons, L. E., & Crane, P. K. (2011). lordif: An R package for detecting differential item functioning using iterative hybrid ordinal logistic regression/item response theory and Monte Carlo simulations. *Journal of Statistical Software, 39*(8), 1-30. https://doi.org/10.18637/jss.v039.i08
+* Cervantes, V. H. (2017). DFIT: An R package for Raju's differential functioning of items and tests framework. *Journal of Statistical Software, 76*(5), 1-24. https://doi.org/10.18637/jss.v076.i05
+* Drabinová, A., & Martinková, P. (2017). Detection of differential item functioning with nonlinear regression: A non-IRT approach accounting for guessing. *Journal of Educational Measurement, 54*(4), 498-517. https://doi.org/10.1111/jedm.12158
+
+**Linking and equating**
+
+* Battauz, M. (2015). equateIRT: An R package for IRT test equating. *Journal of Statistical Software, 68*(7), 1-22. https://doi.org/10.18637/jss.v068.i07
+* González, J. (2014). SNSequate: Standard and nonstandard statistical models and methods for test equating. *Journal of Statistical Software, 59*(7), 1-30. https://doi.org/10.18637/jss.v059.i07
+* Andersson, B., Bränberg, K., & Wiberg, M. (2013). Performing the kernel method of test equating with the package kequate. *Journal of Statistical Software, 55*(6), 1-25. https://doi.org/10.18637/jss.v055.i06
+* Weeks, J. P. (2010). plink: An R package for linking mixed-format tests using IRT-based methods. *Journal of Statistical Software, 35*(12), 1-33. https://doi.org/10.18637/jss.v035.i12
+
+**Adaptive testing**
+
+* Magis, D., & Raîche, G. (2012). Random generation of response patterns under computerized adaptive testing with the R package catR. *Journal of Statistical Software, 48*(8), 1-31. https://doi.org/10.18637/jss.v048.i08
+* Magis, D., & Barrada, J. R. (2017). Computerized adaptive testing with R: Recent updates of the package catR. *Journal of Statistical Software, 76*(Code Snippet 1), 1-19. https://doi.org/10.18637/jss.v076.c01
+* Chalmers, R. P. (2016). Generating adaptive and non-adaptive test interfaces for multidimensional item response theory applications. *Journal of Statistical Software, 71*(5), 1-39. https://doi.org/10.18637/jss.v071.i05
+
+**Classification accuracy and graphics**
+
+* Lathrop, Q. N. *cacIRT: Classification accuracy and consistency under item response theory* [R package]. https://CRAN.R-project.org/package=cacIRT
+* Torres Irribarra, D., & Freund, R. *WrightMap: IRT item-person map with ConQuest integration* [R package]. https://CRAN.R-project.org/package=WrightMap
+* Masur, P. K. *ggmirt: Plotting functions to extend mirt for IRT analyses* [R package]. https://github.com/masurp/ggmirt
+* Wickham, H. (2016). *ggplot2: Elegant graphics for data analysis*. Springer. https://ggplot2.tidyverse.org
+
+**Reviews of the field**
+
+* Choi, Y.-J., & Asilkalkan, A. (2019). R packages for item response theory analysis: Descriptions and features. *Measurement: Interdisciplinary Research and Perspectives, 17*(3), 168-175. https://doi.org/10.1080/15366367.2019.1586404
+* Mair, P., Rosseel, Y., & Gruber, K. *CRAN Task View: Psychometric models and methods*. https://CRAN.R-project.org/view=Psychometrics
+
+## Methodological references, by feature
+
+**Models and estimation** (`irt_fit()`, `irt_scores()`)
+
+* Rasch, G. (1960). *Probabilistic models for some intelligence and attainment tests*. Danish Institute for Educational Research.
+* Birnbaum, A. (1968). Some latent trait models and their use in inferring an examinee's ability. In F. M. Lord & M. R. Novick, *Statistical theories of mental test scores* (pp. 397-479). Addison-Wesley.
+* Barton, M. A., & Lord, F. M. (1981). *An upper asymptote for the three-parameter logistic item-response model* (ETS Research Report RR-81-20). Educational Testing Service.
+* Samejima, F. (1969). Estimation of latent ability using a response pattern of graded scores. *Psychometrika Monograph Supplement, 34*(4, Pt. 2), No. 17.
+* Andrich, D. (1978). A rating formulation for ordered response categories. *Psychometrika, 43*(4), 561-573.
+* Masters, G. N. (1982). A Rasch model for partial credit scoring. *Psychometrika, 47*(2), 149-174.
+* Muraki, E. (1992). A generalized partial credit model: Application of an EM algorithm. *Applied Psychological Measurement, 16*(2), 159-176.
+* Bock, R. D., & Aitkin, M. (1981). Marginal maximum likelihood estimation of item parameters: Application of an EM algorithm. *Psychometrika, 46*(4), 443-459.
+* Warm, T. A. (1989). Weighted likelihood estimation of ability in item response theory. *Psychometrika, 54*(3), 427-450.
+
+**Rasch fit, reliability and dimensionality** (`item_fit()`, `person_fit()`, `reliability()`, `local_dependence()`, `residual_pca()`)
+
+* Wright, B. D., & Stone, M. H. (1979). *Best test design*. MESA Press.
+* Wright, B. D., & Masters, G. N. (1982). *Rating scale analysis*. MESA Press.
+* Wilson, E. B., & Hilferty, M. M. (1931). The distribution of chi-square. *Proceedings of the National Academy of Sciences, 17*(12), 684-688.
+* Yen, W. M. (1984). Effects of local item dependence on the fit and equating performance of the three-parameter logistic model. *Applied Psychological Measurement, 8*(2), 125-145.
+* Christensen, K. B., Makransky, G., & Horton, M. (2017). Critical values for Yen's Q3: Identification of local dependence in the Rasch model using residual correlations. *Applied Psychological Measurement, 41*(3), 178-194.
+* Smith, E. V., Jr. (2002). Detecting and evaluating the impact of multidimensionality using item fit statistics and principal component analysis of residuals. *Journal of Applied Measurement, 3*(2), 205-231.
+
+**Item fit** (`sx2()`)
+
+* Orlando, M., & Thissen, D. (2000). Likelihood-based item-fit indices for dichotomous item response theory models. *Applied Psychological Measurement, 24*(1), 50-64.
+* Kang, T., & Chen, T. T. (2008). Performance of the generalized S-X2 item fit index for polytomous IRT models. *Journal of Educational Measurement, 45*(4), 391-406.
+* Lord, F. M., & Wingersky, M. S. (1984). Comparison of IRT true-score and equipercentile observed-score "equatings". *Applied Psychological Measurement, 8*(4), 453-461.
+
+**Many-facet Rasch measurement** (`mfrm_fit()`, `facet_report()`, `mfrm_bias()`)
+
+* Linacre, J. M. (1989). *Many-facet Rasch measurement*. MESA Press.
+* Eckes, T. (2015). *Introduction to many-facet Rasch measurement: Analyzing and evaluating rater-mediated assessments* (2nd ed.). Peter Lang.
+* Myford, C. M., & Wolfe, E. W. (2003). Detecting and measuring rater effects using many-facet Rasch measurement: Part I. *Journal of Applied Measurement, 4*(4), 386-422.
+* Myford, C. M., & Wolfe, E. W. (2004). Detecting and measuring rater effects using many-facet Rasch measurement: Part II. *Journal of Applied Measurement, 5*(2), 189-227.
+
+**Differential item functioning** (`dif_test()`, `dif_irt()`)
+
+* Mantel, N., & Haenszel, W. (1959). Statistical aspects of the analysis of data from retrospective studies of disease. *Journal of the National Cancer Institute, 22*(4), 719-748.
+* Holland, P. W., & Thayer, D. T. (1988). Differential item performance and the Mantel-Haenszel procedure. In H. Wainer & H. I. Braun (Eds.), *Test validity* (pp. 129-145). Lawrence Erlbaum.
+* Swaminathan, H., & Rogers, H. J. (1990). Detecting differential item functioning using logistic regression procedures. *Journal of Educational Measurement, 27*(4), 361-370.
+* Zumbo, B. D. (1999). *A handbook on the theory and methods of differential item functioning (DIF)*. Directorate of Human Resources Research and Evaluation, Department of National Defense.
+* Jodoin, M. G., & Gierl, M. J. (2001). Evaluating Type I error and power rates using an effect size measure with the logistic regression procedure for DIF detection. *Applied Measurement in Education, 14*(4), 329-349.
+* Lord, F. M. (1980). *Applications of item response theory to practical testing problems*. Lawrence Erlbaum.
+* Raju, N. S. (1988). The area between two item characteristic curves. *Psychometrika, 53*(4), 495-502.
+* Meade, A. W. (2010). A taxonomy of effect size measures for the differential functioning of items and scales. *Journal of Applied Psychology, 95*(4), 728-743.
+* Candell, G. L., & Drasgow, F. (1988). An iterative procedure for linking metrics and assessing item bias in item response theory. *Applied Psychological Measurement, 12*(3), 253-260.
+
+**Linking and equating** (`irt_link()`, `equate_true_score()`, `score_table()`)
+
+* Loyd, B. H., & Hoover, H. D. (1980). Vertical equating using the Rasch model. *Journal of Educational Measurement, 17*(3), 179-193.
+* Marco, G. L. (1977). Item characteristic curve solutions to three intractable testing problems. *Journal of Educational Measurement, 14*(2), 139-160.
+* Haebara, T. (1980). Equating logistic ability scales by a weighted least squares method. *Japanese Psychological Research, 22*(3), 144-149.
+* Stocking, M. L., & Lord, F. M. (1983). Developing a common metric in item response theory. *Applied Psychological Measurement, 7*(2), 201-210.
+* Kolen, M. J., & Brennan, R. L. (2014). *Test equating, scaling, and linking: Methods and practices* (3rd ed.). Springer.
+
+**Classification accuracy** (`classification_accuracy()`)
+
+* Lee, W.-C. (2010). Classification consistency and accuracy for complex assessments using item response theory. *Journal of Educational Measurement, 47*(1), 1-17.
+* Rudner, L. M. (2005). Expected classification accuracy. *Practical Assessment, Research & Evaluation, 10*(13).
+
+**Computerized adaptive testing** (`cat_design()`, `cat_simulate()`)
+
+* Weiss, D. J. (1982). Improving measurement quality and efficiency with adaptive testing. *Applied Psychological Measurement, 6*(4), 473-492.
+* Kingsbury, G. G., & Zara, A. R. (1989). Procedures for selecting items for computerized adaptive tests. *Applied Measurement in Education, 2*(4), 359-375.
+* Chang, H.-H., & Ying, Z. (1996). A global information approach to computerized adaptive testing. *Applied Psychological Measurement, 20*(3), 213-229.
+* Chang, H.-H., & Ying, Z. (1999). a-stratified multistage computerized adaptive testing. *Applied Psychological Measurement, 23*(3), 211-222.
+* van der Linden, W. J. (1998). Bayesian item selection criteria for adaptive testing. *Psychometrika, 63*(2), 201-216.
+* Sympson, J. B., & Hetter, R. D. (1985). Controlling item-exposure rates in computerized adaptive testing. In *Proceedings of the 27th Annual Meeting of the Military Testing Association* (pp. 973-977). Navy Personnel Research and Development Center.
+* Chen, S.-Y., Ankenmann, R. D., & Spray, J. A. (2003). The relationship between item exposure and test overlap in computerized adaptive testing. *Journal of Educational Measurement, 40*(2), 129-145.
+
+## Graphics
+
+The colour palette and chart conventions were chosen for legibility in
+print and for readers with colour-vision deficiency. Plots are built with
+ggplot2 (Wickham, 2016).

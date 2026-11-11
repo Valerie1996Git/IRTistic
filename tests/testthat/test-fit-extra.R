@@ -1,0 +1,41 @@
+test_that("S-X2 has roughly nominal type I error and detects misfit", {
+  skip_on_cran()
+  set.seed(81)
+  p <- c()
+  for (r in 1:5) p <- c(p, sx2(irt_fit(sim_irt(800, 10, "2pl"), "2pl", se = "none"))$p)
+  expect_lt(mean(p < 0.05, na.rm = TRUE), 0.15)
+  d <- sim_irt(1500, 10, "2pl", a = c(rep(1, 9), 3))
+  s <- sx2(irt_fit(d, "rasch", se = "none"))
+  expect_equal(s$item[which.min(s$p)], "I10")
+})
+
+test_that("Lee classification accuracy matches simulation", {
+  set.seed(82)
+  bank <- make_bank(b = seq(-2, 2, length.out = 15), a = 1.2)
+  ca <- classification_accuracy(bank, theta_cuts = c(-0.5, 0.8))
+  th <- rnorm(20000)
+  tot <- rowSums(sim_irt(20000, b = matrix(seq(-2, 2, length.out = 15)), a = 1.2, theta = matrix(th)))
+  emp <- mean(findInterval(tot, ca$score_cuts) == findInterval(th, c(-0.5, 0.8)))
+  expect_equal(ca$accuracy, emp, tolerance = 0.02)
+  expect_true(ca$consistency < 1 && ca$kappa > 0)
+})
+
+test_that("4PL estimates upper asymptotes", {
+  skip_on_cran()
+  set.seed(83)
+  d <- sim_irt(3000, 12, "4pl")
+  cf <- coef(irt_fit(d, "4pl", se = "none"), "wide")
+  expect_true(all(cf$u > cf$g & cf$u <= 1))
+  expect_gt(cor(cf$b, attr(d, "truth")$b[, 1]), 0.9)
+})
+
+test_that("tables format results", {
+  fit <- irt_fit(sim_irt(300, 6, "2pl"), "2pl")
+  tb <- irt_table(fit)
+  expect_s3_class(tb, "irt_table")
+  expect_match(tb$a[1], "\\(")
+  expect_true(any(grepl("|", irt_table(item_fit(fit), format = "markdown"), fixed = TRUE)))
+  f <- tempfile(fileext = ".csv"); irt_table(sx2(fit), file = f)
+  expect_true(file.exists(f))
+  expect_true(any(grepl("< .001|\\.", irt_table(reliability(fit))[[2]])))
+})

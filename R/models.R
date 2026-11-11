@@ -7,25 +7,26 @@
 #   gpcm : P(X = k) propto exp(k * z + sum_{v <= k} d_v)
 # Reported IRT parameters are derived from these (e.g. b = -d / a).
 
-.dich_models <- c("rasch", "2pl", "3pl")
+.dich_models <- c("rasch", "2pl", "3pl", "4pl")
 .poly_models <- c("grm", "pcm", "gpcm", "rsm")
 .all_models  <- c(.dich_models, .poly_models)
 
 .family_of <- function(model) {
   switch(model,
-         rasch = , `2pl` = , `3pl` = "dich",
+         rasch = , `2pl` = , `3pl` = , `4pl` = "dich",
          grm = "grm",
          pcm = , gpcm = , rsm = "gpcm")
 }
 
-.slope_free <- function(model) model %in% c("2pl", "3pl", "grm", "gpcm")
+.slope_free <- function(model) model %in% c("2pl", "3pl", "4pl", "grm", "gpcm")
 
 # Category probabilities: returns Q x K matrix
 .item_probs <- function(fam, pars, theta) {
   z <- as.vector(theta %*% pars$a)
   K <- pars$K
   if (fam == "dich") {
-    p1 <- pars$g + (1 - pars$g) * stats::plogis(z + pars$d)
+    u <- if (is.null(pars$u)) 1 else pars$u
+    p1 <- pars$g + (u - pars$g) * stats::plogis(z + pars$d)
     P <- cbind(1 - p1, p1)
   } else if (fam == "grm") {
     cum <- stats::plogis(outer(z, pars$d, "+"))
@@ -63,13 +64,15 @@
     load <- Q[j, ] != 0
     n_a <- if (.slope_free(m)) sum(load) else 0L
     n_d <- if (m == "rsm") 1L else K[j] - 1L
-    n_g <- if (m == "3pl") 1L else 0L
+    n_g <- if (m %in% c("3pl", "4pl")) 1L else 0L
+    n_u <- if (m == "4pl") 1L else 0L
     idx_a <- if (n_a) pos + seq_len(n_a) else integer(0); pos <- pos + n_a
     idx_d <- pos + seq_len(n_d); pos <- pos + n_d
     idx_g <- if (n_g) pos + 1L else integer(0); pos <- pos + n_g
-    own <- c(idx_a, idx_d, idx_g)
+    idx_u <- if (n_u) pos + 1L else integer(0); pos <- pos + n_u
+    own <- c(idx_a, idx_d, idx_g, idx_u)
     items[[j]] <- list(model = m, fam = .family_of(m), K = K[j], load = load,
-                       idx_a = idx_a, idx_d = idx_d, idx_g = idx_g,
+                       idx_a = idx_a, idx_d = idx_d, idx_g = idx_g, idx_u = idx_u,
                        idx_tau = if (m == "rsm") rsm_tau_idx else integer(0),
                        idx = sort(c(own, if (m == "rsm") rsm_tau_idx)))
   }
@@ -85,6 +88,10 @@
   if (it$fam == "dich") {
     d <- par[it$idx_d]
     if (length(it$idx_g)) g <- stats::plogis(par[it$idx_g])
+    if (length(it$idx_u)) {
+      u <- g + (1 - g) * stats::plogis(par[it$idx_u])   # keeps g < u < 1
+      return(list(a = a, d = d, g = g, u = u, K = it$K))
+    }
   } else if (it$fam == "grm") {
     raw <- par[it$idx_d]
     d <- if (length(raw) > 1) raw[1] - c(0, cumsum(exp(raw[-1]))) else raw
@@ -107,6 +114,11 @@
       gg <- stats::plogis(par[it$idx_g])
       lp <- lp + stats::dbeta(gg, pr$g[1], pr$g[2], log = TRUE)
     }
+    if (length(it$idx_u) && !is.null(pr$u)) {
+      gg <- stats::plogis(par[it$idx_g])
+      uu <- gg + (1 - gg) * stats::plogis(par[it$idx_u])
+      lp <- lp + stats::dbeta(uu, pr$u[1], pr$u[2], log = TRUE)
+    }
     if (length(it$idx_a) && !is.null(pr$a)) {
       aa <- par[it$idx_a]
       lp <- lp + sum(stats::dlnorm(pmax(aa, 1e-8), pr$a[1], pr$a[2], log = TRUE))
@@ -126,6 +138,7 @@
     if (it$fam == "dich") {
       p <- tab[2] / sum(tab)
       par[it$idx_d] <- stats::qlogis(p) * 1.2
+      if (length(it$idx_u)) par[it$idx_u] <- stats::qlogis(0.9)
       if (length(it$idx_g)) { par[it$idx_g] <- stats::qlogis(0.2)
         par[it$idx_d] <- stats::qlogis(min(max((p - 0.2) / 0.8, 0.05), 0.95)) }
     } else if (it$fam == "grm") {

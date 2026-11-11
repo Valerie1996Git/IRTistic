@@ -24,7 +24,8 @@ Imports:
     utils,
     MASS,
     graphics,
-    grDevices
+    grDevices,
+    tools
 Suggests:
     testthat (>= 3.0.0),
     knitr,

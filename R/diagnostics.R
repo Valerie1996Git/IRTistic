@@ -101,6 +101,7 @@ item_fit <- function(fit, theta = NULL, range = c(0.5, 1.5)) {
     numeric(1))
   out <- cbind(.item_measures(fit), fs, pt_measure = pm)
   out$flag <- .flag_fit(out$infit, out$outfit, range[1], range[2])
+  class(out) <- c("irt_itemfit", "data.frame")
   out
 }
 
@@ -121,6 +122,7 @@ person_fit <- function(fit, theta = NULL, range = c(0.5, 1.5)) {
   ext <- .extreme_persons(fit)
   out[ext, c("infit", "infit_z", "outfit", "outfit_z")] <- NA
   out$flag <- .flag_fit(out$infit, out$outfit, range[1], range[2])
+  class(out) <- c("irt_personfit", "data.frame")
   out
 }
 
@@ -170,6 +172,7 @@ reliability <- function(fit) {
                                            reliability = alpha, separation = NA, strata = NA)
   }
   out <- do.call(rbind, rows); rownames(out) <- NULL
+  class(out) <- c("irt_reliability", "data.frame")
   out
 }
 

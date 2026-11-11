@@ -16,7 +16,7 @@ dimensionality ([residual_pca()]), DIF ([dif_test()]) and rater bias
 family, which all return ggplot objects.
 }
 \author{
-\strong{Maintainer}: Valerie Ofori Aboah \email{maintainer@example.com}
+\strong{Maintainer}: Valerie Ofori Aboah \email{ofori96valerie@gmail.com}
 
 }
 \keyword{internal}

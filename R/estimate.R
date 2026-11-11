@@ -9,7 +9,7 @@
 #'   recoded to consecutive integers starting at 0. `NA` is treated as missing
 #'   (not presented) and is ignored in the likelihood.
 #' @param model Character, either one model for all items or one per item.
-#'   One of `"rasch"`, `"2pl"`, `"3pl"`, `"grm"` (graded response),
+#'   One of `"rasch"`, `"2pl"`, `"3pl"`, `"4pl"`, `"grm"` (graded response),
 #'   `"pcm"` (partial credit), `"gpcm"` (generalized partial credit) or
 #'   `"rsm"` (rating scale). `"rasch"` applied to a polytomous item is
 #'   treated as `"pcm"`.
@@ -59,7 +59,7 @@ irt_fit <- function(data, model = "rasch", Q = NULL, quadpts = NULL, priors = NU
   if (length(bad)) stop("Unknown model(s): ", paste(bad, collapse = ", "), call. = FALSE)
   promote <- model == "rasch" & K > 2
   if (any(promote)) model[promote] <- "pcm"
-  dich_bad <- model %in% c("2pl", "3pl") & K > 2
+  dich_bad <- model %in% c("2pl", "3pl", "4pl") & K > 2
   if (any(dich_bad))
     stop("Items ", paste(colnames(X)[dich_bad], collapse = ", "),
          " are polytomous; use 'grm', 'gpcm' or 'pcm' for them.", call. = FALSE)
@@ -75,7 +75,8 @@ irt_fit <- function(data, model = "rasch", Q = NULL, quadpts = NULL, priors = NU
   rownames(Q) <- colnames(X)
 
   if (is.null(priors)) priors <- list()
-  if (any(model == "3pl") && !"g" %in% names(priors)) priors$g <- c(5, 17)
+  if (any(model %in% c("3pl", "4pl")) && !"g" %in% names(priors)) priors$g <- c(5, 17)
+  if (any(model == "4pl") && !"u" %in% names(priors)) priors$u <- c(17, 2)
 
   spec <- .build_spec(model, K, Q, priors)
 

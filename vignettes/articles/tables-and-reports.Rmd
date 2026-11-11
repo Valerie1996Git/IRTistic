@@ -1,0 +1,66 @@
+---
+title: "Publication-ready tables and reports"
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.width = 8, fig.height = 4.5, dpi = 110)
+library(IRTistic)
+set.seed(3)
+```
+
+## Tables
+
+`irt_table()` formats any IRTistic result consistently: fixed decimals,
+APA-style p-values, SEs in parentheses, readable column names, a caption
+and a note.
+
+```{r}
+fit <- irt_fit(sim_irt(600, 10, "2pl"), "2pl")
+irt_table(fit)
+```
+
+In an R Markdown or Quarto document, ask for HTML, Markdown or LaTeX:
+
+```{r}
+irt_table(item_fit(fit), format = "html")
+```
+
+```{r}
+irt_table(reliability(fit), format = "html")
+irt_table(classification_accuracy(fit, theta_cuts = c(-0.5, 1)), format = "html")
+```
+
+Write straight to a file for Word, Excel or a journal template:
+
+```{r, eval = FALSE}
+irt_table(fit, file = "table2-item-parameters.csv")
+irt_table(sx2(fit), file = "table3-sx2.html")
+```
+
+## Plots
+
+Every `plot_*()` function returns a ggplot, so ordinary ggplot2 code
+customises it:
+
+```{r}
+plot_icc(fit, items = 1:4) +
+  ggplot2::facet_wrap(~item, ncol = 4) +
+  ggplot2::labs(title = "Item characteristic curves for the anxiety scale")
+```
+
+Save a figure at journal resolution with `ggplot2::ggsave()`:
+
+```{r, eval = FALSE}
+ggplot2::ggsave("figure1-wright-map.png", plot_wright(fit), width = 7, height = 5, dpi = 300)
+```
+
+## One-call reports
+
+`irt_report()` writes a self-contained HTML report with every table and
+figure for a model: overview, parameters, reliability, item fit, S-X²,
+local dependence, dimensionality, Wright map, curves, a score table and,
+optionally, DIF. Many-facet models get a FACETS-style report.
+
+```{r, eval = FALSE}
+irt_report(fit, "my-analysis.html", author = "Your Name", group = my_groups)
+```
