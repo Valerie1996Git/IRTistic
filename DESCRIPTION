@@ -1,0 +1,35 @@
+Package: IRTistic
+Type: Package
+Title: Item Response Theory and Many-Facet Rasch Measurement with Artful Graphics
+Version: 0.1.0
+Authors@R: person("Valerie", "Ofori Aboah", role = c("aut", "cre"), email = "ofori96valerie@gmail.com")
+Description: A single toolkit for item response theory (IRT) and Rasch
+    measurement. Estimates unidimensional and confirmatory multidimensional
+    Rasch, 2PL, 3PL, graded response, partial credit, generalized partial
+    credit and rating scale models by marginal maximum likelihood with an
+    EM algorithm, and many-facet Rasch models (in the style of FACETS) for
+    rater-mediated assessments. Provides person scoring (EAP, MAP, ML, WLE),
+    infit/outfit statistics, separation and reliability, local dependence
+    and residual dimensionality checks, differential item functioning,
+    rater bias/interaction analysis, data simulation, and a consistent set
+    of 'ggplot2' graphics including Wright maps, FACETS-style vertical
+    rulers, item and category curves, information functions and fit bubble
+    charts.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Depends: R (>= 4.0)
+Imports:
+    ggplot2 (>= 3.4.0),
+    stats,
+    utils,
+    MASS,
+    graphics,
+    grDevices
+Suggests:
+    testthat (>= 3.0.0),
+    knitr,
+    rmarkdown,
+    eRm
+Config/testthat/edition: 3
+RoxygenNote: 7.3.1
+VignetteBuilder: knitr

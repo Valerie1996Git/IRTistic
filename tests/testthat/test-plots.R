@@ -1,0 +1,11 @@
+test_that("every plot builds", {
+  set.seed(41)
+  f <- irt_fit(sim_irt(300, 6, "grm", ncat = 4), "grm", se = "none")
+  for (t in c("wright", "icc", "expected", "info", "iteminfo", "tcc", "fit", "ld", "pca"))
+    expect_s3_class(ggplot2::ggplot_build(plot(f, t)), "ggplot_built")
+  fr <- irt_fit(sim_irt(300, 6, "rasch"), "rasch")
+  expect_s3_class(plot_dif(dif_test(fr, rep(1:2, 150), "mh")), "ggplot")
+  m <- mfrm_fit(sim_mfrm(60, 4, 3), "person", c("rater", "criterion"), "score")
+  for (t in c("facets", "categories", "fit", "bias"))
+    expect_s3_class(ggplot2::ggplot_build(plot(m, t)), "ggplot_built")
+})

@@ -1,0 +1,124 @@
+---
+title: "Getting started with IRTistic"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting started with IRTistic}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.width = 7, fig.height = 4.5)
+set.seed(2026)
+library(IRTistic)
+```
+
+`IRTistic` puts model fitting, diagnostics and graphics for item response
+theory (IRT) and Rasch measurement in one place. Every analysis follows the
+same pattern:
+
+1. fit a model (`irt_fit()` or `mfrm_fit()`),
+2. inspect it with tables (`summary()`, `item_fit()`, `facet_report()`, ...),
+3. draw it with `plot()` or a `plot_*()` function. Plots are ggplot objects,
+   so you can add `facet_wrap()`, themes or labels as usual.
+
+## Dichotomous and polytomous IRT
+
+```{r}
+dat <- sim_irt(500, nitems = 10, model = "rasch")
+fit <- irt_fit(dat, model = "rasch")
+summary(fit)
+```
+
+Person measures by EAP, MAP, ML or WLE:
+
+```{r}
+head(irt_scores(fit, "WLE"))
+```
+
+Rasch-style infit/outfit statistics are available for every model:
+
+```{r}
+item_fit(fit)
+```
+
+```{r}
+plot(fit, "wright")
+plot(fit, "fit")
+plot(fit, "icc", items = 1:6)
+```
+
+Polytomous models (`"grm"`, `"pcm"`, `"gpcm"`, `"rsm"`) and mixed tests work
+the same way:
+
+```{r}
+poly <- sim_irt(500, nitems = 6, model = "grm", ncat = 4)
+fg <- irt_fit(poly, "grm", se = "none")
+plot(fg, "icc")
+plot(fg, "info")
+```
+
+Compare nested models with a likelihood-ratio test:
+
+```{r}
+d2 <- sim_irt(500, 8, "2pl")
+anova(irt_fit(d2, "rasch", se = "none"), irt_fit(d2, "2pl", se = "none"))
+```
+
+### Assumption checks
+
+```{r}
+local_dependence(fit)
+residual_pca(fit)
+```
+
+### Differential item functioning
+
+```{r}
+group <- rep(c("A", "B"), 250)
+dif <- dif_test(fit, group, method = "mh")
+plot_dif(dif)
+```
+
+### Multidimensional models
+
+Supply a Q-matrix of loadings:
+
+```{r}
+Q <- cbind(rep(1:0, each = 5), rep(0:1, each = 5))
+md <- sim_irt(600, 10, "2pl", Q = Q, Sigma = matrix(c(1, .5, .5, 1), 2))
+fm <- irt_fit(md, "2pl", Q = Q, se = "none")
+fm$Sigma
+```
+
+## Many-facet Rasch measurement (FACETS-style)
+
+Rater-mediated data come in long format, one row per rating:
+
+```{r}
+ratings <- sim_mfrm(n_person = 80, n_rater = 5, n_criterion = 4, design = 0.8)
+head(ratings)
+mf <- mfrm_fit(ratings, person = "person", facets = c("rater", "criterion"), score = "score")
+mf
+```
+
+The measurement report gives each facet's measures, standard errors, fair
+averages, fit, and separation/reliability, plus the category statistics:
+
+```{r}
+facet_report(mf)
+```
+
+```{r, fig.height = 5.5}
+plot(mf, "facets")
+plot(mf, "categories")
+plot(mf, "fit")
+```
+
+Rater-by-criterion bias (interaction) analysis:
+
+```{r}
+bias <- mfrm_bias(mf, c("rater", "criterion"))
+bias
+plot_bias(bias)
+```
