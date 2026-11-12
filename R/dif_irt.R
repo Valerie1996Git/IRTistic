@@ -184,8 +184,8 @@ plot_dif_curves <- function(x, items = NULL, focal = NULL, theta_range = c(-4, 4
   df <- do.call(rbind, lapply(items, function(j) data.frame(
     item = j, theta = th, ref = .be(br$items[[j]], th), foc = .be(bf$items[[j]], th))))
   lab <- xs[match(items, xs$item), ]
-  lab$text <- sprintf("chi2(%d) = %.1f, p = %s\nSIDS = %+.2f", lab$df, lab$chisq,
-                      format.pval(lab$p_adj, digits = 2, eps = 0.001), lab$sids)
+  pv <- ifelse(lab$p_adj < 0.001, "p < .001", sprintf("p = %.3f", lab$p_adj))
+  lab$text <- sprintf("chi2(%d) = %.1f, %s\nSIDS = %+.2f", lab$df, lab$chisq, pv, lab$sids)
   df$item <- factor(df$item, levels = items); lab$item <- factor(lab$item, levels = items)
   long <- rbind(data.frame(df[, c("item", "theta")], value = df$ref, group = ref),
                 data.frame(df[, c("item", "theta")], value = df$foc, group = focal))

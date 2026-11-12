@@ -523,9 +523,8 @@ plot_cat_trace <- function(x, person = 1) {
     ggplot2::geom_ribbon(ggplot2::aes(ymin = .data$theta - 1.96 * .data$se, ymax = .data$theta + 1.96 * .data$se),
                          fill = .pal[["blue"]], alpha = 0.15)
   if (!is.null(d$cut)) p <- p + ggplot2::geom_hline(yintercept = d$cut, colour = .pal[["red"]], linetype = 2)
-  if (is.finite(truth)) p <- p + ggplot2::geom_hline(yintercept = truth, colour = .ink[["muted"]], linewidth = 0.5) +
-    ggplot2::annotate("text", x = max(h$step), y = truth, label = "true theta", vjust = -0.5, hjust = 1,
-                      size = 3, colour = .ink[["secondary"]])
+  if (is.finite(truth)) p <- p + ggplot2::geom_hline(yintercept = truth, colour = .ink[["muted"]], linewidth = 0.5,
+                                                     linetype = "dashed")
   p + ggplot2::geom_line(colour = .pal[["blue"]], linewidth = 0.8) +
     ggplot2::geom_point(ggplot2::aes(fill = .data$resp), shape = 21, size = 2.6, colour = "white", stroke = 0.6) +
     ggplot2::scale_fill_manual(values = c(`Highest category` = .pal[["aqua"]], Middle = .pal[["yellow"]],
@@ -533,8 +532,9 @@ plot_cat_trace <- function(x, person = 1) {
     ggplot2::scale_x_continuous(breaks = function(l) unique(round(pretty(l)))) +
     ggplot2::labs(x = "Items administered", y = expression(hat(theta) ~ "with 95% interval"),
                   title = "Adaptive test trace",
-                  subtitle = sprintf("Final estimate %.2f (SE %.2f) after %d items", utils::tail(h$theta, 1),
-                                     utils::tail(h$se, 1), nrow(h))) +
+                  subtitle = paste0(sprintf("Final estimate %.2f (SE %.2f) after %d items", utils::tail(h$theta, 1),
+                                            utils::tail(h$se, 1), nrow(h)),
+                                    if (is.finite(truth)) sprintf("; dashed line = true value (%.2f)", truth) else "")) +
     theme_irt()
 }
 
