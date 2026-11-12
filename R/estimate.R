@@ -19,9 +19,11 @@
 #' @param quadpts Number of quadrature points per dimension. Defaults to 61
 #'   for one dimension, 21 for two, 11 for three and 7 otherwise.
 #' @param priors Optional list of priors used for stabilisation:
-#'   `g = c(alpha, beta)` a Beta prior on 3PL guessing (default `c(5, 17)`
-#'   when any 3PL item is present) and `a = c(meanlog, sdlog)` a log-normal
-#'   prior on slopes (default none).
+#'   `g = c(alpha, beta)` a Beta prior on 3PL/4PL guessing (default `c(5, 17)`
+#'   when any 3PL or 4PL item is present), `u = c(alpha, beta)` a Beta prior on
+#'   the 4PL upper asymptote (default `c(17, 2)`) and `a = c(meanlog, sdlog)` a
+#'   log-normal prior on slopes (default none). Set an element to `NULL` to
+#'   switch that prior off.
 #' @param se Standard error method: `"hessian"` (numerical observed
 #'   information, default), `"crossprod"` (outer product of person gradients)
 #'   or `"none"`.

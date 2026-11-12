@@ -36,9 +36,11 @@ are both allowed. Defaults to a single dimension.}
 for one dimension, 21 for two, 11 for three and 7 otherwise.}
 
 \item{priors}{Optional list of priors used for stabilisation:
-\code{g = c(alpha, beta)} a Beta prior on 3PL guessing (default \code{c(5, 17)}
-when any 3PL item is present) and \code{a = c(meanlog, sdlog)} a log-normal
-prior on slopes (default none).}
+\code{g = c(alpha, beta)} a Beta prior on 3PL/4PL guessing (default \code{c(5, 17)}
+when any 3PL or 4PL item is present), \code{u = c(alpha, beta)} a Beta prior on
+the 4PL upper asymptote (default \code{c(17, 2)}) and \code{a = c(meanlog, sdlog)} a
+log-normal prior on slopes (default none). Set an element to \code{NULL} to
+switch that prior off.}
 
 \item{se}{Standard error method: \code{"hessian"} (numerical observed
 information, default), \code{"crossprod"} (outer product of person gradients)
