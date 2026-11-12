@@ -7,6 +7,14 @@ template:
     base_font: "system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
     heading_font: "system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
 
+home:
+  title: "IRTistic: Item Response Theory and Rasch Measurement in R"
+  description: >
+    IRTistic is an open-source R package for item response theory and many-facet
+    Rasch measurement: Rasch to 4PL and polytomous models, FACETS-style rater
+    analysis, DIF, linking and equating, computerized adaptive testing, and
+    publication-ready graphics and tables.
+
 authors:
   Valerie Ofori Aboah:
     href: https://measuredbyvalerie.netlify.app/
