@@ -13,15 +13,15 @@ plot_fit(
 )
 }
 \arguments{
-\item{x}{Output of [item_fit()], [person_fit()] or [facet_report()], or an
-`irtfit` (item fit is computed).}
+\item{x}{Output of \code{\link[=item_fit]{item_fit()}}, \code{\link[=person_fit]{person_fit()}} or \code{\link[=facet_report]{facet_report()}}, or an
+\code{irtfit} (item fit is computed).}
 
-\item{stat}{`"infit"` or `"outfit"`.}
+\item{stat}{\code{"infit"} or \code{"outfit"}.}
 
 \item{range}{Productive mean-square range to shade.}
 
-\item{label}{Label elements outside the range (`TRUE`), all (`"all"`) or
-none (`FALSE`).}
+\item{label}{Label elements outside the range (\code{TRUE}), all (\code{"all"}) or
+none (\code{FALSE}).}
 
 \item{max_labels}{Maximum number of misfitting elements to label (the
 most extreme are chosen).}
@@ -29,6 +29,6 @@ most extreme are chosen).}
 \description{
 Plots infit (or outfit) mean-square against measure, with bubble area
 proportional to the standard error and the productive range shaded.
-Works for [item_fit()], [person_fit()] and [facet_report()] output (the
+Works for \code{\link[=item_fit]{item_fit()}}, \code{\link[=person_fit]{person_fit()}} and \code{\link[=facet_report]{facet_report()}} output (the
 last is faceted by facet).
 }

@@ -18,8 +18,8 @@ make_bank(
 \arguments{
 \item{b}{Item difficulties: a vector (dichotomous items) or a matrix with
 one row per item and one column per threshold (polytomous items; pad with
-`NA` when items have different numbers of categories). For `"grm"` these
-are the boundary locations, for `"pcm"`/`"gpcm"` the step difficulties.}
+\code{NA} when items have different numbers of categories). For \code{"grm"} these
+are the boundary locations, for \code{"pcm"}/\code{"gpcm"} the step difficulties.}
 
 \item{a}{Discriminations (default 1).}
 
@@ -27,8 +27,8 @@ are the boundary locations, for `"pcm"`/`"gpcm"` the step difficulties.}
 
 \item{u}{Upper asymptotes for 4PL items (default 1).}
 
-\item{model}{One model per item or one for all: `"rasch"`, `"2pl"`,
-`"3pl"`, `"4pl"`, `"grm"`, `"pcm"` or `"gpcm"`.}
+\item{model}{One model per item or one for all: \code{"rasch"}, \code{"2pl"},
+\code{"3pl"}, \code{"4pl"}, \code{"grm"}, \code{"pcm"} or \code{"gpcm"}.}
 
 \item{names}{Item names.}
 
@@ -38,10 +38,10 @@ are the boundary locations, for `"pcm"`/`"gpcm"` the step difficulties.}
 normal-ogive metric.}
 }
 \value{
-An object of class `irt_bank`.
+An object of class \code{irt_bank}.
 }
 \description{
-Creates an `irt_bank` from known item parameters in the usual IRT metric,
+Creates an \code{irt_bank} from known item parameters in the usual IRT metric,
 for example parameters published with an operational test, so that
 adaptive tests and scoring tables can be run without re-estimating.
 }

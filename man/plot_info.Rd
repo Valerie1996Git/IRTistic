@@ -14,10 +14,10 @@ plot_info(
 )
 }
 \arguments{
-\item{fit}{An `irtfit` object.}
+\item{fit}{An \code{irtfit} object.}
 
-\item{type}{`"test"` (test information and conditional SE, in two
-stacked panels sharing the trait axis) or `"item"` (item information
+\item{type}{\code{"test"} (test information and conditional SE, in two
+stacked panels sharing the trait axis) or \code{"item"} (item information
 curves, faceted).}
 
 \item{items}{Items to show (names or indices); all by default.}

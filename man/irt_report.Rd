@@ -14,13 +14,13 @@ irt_report(
 )
 }
 \arguments{
-\item{x}{An `irtfit` or `mfrmfit`.}
+\item{x}{An \code{irtfit} or \code{mfrmfit}.}
 
 \item{file}{Output HTML file.}
 
 \item{title, author}{Report title and author.}
 
-\item{group}{Optional grouping vector for a DIF section (`irtfit` only).}
+\item{group}{Optional grouping vector for a DIF section (\code{irtfit} only).}
 
 \item{open}{Open the report in a browser when done.}
 }

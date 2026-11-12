@@ -7,7 +7,7 @@
 plot_ld(x)
 }
 \arguments{
-\item{x}{Output of [local_dependence()] or an `irtfit`.}
+\item{x}{Output of \code{\link[=local_dependence]{local_dependence()}} or an \code{irtfit}.}
 }
 \description{
 Local dependence heatmap (Yen's Q3)

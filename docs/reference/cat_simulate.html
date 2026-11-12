@@ -88,7 +88,7 @@ bank's item parameters, or bring a complete matrix of real responses
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>design</dt>
-<dd><p>A [cat_design()].</p></dd>
+<dd><p>A <code><a href="cat_design.html">cat_design()</a></code>.</p></dd>
 
 
 <dt>theta</dt>
@@ -97,7 +97,7 @@ bank's item parameters, or bring a complete matrix of real responses
 
 <dt>responses</dt>
 <dd><p>Optional matrix of responses with one column per bank
-item (post-hoc simulation). Overrides `theta`.</p></dd>
+item (post-hoc simulation). Overrides <code>theta</code>.</p></dd>
 
 
 <dt>seed</dt>
@@ -112,9 +112,9 @@ item (post-hoc simulation). Overrides `theta`.</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>An object of class `cat_sim` with per-person results (`results`),
-  the full administration history (`history`), item exposure rates
-  (`exposure`) and the design.</p>
+<p>An object of class <code>cat_sim</code> with per-person results (<code>results</code>),
+the full administration history (<code>history</code>), item exposure rates
+(<code>exposure</code>) and the design.</p>
     </div>
 
     <div class="section level2">
@@ -124,11 +124,11 @@ item (post-hoc simulation). Overrides `theta`.</p></dd>
 <span class="r-in"><span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu">cat_simulate</span><span class="op">(</span><span class="va">design</span>, theta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">200</span><span class="op">)</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">sim</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> CAT simulation: 200 simulees</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   test length: mean 25.0 (SD 0.0), range 25-25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   stopping reasons: max_items 200 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   mean final SE: 0.310</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   recovery: bias 0.005, RMSE 0.296, r = 0.948</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   exposure: max 0.940, 47.3% of bank unused, test overlap 0.542, chi-square 56.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   test length: mean 21.6 (SD 2.5), range 18-25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   stopping reasons: max_items 56, se_target 144 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   mean final SE: 0.306</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   recovery: bias 0.022, RMSE 0.293, r = 0.949</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   exposure: max 0.905, 49.3% of bank unused, test overlap 0.533, chi-square 58.6</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

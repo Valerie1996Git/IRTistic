@@ -16,24 +16,24 @@ cat_answer(session, item, response)
 cat_done(session)
 }
 \arguments{
-\item{design}{A [cat_design()].}
+\item{design}{A \code{\link[=cat_design]{cat_design()}}.}
 
-\item{session}{A session from `cat_start()` (or a previous `cat_answer()`).}
+\item{session}{A session from \code{cat_start()} (or a previous \code{cat_answer()}).}
 
 \item{item}{Item name or index being answered.}
 
 \item{response}{The response, on the item's original score scale.}
 }
 \value{
-`cat_start()` and `cat_answer()` return the updated session;
-  `cat_next()` returns the name of the next item (or `NA` when the test
-  is finished); `cat_done()` returns `TRUE`/`FALSE` with the reason as an
-  attribute.
+\code{cat_start()} and \code{cat_answer()} return the updated session;
+\code{cat_next()} returns the name of the next item (or \code{NA} when the test
+is finished); \code{cat_done()} returns \code{TRUE}/\code{FALSE} with the reason as an
+attribute.
 }
 \description{
-`cat_start()` creates a test session from a design, `cat_next()` returns
-the next item to administer, `cat_answer()` records a response and updates
-the trait estimate, and `cat_done()` says whether a stopping rule has been
+\code{cat_start()} creates a test session from a design, \code{cat_next()} returns
+the next item to administer, \code{cat_answer()} records a response and updates
+the trait estimate, and \code{cat_done()} says whether a stopping rule has been
 met. Sessions are ordinary R lists, so they can be stored between page
 loads of a web application (for example in 'shiny').
 }

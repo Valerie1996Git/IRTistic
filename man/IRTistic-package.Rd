@@ -6,14 +6,23 @@
 \alias{IRTistic-package}
 \title{IRTistic: IRT and many-facet Rasch measurement with artful ggplot2 graphics}
 \description{
-Fit models with [irt_fit()] (Rasch, 2PL, 3PL, GRM, PCM, GPCM, RSM,
-unidimensional or confirmatory multidimensional) or [mfrm_fit()]
-(many-facet Rasch). Then score persons ([irt_scores()]), check fit
-([item_fit()], [person_fit()], [facet_report()]), reliability
-([reliability()]), local dependence ([local_dependence()]),
-dimensionality ([residual_pca()]), DIF ([dif_test()]) and rater bias
-([mfrm_bias()]), and draw everything with `plot()` or the `plot_*()`
+Fit models with \code{\link[=irt_fit]{irt_fit()}} (Rasch, 2PL, 3PL, GRM, PCM, GPCM, RSM,
+unidimensional or confirmatory multidimensional) or \code{\link[=mfrm_fit]{mfrm_fit()}}
+(many-facet Rasch). Then score persons (\code{\link[=irt_scores]{irt_scores()}}), check fit
+(\code{\link[=item_fit]{item_fit()}}, \code{\link[=person_fit]{person_fit()}}, \code{\link[=facet_report]{facet_report()}}), reliability
+(\code{\link[=reliability]{reliability()}}), local dependence (\code{\link[=local_dependence]{local_dependence()}}),
+dimensionality (\code{\link[=residual_pca]{residual_pca()}}), DIF (\code{\link[=dif_test]{dif_test()}}) and rater bias
+(\code{\link[=mfrm_bias]{mfrm_bias()}}), and draw everything with \code{plot()} or the \verb{plot_*()}
 family, which all return ggplot objects.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/Valerie1996Git/IRTistic}
+  \item \url{https://valerie1996git.github.io/IRTistic/}
+  \item Report bugs at \url{https://github.com/Valerie1996Git/IRTistic/issues}
+}
+
 }
 \author{
 \strong{Maintainer}: Valerie Ofori Aboah \email{ofori96valerie@gmail.com}

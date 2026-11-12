@@ -7,10 +7,10 @@
 score_table(x)
 }
 \arguments{
-\item{x}{An `irtfit` (unidimensional) or `irt_bank`.}
+\item{x}{An \code{irtfit} (unidimensional) or \code{irt_bank}.}
 }
 \value{
-A data frame with columns `score`, `theta`, `se` and `expected_prop`.
+A data frame with columns \code{score}, \code{theta}, \code{se} and \code{expected_prop}.
 }
 \description{
 Uses the Lord-Wingersky recursion to give, for every possible summed score,

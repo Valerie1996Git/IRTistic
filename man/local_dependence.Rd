@@ -7,10 +7,10 @@
 local_dependence(fit, theta = NULL, cutoff = 0.2)
 }
 \arguments{
-\item{fit}{An `irtfit` object.}
+\item{fit}{An \code{irtfit} object.}
 
 \item{theta}{Person measures to condition on: a method name passed to
-[irt_scores()] or a numeric vector/matrix. Defaults to WLE for
+\code{\link[=irt_scores]{irt_scores()}} or a numeric vector/matrix. Defaults to WLE for
 unidimensional Rasch-family models and EAP otherwise.}
 
 \item{cutoff}{Flag pairs whose Q3 exceeds the average Q3 by this amount
@@ -18,7 +18,7 @@ unidimensional Rasch-family models and EAP otherwise.}
 }
 \value{
 A list with the Q3 matrix, the average off-diagonal Q3 and a
-  data frame of item pairs sorted by Q3.
+data frame of item pairs sorted by Q3.
 }
 \description{
 Local dependence (Yen's Q3)

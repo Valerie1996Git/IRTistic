@@ -7,7 +7,7 @@
 plot_tcc(fit, theta_range = c(-4, 4), dim = NULL)
 }
 \arguments{
-\item{fit}{An `irtfit` object.}
+\item{fit}{An \code{irtfit} object.}
 
 \item{theta_range}{Range of the latent trait.}
 

@@ -21,17 +21,17 @@ sim_irt(
 \arguments{
 \item{n}{Number of persons.}
 
-\item{nitems}{Number of items (ignored if `b` is given).}
+\item{nitems}{Number of items (ignored if \code{b} is given).}
 
-\item{model}{One model for all items or one per item (see [irt_fit()]).}
+\item{model}{One model for all items or one per item (see \code{\link[=irt_fit]{irt_fit()}}).}
 
 \item{ncat}{Number of categories for polytomous items.}
 
 \item{a}{Slopes: a vector (unidimensional) or a matrix items x dimensions.
-Drawn from a log-normal(0, 0.25) if `NULL`.}
+Drawn from a log-normal(0, 0.25) if \code{NULL}.}
 
 \item{b}{Difficulties: a vector for dichotomous items or a matrix
-items x (ncat - 1) of thresholds. Drawn if `NULL`.}
+items x (ncat - 1) of thresholds. Drawn if \code{NULL}.}
 
 \item{g}{Guessing parameters for 3PL/4PL items.}
 
@@ -44,8 +44,8 @@ items x (ncat - 1) of thresholds. Drawn if `NULL`.}
 \item{theta}{Optional matrix of true abilities.}
 }
 \value{
-A data frame of responses with attribute `"truth"` holding the
-  generating parameters and abilities.
+A data frame of responses with attribute \code{"truth"} holding the
+generating parameters and abilities.
 }
 \description{
 Simulate item response data

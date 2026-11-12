@@ -7,12 +7,12 @@
 plot_cat_trace(x, person = 1)
 }
 \arguments{
-\item{x}{A `cat_session` or `cat_sim`.}
+\item{x}{A \code{cat_session} or \code{cat_sim}.}
 
-\item{person}{For a `cat_sim`, the simulee to show.}
+\item{person}{For a \code{cat_sim}, the simulee to show.}
 }
 \description{
-Shows how the trait estimate and its 95% interval evolve item by item,
+Shows how the trait estimate and its 95\% interval evolve item by item,
 with the true value (for simulations) and any classification cut scores.
 Points are coloured by whether the response was in the top or bottom
 category.

@@ -7,7 +7,7 @@
 cat_conditional(x, bins = 10)
 }
 \arguments{
-\item{x}{A `cat_sim` with known true trait values.}
+\item{x}{A \code{cat_sim} with known true trait values.}
 
 \item{bins}{Number of equal-count bins.}
 }

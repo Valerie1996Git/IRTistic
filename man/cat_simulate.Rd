@@ -13,21 +13,21 @@ cat_simulate(
 )
 }
 \arguments{
-\item{design}{A [cat_design()].}
+\item{design}{A \code{\link[=cat_design]{cat_design()}}.}
 
 \item{theta}{True trait values (Monte Carlo simulation).}
 
 \item{responses}{Optional matrix of responses with one column per bank
-item (post-hoc simulation). Overrides `theta`.}
+item (post-hoc simulation). Overrides \code{theta}.}
 
 \item{seed}{Optional random seed.}
 
 \item{progress}{Print progress.}
 }
 \value{
-An object of class `cat_sim` with per-person results (`results`),
-  the full administration history (`history`), item exposure rates
-  (`exposure`) and the design.
+An object of class \code{cat_sim} with per-person results (\code{results}),
+the full administration history (\code{history}), item exposure rates
+(\code{exposure}) and the design.
 }
 \description{
 Runs a Monte Carlo (or post-hoc) simulation of a CAT design. Simulees either

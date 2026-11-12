@@ -7,9 +7,9 @@
 plot_bias(x, stat = c("t", "bias"))
 }
 \arguments{
-\item{x}{Output of [mfrm_bias()] with two facets.}
+\item{x}{Output of \code{\link[=mfrm_bias]{mfrm_bias()}} with two facets.}
 
-\item{stat}{`"t"` (default) or `"bias"`.}
+\item{stat}{\code{"t"} (default) or \code{"bias"}.}
 }
 \description{
 Bias / interaction heatmap

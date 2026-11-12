@@ -13,7 +13,7 @@ plot_dif_curves(
 )
 }
 \arguments{
-\item{x}{Output of [dif_irt()].}
+\item{x}{Output of \code{\link[=dif_irt]{dif_irt()}}.}
 
 \item{items}{Items to plot. Defaults to the flagged items (or all items if
 none are flagged).}

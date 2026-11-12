@@ -7,7 +7,7 @@
 plot_categories(fit, range = c(-5, 5))
 }
 \arguments{
-\item{fit}{An `mfrmfit` object.}
+\item{fit}{An \code{mfrmfit} object.}
 
 \item{range}{Range of the measure relative to the combined facet location.}
 }

@@ -7,17 +7,17 @@
 \method{coef}{irtfit}(object, format = c("long", "wide"), ...)
 }
 \arguments{
-\item{object}{An `irtfit` object.}
+\item{object}{An \code{irtfit} object.}
 
-\item{format}{`"long"` (one row per parameter, with standard errors) or
-`"wide"` (one row per item).}
+\item{format}{\code{"long"} (one row per parameter, with standard errors) or
+\code{"wide"} (one row per item).}
 
 \item{...}{Unused.}
 }
 \value{
 A data frame. For unidimensional models parameters are in the
-  IRT metric (`a` discrimination, `b` difficulty/thresholds, `g`
-  guessing); for multidimensional models they are slopes and intercepts.
+IRT metric (\code{a} discrimination, \code{b} difficulty/thresholds, \code{g}
+guessing); for multidimensional models they are slopes and intercepts.
 }
 \description{
 Item parameter estimates

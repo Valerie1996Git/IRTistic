@@ -14,12 +14,12 @@ plot_icc(
 )
 }
 \arguments{
-\item{fit}{An `irtfit` object.}
+\item{fit}{An \code{irtfit} object.}
 
 \item{items}{Items to show (names or indices); all by default.}
 
-\item{type}{`"category"` for category probability curves or
-`"expected"` for expected item scores.}
+\item{type}{\code{"category"} for category probability curves or
+\code{"expected"} for expected item scores.}
 
 \item{theta_range}{Range of the latent trait.}
 

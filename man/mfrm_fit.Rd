@@ -23,13 +23,13 @@ mfrm_fit(
 \item{person}{Name of the person column.}
 
 \item{facets}{Character vector naming the facet columns (e.g.
-`c("rater", "criterion")`).}
+\code{c("rater", "criterion")}).}
 
 \item{score}{Name of the score column (ordered numeric categories).}
 
-\item{model}{`"rsm"` (rating scale, default) or `"pcm"` (partial credit).}
+\item{model}{\code{"rsm"} (rating scale, default) or \code{"pcm"} (partial credit).}
 
-\item{step_facet}{For `"pcm"`, the facet whose elements get their own
+\item{step_facet}{For \code{"pcm"}, the facet whose elements get their own
 thresholds (defaults to the first facet).}
 
 \item{quadpts}{Number of quadrature points.}
@@ -37,10 +37,10 @@ thresholds (defaults to the first facet).}
 \item{maxit, tol}{Control for the EM warm-up (at most 10 cycles) that is
 followed by direct quasi-Newton maximisation of the marginal likelihood.}
 
-\item{se}{Compute standard errors (`TRUE`).}
+\item{se}{Compute standard errors (\code{TRUE}).}
 }
 \value{
-An object of class `mfrmfit`.
+An object of class \code{mfrmfit}.
 }
 \description{
 Estimates a many-facet Rasch measurement (MFRM) model of the kind fitted
@@ -50,7 +50,7 @@ several criteria. The log-odds of scoring in category k rather than k-1 is
 where \eqn{\theta_n} is the person measure, \eqn{\beta_{f,e}} the measure
 of element e of facet f (item difficulty, rater severity, ...) and
 \eqn{\tau_{s,k}} the Andrich thresholds, shared by all observations
-(rating scale model) or specific to each element of a `step_facet`
+(rating scale model) or specific to each element of a \code{step_facet}
 (partial credit model).
 }
 \details{

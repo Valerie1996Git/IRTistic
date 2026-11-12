@@ -7,7 +7,7 @@
 plot_facets(fit, person_method = "WLE")
 }
 \arguments{
-\item{fit}{An `mfrmfit` object.}
+\item{fit}{An \code{mfrmfit} object.}
 
 \item{person_method}{Person measure used for the person column.}
 }

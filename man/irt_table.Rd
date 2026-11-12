@@ -18,35 +18,35 @@ irt_table(
 
 \item{digits}{Number of decimals.}
 
-\item{format}{`"data.frame"` (default), `"markdown"`, `"html"` or `"latex"`.}
+\item{format}{\code{"data.frame"} (default), \code{"markdown"}, \code{"html"} or \code{"latex"}.}
 
 \item{file}{Optional output file; the format is taken from the extension
-(`.csv`, `.html`, `.md`, `.tex`).}
+(\code{.csv}, \code{.html}, \code{.md}, \code{.tex}).}
 
 \item{caption}{Table caption (a sensible default is used).}
 
-\item{...}{Further arguments for specific methods: `se` (combine estimates
-and SEs, default `TRUE`) for `irtfit`; `facet` for facet reports.}
+\item{...}{Further arguments for specific methods: \code{se} (combine estimates
+and SEs, default \code{TRUE}) for \code{irtfit}; \code{facet} for facet reports.}
 }
 \value{
-An `irt_table` (a data frame with `caption` and `note`
-  attributes), or a 'knitr' table for the other formats. Written files are
-  returned invisibly.
+An \code{irt_table} (a data frame with \code{caption} and \code{note}
+attributes), or a 'knitr' table for the other formats. Written files are
+returned invisibly.
 }
 \description{
 Turns IRTistic results into clean, consistently formatted tables: numbers
 rounded to a fixed number of decimals, p-values in APA style ("< .001"),
 estimates optionally combined with their standard errors as "1.23 (0.05)",
 and a caption and note attached. Tables can be returned as a data frame or
-rendered as Markdown, HTML or LaTeX (via 'knitr'), and written to `.csv`,
-`.html`, `.md` or `.tex` files.
+rendered as Markdown, HTML or LaTeX (via 'knitr'), and written to \code{.csv},
+\code{.html}, \code{.md} or \code{.tex} files.
 }
 \details{
-Supported inputs: `irtfit` (item parameters), `mfrmfit` / `mfrm_report`
-(facet measurement reports), and the outputs of [item_fit()],
-[person_fit()], [sx2()], [reliability()], [dif_test()], [dif_irt()],
-[mfrm_bias()], [classification_accuracy()], [cat_simulate()],
-[score_table()], [equate_true_score()], as well as any data frame.
+Supported inputs: \code{irtfit} (item parameters), \code{mfrmfit} / \code{mfrm_report}
+(facet measurement reports), and the outputs of \code{\link[=item_fit]{item_fit()}},
+\code{\link[=person_fit]{person_fit()}}, \code{\link[=sx2]{sx2()}}, \code{\link[=reliability]{reliability()}}, \code{\link[=dif_test]{dif_test()}}, \code{\link[=dif_irt]{dif_irt()}},
+\code{\link[=mfrm_bias]{mfrm_bias()}}, \code{\link[=classification_accuracy]{classification_accuracy()}}, \code{\link[=cat_simulate]{cat_simulate()}},
+\code{\link[=score_table]{score_table()}}, \code{\link[=equate_true_score]{equate_true_score()}}, as well as any data frame.
 }
 \examples{
 fit <- irt_fit(sim_irt(500, 8, "2pl"), "2pl")

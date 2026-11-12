@@ -24,12 +24,12 @@ sim_mfrm(
 
 \item{thresholds}{Andrich thresholds (length ncat - 1, centred).}
 
-\item{design}{`"complete"` (every rater rates everyone) or a proportion
+\item{design}{\code{"complete"} (every rater rates everyone) or a proportion
 of ratings to keep at random.}
 }
 \value{
 A long data frame with columns person, rater, criterion, score
-  and attribute `"truth"`.
+and attribute \code{"truth"}.
 }
 \description{
 Simulate many-facet rating data

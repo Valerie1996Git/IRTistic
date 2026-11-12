@@ -7,13 +7,13 @@
 \method{plot}{mfrmfit}(x, type = c("facets", "categories", "fit", "bias"), facets = NULL, ...)
 }
 \arguments{
-\item{x}{An `mfrmfit` object.}
+\item{x}{An \code{mfrmfit} object.}
 
-\item{type}{`"facets"` (vertical ruler), `"categories"`, `"fit"` or `"bias"`.}
+\item{type}{\code{"facets"} (vertical ruler), \code{"categories"}, \code{"fit"} or \code{"bias"}.}
 
-\item{facets}{For `type = "bias"`, the two facets to cross.}
+\item{facets}{For \code{type = "bias"}, the two facets to cross.}
 
-\item{...}{Passed to the underlying `plot_*()` function.}
+\item{...}{Passed to the underlying \verb{plot_*()} function.}
 }
 \description{
 Plot a fitted many-facet Rasch model

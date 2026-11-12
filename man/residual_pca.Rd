@@ -7,15 +7,15 @@
 residual_pca(fit, theta = NULL)
 }
 \arguments{
-\item{fit}{An `irtfit` object.}
+\item{fit}{An \code{irtfit} object.}
 
 \item{theta}{Person measures to condition on: a method name passed to
-[irt_scores()] or a numeric vector/matrix. Defaults to WLE for
+\code{\link[=irt_scores]{irt_scores()}} or a numeric vector/matrix. Defaults to WLE for
 unidimensional Rasch-family models and EAP otherwise.}
 }
 \value{
 A list with eigenvalues, variance proportions and item loadings
-  on the first contrasts.
+on the first contrasts.
 }
 \description{
 A Winsteps-style check of unidimensionality: after removing the Rasch/IRT

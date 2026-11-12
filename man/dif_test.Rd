@@ -14,31 +14,33 @@ dif_test(
 )
 }
 \arguments{
-\item{fit}{An `irtfit` object (or a response matrix / data frame when
-`method = "mh"` or `match = "total"`).}
+\item{fit}{An \code{irtfit} object (or a response matrix / data frame when
+\code{method = "mh"} or \code{match = "total"}).}
 
 \item{group}{A vector of group memberships, one per person.}
 
-\item{method}{`"mh"` or `"lr"`.}
+\item{method}{\code{"mh"} or \code{"lr"}.}
 
-\item{match}{`"theta"` (default when `fit` is a model) or `"total"`.}
+\item{match}{\code{"theta"} (default when \code{fit} is a model) or \code{"total"}.}
 
 \item{reference}{Reference group level for MH (defaults to the first).}
 
-\item{p.adjust}{Multiple-comparison adjustment passed to [stats::p.adjust()].}
+\item{p.adjust}{Multiple-comparison adjustment passed to \code{\link[stats:p.adjust]{stats::p.adjust()}}.}
 }
 \value{
-A data frame of class `irt_dif`, one row per item.
+A data frame of class \code{irt_dif}, one row per item.
 }
 \description{
 Screens items for DIF between two or more groups.
 }
 \details{
-* `"mh"`: Mantel-Haenszel for dichotomous items (two groups), matched on
-  total score, with the ETS delta effect size and A/B/C classification.
-* `"lr"`: logistic regression (binary items) or proportional-odds
-  ordinal logistic regression (polytomous items), matched on the latent
-  trait (EAP from `fit`) or on the total score. Reports uniform,
-  non-uniform and total DIF likelihood-ratio tests and the change in
-  Nagelkerke R-squared with the Jodoin-Gierl classification.
+\itemize{
+\item \code{"mh"}: Mantel-Haenszel for dichotomous items (two groups), matched on
+total score, with the ETS delta effect size and A/B/C classification.
+\item \code{"lr"}: logistic regression (binary items) or proportional-odds
+ordinal logistic regression (polytomous items), matched on the latent
+trait (EAP from \code{fit}) or on the total score. Reports uniform,
+non-uniform and total DIF likelihood-ratio tests and the change in
+Nagelkerke R-squared with the Jodoin-Gierl classification.
+}
 }

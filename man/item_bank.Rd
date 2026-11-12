@@ -7,17 +7,17 @@
 item_bank(fit, content = NULL)
 }
 \arguments{
-\item{fit}{A unidimensional `irtfit` object.}
+\item{fit}{A unidimensional \code{irtfit} object.}
 
 \item{content}{Optional vector of content areas (one per item) for content
 balancing in adaptive tests.}
 }
 \value{
-An object of class `irt_bank`.
+An object of class \code{irt_bank}.
 }
 \description{
-Extracts the calibrated items of a unidimensional [irt_fit()] model into an
-`irt_bank`, the object used by [cat_design()], [irt_link()] and friends.
+Extracts the calibrated items of a unidimensional \code{\link[=irt_fit]{irt_fit()}} model into an
+\code{irt_bank}, the object used by \code{\link[=cat_design]{cat_design()}}, \code{\link[=irt_link]{irt_link()}} and friends.
 }
 \examples{
 fit <- irt_fit(sim_irt(500, 20, "2pl"), "2pl", se = "none")
@@ -25,5 +25,5 @@ bank <- item_bank(fit)
 bank
 }
 \seealso{
-[make_bank()] to build a bank from known parameters.
+\code{\link[=make_bank]{make_bank()}} to build a bank from known parameters.
 }

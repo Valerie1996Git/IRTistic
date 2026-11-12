@@ -7,14 +7,14 @@
 facet_report(fit, person_method = c("WLE", "ML", "EAP"))
 }
 \arguments{
-\item{fit}{An `mfrmfit` object.}
+\item{fit}{An \code{mfrmfit} object.}
 
 \item{person_method}{Person measure used for fit statistics and the
-person report: `"WLE"` (default), `"ML"` or `"EAP"`.}
+person report: \code{"WLE"} (default), \code{"ML"} or \code{"EAP"}.}
 }
 \value{
-A list of class `mfrm_report` with `measures` (named list of data
-  frames, one per facet), `summary` (one row per facet) and `persons`.
+A list of class \code{mfrm_report} with \code{measures} (named list of data
+frames, one per facet), \code{summary} (one row per facet) and \code{persons}.
 }
 \description{
 Produces one measurement table per facet, including persons, in the

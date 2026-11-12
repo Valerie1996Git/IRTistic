@@ -7,9 +7,9 @@
 plot_wright(fit, person_method = NULL, dim = NULL, bins = 30)
 }
 \arguments{
-\item{fit}{An `irtfit` object.}
+\item{fit}{An \code{irtfit} object.}
 
-\item{person_method}{Person measure to plot (`"EAP"`, `"WLE"`, ...).}
+\item{person_method}{Person measure to plot (\code{"EAP"}, \code{"WLE"}, ...).}
 
 \item{dim}{For multidimensional models, which dimension to map.}
 

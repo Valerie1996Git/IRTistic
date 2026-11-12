@@ -7,7 +7,7 @@
 plot_cat_exposure(x, r_max = NULL)
 }
 \arguments{
-\item{x}{A `cat_sim`.}
+\item{x}{A \code{cat_sim}.}
 
 \item{r_max}{Optional target maximum exposure rate to draw.}
 }

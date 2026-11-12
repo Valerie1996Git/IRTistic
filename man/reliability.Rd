@@ -7,7 +7,7 @@
 reliability(fit)
 }
 \arguments{
-\item{fit}{An `irtfit` object.}
+\item{fit}{An \code{irtfit} object.}
 }
 \value{
 A data frame.

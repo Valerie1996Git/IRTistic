@@ -7,7 +7,7 @@
 cat_sympson_hetter(design, theta, r_max = 0.25, iterations = 8)
 }
 \arguments{
-\item{design}{A [cat_design()] (its exposure setting is ignored).}
+\item{design}{A \code{\link[=cat_design]{cat_design()}} (its exposure setting is ignored).}
 
 \item{theta}{Simulated trait values representative of the population.}
 
@@ -16,10 +16,10 @@ cat_sympson_hetter(design, theta, r_max = 0.25, iterations = 8)
 \item{iterations}{Number of adjustment cycles.}
 }
 \value{
-A numeric vector of exposure parameters, for `cat_design(..., sh_k = )`.
+A numeric vector of exposure parameters, for \code{cat_design(..., sh_k = )}.
 }
 \description{
 Iteratively simulates the CAT and adjusts each item's exposure control
-parameter so that no item is administered to more than `r_max` of
+parameter so that no item is administered to more than \code{r_max} of
 examinees (Sympson & Hetter, 1985).
 }

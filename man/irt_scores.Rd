@@ -7,19 +7,19 @@
 irt_scores(fit, method = c("EAP", "MAP", "ML", "WLE"), bounds = c(-6, 6))
 }
 \arguments{
-\item{fit}{An `irtfit` object.}
+\item{fit}{An \code{irtfit} object.}
 
-\item{method}{`"EAP"` (expected a posteriori, default), `"MAP"` (maximum a
-posteriori), `"ML"` (maximum likelihood) or `"WLE"` (Warm's weighted
+\item{method}{\code{"EAP"} (expected a posteriori, default), \code{"MAP"} (maximum a
+posteriori), \code{"ML"} (maximum likelihood) or \code{"WLE"} (Warm's weighted
 likelihood).}
 
 \item{bounds}{Range searched for ML/WLE/MAP estimates.}
 }
 \value{
 A data frame with one row per person: the measure(s), their
-  standard error(s), raw score and number of responses. For ML, persons
-  with extreme (zero or perfect) scores are flagged in `extreme` and
-  placed at the bounds.
+standard error(s), raw score and number of responses. For ML, persons
+with extreme (zero or perfect) scores are flagged in \code{extreme} and
+placed at the bounds.
 }
 \description{
 Estimate person measures

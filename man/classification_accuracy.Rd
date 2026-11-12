@@ -13,34 +13,36 @@ classification_accuracy(
 )
 }
 \arguments{
-\item{fit}{A unidimensional `irtfit` (or `irt_bank` for `"lee"`).}
+\item{fit}{A unidimensional \code{irtfit} (or \code{irt_bank} for \code{"lee"}).}
 
 \item{score_cuts}{Summed-score cuts: a person is placed at or above a
 level when the score is at least the cut.}
 
 \item{theta_cuts}{Cuts on the trait scale.}
 
-\item{method}{`"lee"` or `"rudner"`.}
+\item{method}{\code{"lee"} or \code{"rudner"}.}
 
-\item{person_method}{Trait estimator for `"rudner"`.}
+\item{person_method}{Trait estimator for \code{"rudner"}.}
 }
 \value{
-A list of class `irt_classification` with overall accuracy,
-  consistency, Cohen's kappa, the false positive/negative rates at each
-  cut, and the joint true x observed classification table.
+A list of class \code{irt_classification} with overall accuracy,
+consistency, Cohen's kappa, the false positive/negative rates at each
+cut, and the joint true x observed classification table.
 }
 \description{
 Estimates how accurately and how consistently examinees are classified
 into performance levels.
 }
 \details{
-* `method = "lee"` (default) uses the IRT model and the Lord-Wingersky
-  recursion to obtain, for every trait value, the distribution of summed
-  scores and hence of observed classifications (Lee, 2010). It needs
-  cut scores on the summed-score scale (`score_cuts`) or on the trait
-  scale (`theta_cuts`, converted through the test characteristic curve).
-* `method = "rudner"` uses each person's trait estimate and standard
-  error with cuts on the trait scale (Rudner, 2001, 2005).
+\itemize{
+\item \code{method = "lee"} (default) uses the IRT model and the Lord-Wingersky
+recursion to obtain, for every trait value, the distribution of summed
+scores and hence of observed classifications (Lee, 2010). It needs
+cut scores on the summed-score scale (\code{score_cuts}) or on the trait
+scale (\code{theta_cuts}, converted through the test characteristic curve).
+\item \code{method = "rudner"} uses each person's trait estimate and standard
+error with cuts on the trait scale (Rudner, 2001, 2005).
+}
 }
 \examples{
 fit <- irt_fit(sim_irt(800, 20, "2pl"), "2pl", se = "none")
@@ -48,9 +50,9 @@ classification_accuracy(fit, theta_cuts = c(-0.5, 1))
 }
 \references{
 Lee, W.-C. (2010). Classification consistency and accuracy for complex
-assessments using item response theory. *Journal of Educational
-Measurement, 47*(1), 1-17.
+assessments using item response theory. \emph{Journal of Educational
+Measurement, 47}(1), 1-17.
 
-Rudner, L. M. (2005). Expected classification accuracy. *Practical
-Assessment, Research & Evaluation, 10*(13).
+Rudner, L. M. (2005). Expected classification accuracy. \emph{Practical
+Assessment, Research & Evaluation, 10}(13).
 }

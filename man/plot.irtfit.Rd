@@ -11,12 +11,12 @@
 )
 }
 \arguments{
-\item{x}{An `irtfit` object.}
+\item{x}{An \code{irtfit} object.}
 
-\item{type}{One of `"wright"`, `"icc"`, `"expected"`, `"info"`,
-`"iteminfo"`, `"tcc"`, `"fit"`, `"ld"`, `"pca"`.}
+\item{type}{One of \code{"wright"}, \code{"icc"}, \code{"expected"}, \code{"info"},
+\code{"iteminfo"}, \code{"tcc"}, \code{"fit"}, \code{"ld"}, \code{"pca"}.}
 
-\item{...}{Passed to the underlying `plot_*()` function.}
+\item{...}{Passed to the underlying \verb{plot_*()} function.}
 }
 \value{
 A ggplot object.

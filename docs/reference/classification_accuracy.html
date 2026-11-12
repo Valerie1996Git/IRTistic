@@ -82,7 +82,7 @@ into performance levels.</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>fit</dt>
-<dd><p>A unidimensional `irtfit` (or `irt_bank` for `"lee"`).</p></dd>
+<dd><p>A unidimensional <code>irtfit</code> (or <code>irt_bank</code> for <code>"lee"</code>).</p></dd>
 
 
 <dt>score_cuts</dt>
@@ -95,38 +95,39 @@ level when the score is at least the cut.</p></dd>
 
 
 <dt>method</dt>
-<dd><p>`"lee"` or `"rudner"`.</p></dd>
+<dd><p><code>"lee"</code> or <code>"rudner"</code>.</p></dd>
 
 
 <dt>person_method</dt>
-<dd><p>Trait estimator for `"rudner"`.</p></dd>
+<dd><p>Trait estimator for <code>"rudner"</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>A list of class `irt_classification` with overall accuracy,
-  consistency, Cohen's kappa, the false positive/negative rates at each
-  cut, and the joint true x observed classification table.</p>
+<p>A list of class <code>irt_classification</code> with overall accuracy,
+consistency, Cohen's kappa, the false positive/negative rates at each
+cut, and the joint true x observed classification table.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>* `method = "lee"` (default) uses the IRT model and the Lord-Wingersky
-  recursion to obtain, for every trait value, the distribution of summed
-  scores and hence of observed classifications (Lee, 2010). It needs
-  cut scores on the summed-score scale (`score_cuts`) or on the trait
-  scale (`theta_cuts`, converted through the test characteristic curve).
-* `method = "rudner"` uses each person's trait estimate and standard
-  error with cuts on the trait scale (Rudner, 2001, 2005).</p>
-    </div>
+    
+<ul><li><p><code>method = "lee"</code> (default) uses the IRT model and the Lord-Wingersky
+recursion to obtain, for every trait value, the distribution of summed
+scores and hence of observed classifications (Lee, 2010). It needs
+cut scores on the summed-score scale (<code>score_cuts</code>) or on the trait
+scale (<code>theta_cuts</code>, converted through the test characteristic curve).</p></li>
+<li><p><code>method = "rudner"</code> uses each person's trait estimate and standard
+error with cuts on the trait scale (Rudner, 2001, 2005).</p></li>
+</ul></div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
     <p>Lee, W.-C. (2010). Classification consistency and accuracy for complex
-assessments using item response theory. *Journal of Educational
-Measurement, 47*(1), 1-17.</p>
-<p>Rudner, L. M. (2005). Expected classification accuracy. *Practical
-Assessment, Research &amp; Evaluation, 10*(13).</p>
+assessments using item response theory. <em>Journal of Educational
+Measurement, 47</em>(1), 1-17.</p>
+<p>Rudner, L. M. (2005). Expected classification accuracy. <em>Practical
+Assessment, Research &amp; Evaluation, 10</em>(13).</p>
     </div>
 
     <div class="section level2">
@@ -134,20 +135,20 @@ Assessment, Research &amp; Evaluation, 10*(13).</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="irt_fit.html">irt_fit</a></span><span class="op">(</span><span class="fu"><a href="sim_irt.html">sim_irt</a></span><span class="op">(</span><span class="fl">800</span>, <span class="fl">20</span>, <span class="st">"2pl"</span><span class="op">)</span>, <span class="st">"2pl"</span>, se <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">classification_accuracy</span><span class="op">(</span><span class="va">fit</span>, theta_cuts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.5</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Classification accuracy and consistency (Lee method)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   summed-score cuts: 7, 13 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   summed-score cuts: 7, 15 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   theta cuts: -0.5, 1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   accuracy = 0.757 | consistency = 0.668 | kappa = 0.455</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   accuracy = 0.808 | consistency = 0.736 | kappa = 0.556</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  cut accuracy false_positive false_negative</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    1    0.853         0.0570         0.0903</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    2    0.904         0.0461         0.0498</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    1    0.892         0.0443         0.0637</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    2    0.916         0.0350         0.0494</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Joint distribution (rows = true level, columns = observed level):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     observed</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> true    L1    L2    L3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   L1 0.234 0.057 0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   L2 0.090 0.402 0.046</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   L3 0.000 0.050 0.121</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   L1 0.247 0.044 0.000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   L2 0.064 0.439 0.035</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   L3 0.000 0.049 0.122</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

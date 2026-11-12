@@ -7,7 +7,7 @@
 mfrm_bias(fit, facets, min_count = 2)
 }
 \arguments{
-\item{fit}{An `mfrmfit` object.}
+\item{fit}{An \code{mfrmfit} object.}
 
 \item{facets}{Two or more facet names (may include the person facet).}
 
@@ -15,7 +15,7 @@ mfrm_bias(fit, facets, min_count = 2)
 reported.}
 }
 \value{
-A data frame of class `mfrm_bias`.
+A data frame of class \code{mfrm_bias}.
 }
 \description{
 Estimates a bias (interaction) term for every combination of elements of

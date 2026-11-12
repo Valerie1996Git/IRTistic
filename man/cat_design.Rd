@@ -26,17 +26,17 @@ cat_design(
 )
 }
 \arguments{
-\item{bank}{An `irt_bank` (from [item_bank()] or [make_bank()]) or a
-unidimensional `irtfit`.}
+\item{bank}{An \code{irt_bank} (from \code{\link[=item_bank]{item_bank()}} or \code{\link[=make_bank]{make_bank()}}) or a
+unidimensional \code{irtfit}.}
 
-\item{select}{Item selection rule: `"MFI"` (maximum Fisher information at
-the current estimate), `"MPWI"` (maximum posterior-weighted
-information), `"KL"` (Kullback-Leibler information over a shrinking
-interval, Chang & Ying 1996), `"MEPV"` (minimum expected posterior
-variance) or `"random"`.}
+\item{select}{Item selection rule: \code{"MFI"} (maximum Fisher information at
+the current estimate), \code{"MPWI"} (maximum posterior-weighted
+information), \code{"KL"} (Kullback-Leibler information over a shrinking
+interval, Chang & Ying 1996), \code{"MEPV"} (minimum expected posterior
+variance) or \code{"random"}.}
 
-\item{estimator}{Interim and final trait estimator: `"EAP"`, `"MAP"`,
-`"ML"` or `"WLE"`. ML and WLE fall back to EAP until the response pattern
+\item{estimator}{Interim and final trait estimator: \code{"EAP"}, \code{"MAP"},
+\code{"ML"} or \code{"WLE"}. ML and WLE fall back to EAP until the response pattern
 is mixed.}
 
 \item{prior_mean, prior_sd}{Normal prior for EAP/MAP (defaults to the bank's
@@ -50,14 +50,14 @@ latent distribution).}
 
 \item{cut}{Optional cut score(s) on the trait scale for classification
 testing: the test stops once the confidence interval of the estimate
-excludes every cut (subject to `min_items`).}
+excludes every cut (subject to \code{min_items}).}
 
-\item{cut_level}{Confidence level used with `cut`.}
+\item{cut_level}{Confidence level used with \code{cut}.}
 
-\item{exposure}{Exposure control: `"none"`, `"randomesque"` (choose at
-random among the `randomesque_k` best items, Kingsbury & Zara 1989) or
-`"sympson-hetter"` (probabilistic filter with exposure parameters
-`sh_k`, Sympson & Hetter 1985; see [cat_sympson_hetter()]).}
+\item{exposure}{Exposure control: \code{"none"}, \code{"randomesque"} (choose at
+random among the \code{randomesque_k} best items, Kingsbury & Zara 1989) or
+\code{"sympson-hetter"} (probabilistic filter with exposure parameters
+\code{sh_k}, Sympson & Hetter 1985; see \code{\link[=cat_sympson_hetter]{cat_sympson_hetter()}}).}
 
 \item{randomesque_k}{Number of candidate items for randomesque selection.}
 
@@ -65,7 +65,7 @@ random among the `randomesque_k` best items, Kingsbury & Zara 1989) or
 
 \item{strata}{Number of a-stratification strata (Chang & Ying 1999):
 items are grouped by discrimination and the test moves from low- to
-high-discrimination strata. `NULL` (default) for none.}
+high-discrimination strata. \code{NULL} (default) for none.}
 
 \item{content_target}{Named vector of target proportions per content area
 (requires content areas in the bank). Items are drawn from the area
@@ -76,14 +76,14 @@ furthest below its target (Kingsbury & Zara 1989).}
 \item{grid}{Number of quadrature points for interim computations.}
 }
 \value{
-An object of class `cat_design`.
+An object of class \code{cat_design}.
 }
 \description{
 Collects everything that defines an adaptive test: the item bank, how the
 first item is chosen, the item selection rule, the trait estimator,
 exposure control, content balancing and stopping rules. The design is then
-used either live, one item at a time ([cat_start()], [cat_next()],
-[cat_answer()]), or in a simulation study ([cat_simulate()]).
+used either live, one item at a time (\code{\link[=cat_start]{cat_start()}}, \code{\link[=cat_next]{cat_next()}},
+\code{\link[=cat_answer]{cat_answer()}}), or in a simulation study (\code{\link[=cat_simulate]{cat_simulate()}}).
 }
 \examples{
 bank <- make_bank(b = rnorm(200), a = rlnorm(200, 0, 0.3), model = "2pl")
@@ -92,21 +92,21 @@ design
 }
 \references{
 Chang, H.-H., & Ying, Z. (1996). A global information approach to
-computerized adaptive testing. *Applied Psychological Measurement, 20*(3),
+computerized adaptive testing. \emph{Applied Psychological Measurement, 20}(3),
 213-229.
 
 Chang, H.-H., & Ying, Z. (1999). a-stratified multistage computerized
-adaptive testing. *Applied Psychological Measurement, 23*(3), 211-222.
+adaptive testing. \emph{Applied Psychological Measurement, 23}(3), 211-222.
 
 Kingsbury, G. G., & Zara, A. R. (1989). Procedures for selecting items for
-computerized adaptive tests. *Applied Measurement in Education, 2*(4),
+computerized adaptive tests. \emph{Applied Measurement in Education, 2}(4),
 359-375.
 
 Sympson, J. B., & Hetter, R. D. (1985). Controlling item-exposure rates in
-computerized adaptive testing. *Proceedings of the 27th Annual Meeting of
-the Military Testing Association*, 973-977.
+computerized adaptive testing. \emph{Proceedings of the 27th Annual Meeting of
+the Military Testing Association}, 973-977.
 
 Magis, D., & Barrada, J. R. (2017). Computerized adaptive testing with R:
-Recent updates of the package catR. *Journal of Statistical Software,
-76*(Code Snippet 1), 1-19.
+Recent updates of the package catR. \emph{Journal of Statistical Software,
+76}(Code Snippet 1), 1-19.
 }

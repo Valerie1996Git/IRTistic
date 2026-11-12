@@ -13,25 +13,25 @@ irt_link(
 )
 }
 \arguments{
-\item{from, to}{`irtfit` (unidimensional) or `irt_bank` objects. `from` is
-transformed onto the scale of `to`.}
+\item{from, to}{\code{irtfit} (unidimensional) or \code{irt_bank} objects. \code{from} is
+transformed onto the scale of \code{to}.}
 
 \item{anchors}{Names of the common items. Defaults to all items whose names
 appear in both.}
 
-\item{method}{`"stocking-lord"` (default), `"haebara"`, `"mean-sigma"` or
-`"mean-mean"`.}
+\item{method}{\code{"stocking-lord"} (default), \code{"haebara"}, \code{"mean-sigma"} or
+\code{"mean-mean"}.}
 
-\item{fix_slope}{Fix \eqn{A = 1}? Defaults to `TRUE` when every anchor is a
+\item{fix_slope}{Fix \eqn{A = 1}? Defaults to \code{TRUE} when every anchor is a
 Rasch-family item in both calibrations.}
 }
 \value{
-An object of class `irt_link` with the constants `A` and `B`, the
-  transformed bank (`bank`), the method and the anchors.
+An object of class \code{irt_link} with the constants \code{A} and \code{B}, the
+transformed bank (\code{bank}), the method and the anchors.
 }
 \description{
 Finds the linear transformation \eqn{\theta^* = A\theta + B} that places the
-`from` calibration on the scale of the `to` calibration using common
+\code{from} calibration on the scale of the \code{to} calibration using common
 (anchor) items, by the mean-mean, mean-sigma, Haebara or Stocking-Lord
 method.
 }

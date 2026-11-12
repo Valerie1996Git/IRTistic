@@ -7,19 +7,19 @@
 equate_true_score(x, y)
 }
 \arguments{
-\item{x}{Form X: an `irtfit`, `irt_bank`, or an `irt_link` whose `bank` is
+\item{x}{Form X: an \code{irtfit}, \code{irt_bank}, or an \code{irt_link} whose \code{bank} is
 form X already on Y's scale.}
 
-\item{y}{Form Y: an `irtfit` or `irt_bank`.}
+\item{y}{Form Y: an \code{irtfit} or \code{irt_bank}.}
 }
 \value{
 A data frame with each form-X score, the corresponding trait value
-  and the equivalent form-Y true score.
+and the equivalent form-Y true score.
 }
 \description{
 Equates number-correct (summed) scores on form X to the scale of form Y
 through the test characteristic curves, after the two forms have been
-placed on a common scale with [irt_link()].
+placed on a common scale with \code{\link[=irt_link]{irt_link()}}.
 }
 \examples{
 set.seed(2)

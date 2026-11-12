@@ -7,7 +7,7 @@
 plot_pca(x, contrast = 1)
 }
 \arguments{
-\item{x}{Output of [residual_pca()] or an `irtfit`.}
+\item{x}{Output of \code{\link[=residual_pca]{residual_pca()}} or an \code{irtfit}.}
 
 \item{contrast}{Which contrast to plot.}
 }

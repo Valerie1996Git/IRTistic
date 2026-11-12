@@ -7,7 +7,7 @@
 unexpected(fit, cutoff = 3)
 }
 \arguments{
-\item{fit}{An `mfrmfit` object.}
+\item{fit}{An \code{mfrmfit} object.}
 
 \item{cutoff}{Absolute standardised residual cutoff.}
 }

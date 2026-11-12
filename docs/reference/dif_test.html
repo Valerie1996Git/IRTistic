@@ -80,8 +80,8 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>fit</dt>
-<dd><p>An `irtfit` object (or a response matrix / data frame when
-`method = "mh"` or `match = "total"`).</p></dd>
+<dd><p>An <code>irtfit</code> object (or a response matrix / data frame when
+<code>method = "mh"</code> or <code>match = "total"</code>).</p></dd>
 
 
 <dt>group</dt>
@@ -89,11 +89,11 @@
 
 
 <dt>method</dt>
-<dd><p>`"mh"` or `"lr"`.</p></dd>
+<dd><p><code>"mh"</code> or <code>"lr"</code>.</p></dd>
 
 
 <dt>match</dt>
-<dd><p>`"theta"` (default when `fit` is a model) or `"total"`.</p></dd>
+<dd><p><code>"theta"</code> (default when <code>fit</code> is a model) or <code>"total"</code>.</p></dd>
 
 
 <dt>reference</dt>
@@ -101,25 +101,26 @@
 
 
 <dt>p.adjust</dt>
-<dd><p>Multiple-comparison adjustment passed to [stats::p.adjust()].</p></dd>
+<dd><p>Multiple-comparison adjustment passed to <code><a href="https://rdrr.io/r/stats/p.adjust.html" class="external-link">stats::p.adjust()</a></code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>A data frame of class `irt_dif`, one row per item.</p>
+<p>A data frame of class <code>irt_dif</code>, one row per item.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>* `"mh"`: Mantel-Haenszel for dichotomous items (two groups), matched on
-  total score, with the ETS delta effect size and A/B/C classification.
-* `"lr"`: logistic regression (binary items) or proportional-odds
-  ordinal logistic regression (polytomous items), matched on the latent
-  trait (EAP from `fit`) or on the total score. Reports uniform,
-  non-uniform and total DIF likelihood-ratio tests and the change in
-  Nagelkerke R-squared with the Jodoin-Gierl classification.</p>
-    </div>
+    
+<ul><li><p><code>"mh"</code>: Mantel-Haenszel for dichotomous items (two groups), matched on
+total score, with the ETS delta effect size and A/B/C classification.</p></li>
+<li><p><code>"lr"</code>: logistic regression (binary items) or proportional-odds
+ordinal logistic regression (polytomous items), matched on the latent
+trait (EAP from <code>fit</code>) or on the total score. Reports uniform,
+non-uniform and total DIF likelihood-ratio tests and the change in
+Nagelkerke R-squared with the Jodoin-Gierl classification.</p></li>
+</ul></div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>

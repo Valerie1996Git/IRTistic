@@ -7,7 +7,7 @@
 \method{summary}{irtfit}(object, ...)
 }
 \arguments{
-\item{object}{An `irtfit` object.}
+\item{object}{An \code{irtfit} object.}
 
 \item{...}{Unused.}
 }

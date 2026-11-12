@@ -19,14 +19,14 @@ irt_fit(
 \arguments{
 \item{data}{A matrix or data frame of item responses, persons in rows and
 items in columns. Responses may be any ordered numeric codes; they are
-recoded to consecutive integers starting at 0. `NA` is treated as missing
+recoded to consecutive integers starting at 0. \code{NA} is treated as missing
 (not presented) and is ignored in the likelihood.}
 
 \item{model}{Character, either one model for all items or one per item.
-One of `"rasch"`, `"2pl"`, `"3pl"`, `"4pl"`, `"grm"` (graded response),
-`"pcm"` (partial credit), `"gpcm"` (generalized partial credit) or
-`"rsm"` (rating scale). `"rasch"` applied to a polytomous item is
-treated as `"pcm"`.}
+One of \code{"rasch"}, \code{"2pl"}, \code{"3pl"}, \code{"4pl"}, \code{"grm"} (graded response),
+\code{"pcm"} (partial credit), \code{"gpcm"} (generalized partial credit) or
+\code{"rsm"} (rating scale). \code{"rasch"} applied to a polytomous item is
+treated as \code{"pcm"}.}
 
 \item{Q}{Optional item-by-dimension loading matrix (0/1) for confirmatory
 multidimensional models. Between- and within-item multidimensionality
@@ -36,13 +36,13 @@ are both allowed. Defaults to a single dimension.}
 for one dimension, 21 for two, 11 for three and 7 otherwise.}
 
 \item{priors}{Optional list of priors used for stabilisation:
-`g = c(alpha, beta)` a Beta prior on 3PL guessing (default `c(5, 17)`
-when any 3PL item is present) and `a = c(meanlog, sdlog)` a log-normal
+\code{g = c(alpha, beta)} a Beta prior on 3PL guessing (default \code{c(5, 17)}
+when any 3PL item is present) and \code{a = c(meanlog, sdlog)} a log-normal
 prior on slopes (default none).}
 
-\item{se}{Standard error method: `"hessian"` (numerical observed
-information, default), `"crossprod"` (outer product of person gradients)
-or `"none"`.}
+\item{se}{Standard error method: \code{"hessian"} (numerical observed
+information, default), \code{"crossprod"} (outer product of person gradients)
+or \code{"none"}.}
 
 \item{maxit}{Maximum number of EM cycles.}
 
@@ -52,8 +52,8 @@ and on the maximum parameter change.}
 \item{verbose}{Print progress every 25 cycles.}
 }
 \value{
-An object of class `irtfit`. Use [summary()], [coef()],
-  [irt_scores()], [item_fit()], [plot()] and friends on it.
+An object of class \code{irtfit}. Use \code{\link[=summary]{summary()}}, \code{\link[=coef]{coef()}},
+\code{\link[=irt_scores]{irt_scores()}}, \code{\link[=item_fit]{item_fit()}}, \code{\link[=plot]{plot()}} and friends on it.
 }
 \description{
 Estimates unidimensional or confirmatory multidimensional IRT models by
@@ -62,10 +62,10 @@ quadrature. Dichotomous and polytomous items can be mixed in one test.
 }
 \details{
 The latent distribution is multivariate normal with mean zero.
-  Variances of dimensions measured only by fixed-slope (Rasch family)
-  items are estimated; otherwise variances are fixed at 1 to identify
-  the slopes. Correlations between dimensions are always estimated.
-  Standard errors treat the latent covariance matrix as known.
+Variances of dimensions measured only by fixed-slope (Rasch family)
+items are estimated; otherwise variances are fixed at 1 to identify
+the slopes. Correlations between dimensions are always estimated.
+Standard errors treat the latent covariance matrix as known.
 }
 \examples{
 set.seed(1)

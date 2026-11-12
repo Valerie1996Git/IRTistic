@@ -7,10 +7,10 @@
 item_fit(fit, theta = NULL, range = c(0.5, 1.5))
 }
 \arguments{
-\item{fit}{An `irtfit` object.}
+\item{fit}{An \code{irtfit} object.}
 
 \item{theta}{Person measures to condition on: a method name passed to
-[irt_scores()] or a numeric vector/matrix. Defaults to WLE for
+\code{\link[=irt_scores]{irt_scores()}} or a numeric vector/matrix. Defaults to WLE for
 unidimensional Rasch-family models and EAP otherwise.}
 
 \item{range}{Mean-square range regarded as productive for measurement.}

@@ -7,7 +7,7 @@
 \method{anova}{irtfit}(object, ...)
 }
 \arguments{
-\item{object, ...}{`irtfit` objects fitted to the same data.}
+\item{object, ...}{\code{irtfit} objects fitted to the same data.}
 }
 \description{
 Likelihood-ratio comparison of nested IRT models

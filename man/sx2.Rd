@@ -7,7 +7,7 @@
 sx2(fit, min_expected = 1, p.adjust = "BH")
 }
 \arguments{
-\item{fit}{A unidimensional `irtfit`. Persons with missing responses are
+\item{fit}{A unidimensional \code{irtfit}. Persons with missing responses are
 dropped (S-X2 requires complete data).}
 
 \item{min_expected}{Adjacent score groups are merged until every expected
@@ -16,7 +16,7 @@ cell count is at least this value.}
 \item{p.adjust}{Multiple-comparison adjustment.}
 }
 \value{
-A data frame with `S_X2`, `df`, `p`, adjusted p and RMSEA per item.
+A data frame with \code{S_X2}, \code{df}, \code{p}, adjusted p and RMSEA per item.
 }
 \description{
 Compares, within each summed-score group, the observed proportion of
@@ -32,10 +32,10 @@ sx2(fit)
 }
 \references{
 Orlando, M., & Thissen, D. (2000). Likelihood-based item-fit indices for
-dichotomous item response theory models. *Applied Psychological
-Measurement, 24*(1), 50-64.
+dichotomous item response theory models. \emph{Applied Psychological
+Measurement, 24}(1), 50-64.
 
 Kang, T., & Chen, T. T. (2008). Performance of the generalized S-X2 item
-fit index for polytomous IRT models. *Journal of Educational Measurement,
-45*(4), 391-406.
+fit index for polytomous IRT models. \emph{Journal of Educational Measurement,
+45}(4), 391-406.
 }

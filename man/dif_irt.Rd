@@ -17,35 +17,35 @@ dif_irt(
 )
 }
 \arguments{
-\item{data}{A response matrix/data frame, or an `irtfit` (its data and
+\item{data}{A response matrix/data frame, or an \code{irtfit} (its data and
 item models are reused).}
 
 \item{group}{A vector of group memberships, one per person.}
 
-\item{model}{Item model(s) when `data` is not a fitted model.}
+\item{model}{Item model(s) when \code{data} is not a fitted model.}
 
 \item{reference}{Reference group (defaults to the first level).}
 
-\item{anchors}{Names of anchor items assumed DIF-free. When `NULL`, all
-items start as anchors and, with `purify = TRUE`, flagged items are
+\item{anchors}{Names of anchor items assumed DIF-free. When \code{NULL}, all
+items start as anchors and, with \code{purify = TRUE}, flagged items are
 removed and the linking repeated until the anchor set is stable.}
 
 \item{purify}{Iteratively purify the anchor set.}
 
 \item{alpha}{Significance level used for flagging and purification.}
 
-\item{link_method}{Linking method passed to [irt_link()].}
+\item{link_method}{Linking method passed to \code{\link[=irt_link]{irt_link()}}.}
 
 \item{p.adjust}{Multiple-comparison adjustment.}
 }
 \value{
-A data frame of class `irt_dif_irt`, one row per item and focal
-  group, with Lord's chi-square (`chisq`, `df`, `p`, `p_adj`), the mean
-  difficulty difference (`delta_b`, focal minus reference; positive means
-  harder for the focal group), Raju's signed and unsigned areas, SIDS and
-  UIDS (expected item score differences, focal minus reference, in score
-  points), and a `flag`. The differential test functioning (expected total
-  score difference) is in `attr(, "DTF")`.
+A data frame of class \code{irt_dif_irt}, one row per item and focal
+group, with Lord's chi-square (\code{chisq}, \code{df}, \code{p}, \code{p_adj}), the mean
+difficulty difference (\code{delta_b}, focal minus reference; positive means
+harder for the focal group), Raju's signed and unsigned areas, SIDS and
+UIDS (expected item score differences, focal minus reference, in score
+points), and a \code{flag}. The differential test functioning (expected total
+score difference) is in \code{attr(, "DTF")}.
 }
 \description{
 Calibrates the items separately in each group, places every focal group
