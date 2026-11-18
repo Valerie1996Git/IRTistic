@@ -26,7 +26,7 @@ graphics system and one table system.
 | **Linking and equating** | mean-mean, mean-sigma, Haebara, Stocking-Lord (`irt_link()`); IRT true-score equating (`equate_true_score()`) |
 | **Adaptive testing** | MFI, MPWI, KL, MEPV selection; EAP/MAP/ML/WLE; randomesque, Sympson-Hetter, a-stratification; content balancing; SE and classification stopping; live sessions and Monte Carlo or post-hoc simulation (`cat_design()`, `cat_simulate()`, `cat_start()`) |
 | **Graphics** | Wright maps, FACETS rulers, ICC/category curves, information, TCC, fit bubbles, Q3 heatmaps, DIF curves, bias heatmaps, CAT traces, exposure and conditional precision plots; every one a ggplot |
-| **Output** | APA-style tables as data frame, Markdown, HTML, LaTeX, Word or CSV (`irt_table()`); a complete analysis report in one call, as HTML, Word or PDF (`irt_report()`) |
+| **Output** | APA-style tables as data frame, Markdown, HTML, LaTeX, Word or CSV (`irt_table()`); a complete analysis report in one call, as HTML or Word (`irt_report()`) |
 
 ## Installation
 
@@ -64,7 +64,6 @@ summary(sim); plot(sim)      # how would an adaptive version perform?
 
 irt_report(fit, "report.html", group = group)   # everything above, in one HTML file
 irt_report(fit, "report.docx")                  # ... or a Word document
-irt_report(fit, "report.pdf")                   # ... or a PDF
 ```
 
 Rater data:

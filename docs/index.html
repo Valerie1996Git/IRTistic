@@ -141,7 +141,7 @@
 </tr>
 <tr class="even">
 <td><strong>Output</strong></td>
-<td>APA-style tables as data frame, Markdown, HTML, LaTeX, Word or CSV (<code><a href="reference/irt_table.html">irt_table()</a></code>); a complete analysis report in one call, as HTML, Word or PDF (<code><a href="reference/irt_report.html">irt_report()</a></code>)</td>
+<td>APA-style tables as data frame, Markdown, HTML, LaTeX, Word or CSV (<code><a href="reference/irt_table.html">irt_table()</a></code>); a complete analysis report in one call, as HTML or Word (<code><a href="reference/irt_report.html">irt_report()</a></code>)</td>
 </tr>
 </tbody>
 </table>
@@ -178,8 +178,7 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">sim</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim</span><span class="op">)</span>      <span class="co"># how would an adaptive version perform?</span></span>
 <span></span>
 <span><span class="fu"><a href="reference/irt_report.html">irt_report</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"report.html"</span>, group <span class="op">=</span> <span class="va">group</span><span class="op">)</span>   <span class="co"># everything above, in one HTML file</span></span>
-<span><span class="fu"><a href="reference/irt_report.html">irt_report</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"report.docx"</span><span class="op">)</span>                  <span class="co"># ... or a Word document</span></span>
-<span><span class="fu"><a href="reference/irt_report.html">irt_report</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"report.pdf"</span><span class="op">)</span>                   <span class="co"># ... or a PDF</span></span></code></pre></div>
+<span><span class="fu"><a href="reference/irt_report.html">irt_report</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"report.docx"</span><span class="op">)</span>                  <span class="co"># ... or a Word document</span></span></code></pre></div>
 <p>Rater data:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ratings</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/sim_mfrm.html">sim_mfrm</a></span><span class="op">(</span>n_person <span class="op">=</span> <span class="fl">100</span>, n_rater <span class="op">=</span> <span class="fl">6</span>, n_criterion <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>

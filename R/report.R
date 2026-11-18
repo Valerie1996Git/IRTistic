@@ -1,7 +1,7 @@
 #' One-call analysis report
 #'
-#' Writes a complete report of a fitted model as an HTML page, a Word
-#' document or a PDF: overview
+#' Writes a complete report of a fitted model as an HTML page or a Word
+#' document: overview
 #' and model fit, item parameters, reliability, item fit (infit/outfit and
 #' S-X2), local dependence, dimensionality, Wright map, item and test curves,
 #' summed-score conversion table and, when a grouping variable is given, an
@@ -12,14 +12,12 @@
 #' produced on its own with the functions it names.
 #'
 #' Requires the 'rmarkdown' and 'knitr' packages (and pandoc, which ships
-#' with RStudio). PDF output also needs a LaTeX installation; if you do not
-#' have one, run `install.packages("tinytex"); tinytex::install_tinytex()`
-#' once.
+#' with RStudio).
 #'
 #' @param x An `irtfit` or `mfrmfit`.
 #' @param file Output file. The extension sets the format when `format` is
-#'   not given: `.html`, `.docx` (Word) or `.pdf`.
-#' @param format `"html"`, `"word"` or `"pdf"`. Defaults to the format implied
+#'   not given: `.html` or `.docx` (Word).
+#' @param format `"html"` or `"word"`. Defaults to the format implied
 #'   by `file`, or HTML.
 #' @param title,author Report title and author.
 #' @param group Optional grouping vector for a DIF section (`irtfit` only).
@@ -30,7 +28,6 @@
 #' fit <- irt_fit(sim_irt(500, 12, "2pl"), "2pl")
 #' irt_report(fit, "my-analysis.html", group = rep(c("A", "B"), 250))
 #' irt_report(fit, "my-analysis.docx")          # Word
-#' irt_report(fit, "my-analysis.pdf")           # PDF
 #' irt_report(fit, format = "word")             # IRTistic-report.docx
 #' }
 #' @export
@@ -39,33 +36,29 @@ irt_report <- function(x, file = NULL, title = NULL, author = NULL, group = NULL
   for (p in c("rmarkdown", "knitr"))
     if (!requireNamespace(p, quietly = TRUE)) stop("Install the '", p, "' package to build reports.", call. = FALSE)
   if (!inherits(x, c("irtfit", "mfrmfit"))) stop("'x' must be an irtfit or mfrmfit.", call. = FALSE)
-  ext_fmt <- c(html = "html", htm = "html", docx = "word", doc = "word", pdf = "pdf")
+  ext_fmt <- c(html = "html", htm = "html", docx = "word", doc = "word")
   if (is.null(format)) {
     ext <- if (is.null(file)) "html" else tolower(tools::file_ext(file))
+    if (ext == "pdf")
+      stop("Unsupported file extension '.pdf'. Write a Word report (.docx) and use ",
+           "File > Save As > PDF in Word.", call. = FALSE)
     if (!ext %in% names(ext_fmt))
-      stop("Unsupported file extension '.", ext, "'. Use .html, .docx or .pdf.", call. = FALSE)
+      stop("Unsupported file extension '.", ext, "'. Use .html or .docx (Word).", call. = FALSE)
     format <- ext_fmt[[ext]]
   }
-  format <- match.arg(format, c("html", "word", "pdf"))
-  if (is.null(file)) file <- paste0("IRTistic-report.", c(html = "html", word = "docx", pdf = "pdf")[[format]])
-  if (format == "pdf" && !nzchar(Sys.which("pdflatex")) && !nzchar(Sys.which("xelatex")) &&
-      !(requireNamespace("tinytex", quietly = TRUE) && tinytex::is_tinytex()))
-    stop("PDF reports need LaTeX. Run install.packages(\"tinytex\"); tinytex::install_tinytex() once, ",
-         "or use format = \"word\" or \"html\".", call. = FALSE)
+  format <- match.arg(format, c("html", "word"))
+  if (is.null(file)) file <- paste0("IRTistic-report.", c(html = "html", word = "docx")[[format]])
   if (is.null(title)) title <- if (inherits(x, "irtfit")) "IRT analysis report" else "Many-facet Rasch analysis report"
   body <- if (inherits(x, "irtfit")) .report_irt(x, !is.null(group)) else .report_mfrm(x)
   out_yaml <- switch(format,
     html = c("  html_document:", "    toc: true", "    toc_depth: 2", "    df_print: default"),
     word = c("  word_document:", "    toc: true", "    toc_depth: 2", "    pandoc_args: [\"--columns=1000\"]",
-                 sprintf("    reference_docx: \"%s\"", system.file("report", "reference.docx", package = "IRTistic"))),
-    pdf  = c("  pdf_document:", "    toc: true", "    toc_depth: 2", "    latex_engine: xelatex", "    pandoc_args: [\"--columns=1000\"]"))
+                 sprintf("    reference_docx: \"%s\"", system.file("report", "reference.docx", package = "IRTistic"))))
   tab_fmt <- if (format == "html") "html" else "markdown"
   yaml <- c("---", sprintf("title: \"%s\"", gsub("\"", "'", title)),
             if (!is.null(author)) sprintf("author: \"%s\"", gsub("\"", "'", author)),
             sprintf("date: \"%s\"", format(Sys.Date(), "%d %B %Y")),
             "output:", out_yaml,
-            if (format == "pdf") c("geometry: margin=0.7in", "fontsize: 10pt",
-                                   "header-includes:", "  - \\usepackage{longtable}", "  - \\setlength{\\tabcolsep}{4pt}"),
             "---", "",
             "```{r setup, include = FALSE}",
             sprintf("knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, fig.width = %s, fig.height = 4.8, dpi = %d)",

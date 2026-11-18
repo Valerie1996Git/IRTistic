@@ -725,19 +725,15 @@ and figure for a model: overview, parameters, reliability, item fit,
 S-X², local dependence, dimensionality, Wright map, curves, a score
 table and, optionally, DIF. Many-facet models get a FACETS-style
 report.</p>
-<p>The report can be an HTML page, a Word document or a PDF. The file
-extension picks the format:</p>
+<p>The report can be an HTML page or a Word document. The file extension
+picks the format:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/irt_report.html">irt_report</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"my-analysis.html"</span>, author <span class="op">=</span> <span class="st">"Your Name"</span>, group <span class="op">=</span> <span class="va">my_groups</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/irt_report.html">irt_report</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"my-analysis.docx"</span>, author <span class="op">=</span> <span class="st">"Your Name"</span><span class="op">)</span>   <span class="co"># Word</span></span>
-<span><span class="fu"><a href="../reference/irt_report.html">irt_report</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"my-analysis.pdf"</span>,  author <span class="op">=</span> <span class="st">"Your Name"</span><span class="op">)</span>   <span class="co"># PDF</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/irt_report.html">irt_report</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"my-analysis.docx"</span>, author <span class="op">=</span> <span class="st">"Your Name"</span><span class="op">)</span>   <span class="co"># Word</span></span></code></pre></div>
 <p>You can also set the format directly with
-<code>format = "word"</code> or <code>format = "pdf"</code>. Word output
-only needs RStudio (which ships pandoc). PDF output also needs LaTeX; if
-you do not have it, run this once:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"tinytex"</span><span class="op">)</span></span>
-<span><span class="fu">tinytex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tinytex/man/install_tinytex.html" class="external-link">install_tinytex</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<code>format = "word"</code>. Word output only needs RStudio, which
+ships pandoc. To get a PDF, open the Word report and use <strong>File
+&gt; Save As &gt; PDF</strong>.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

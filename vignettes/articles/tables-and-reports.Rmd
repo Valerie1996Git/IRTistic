@@ -62,20 +62,14 @@ model: overview, parameters, reliability, item fit, S-X², local
 dependence, dimensionality, Wright map, curves, a score table and,
 optionally, DIF. Many-facet models get a FACETS-style report.
 
-The report can be an HTML page, a Word document or a PDF. The file
-extension picks the format:
+The report can be an HTML page or a Word document. The file extension
+picks the format:
 
 ```{r, eval = FALSE}
 irt_report(fit, "my-analysis.html", author = "Your Name", group = my_groups)
 irt_report(fit, "my-analysis.docx", author = "Your Name")   # Word
-irt_report(fit, "my-analysis.pdf",  author = "Your Name")   # PDF
 ```
 
-You can also set the format directly with `format = "word"` or
-`format = "pdf"`. Word output only needs RStudio (which ships pandoc). PDF
-output also needs LaTeX; if you do not have it, run this once:
-
-```{r, eval = FALSE}
-install.packages("tinytex")
-tinytex::install_tinytex()
-```
+You can also set the format directly with `format = "word"`. Word output
+only needs RStudio, which ships pandoc. To get a PDF, open the Word report
+and use **File > Save As > PDF**.

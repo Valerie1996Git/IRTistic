@@ -5,7 +5,7 @@
 New features:
 
 * `dif_test()` can now purify the matching score with `purify = TRUE`, for Mantel-Haenszel and for logistic regression matched on the total score. Flagged items are dropped from the total score and the analysis is repeated until the flagged set is stable. The result shows which items were anchors and the items flagged at each round.
-* `irt_report()` can now write Word (`.docx`) and PDF reports as well as HTML. The format follows the file extension, or set it with `format = "word"` or `format = "pdf"`.
+* `irt_report()` can now write Word (`.docx`) reports as well as HTML. The format follows the file extension, or set it with `format = "word"`.
 * `irt_table()` can write a table straight to a Word file: `irt_table(x, file = "table.docx")`.
 
 Improvements:
