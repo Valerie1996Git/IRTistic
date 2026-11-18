@@ -27,7 +27,10 @@ graphics system and one table system.
 ## Installation
 
 ```r
-# install.packages("remotes")
+# Install the remotes package first (only needed once)
+install.packages("remotes")
+
+# Then install IRTistic from GitHub
 remotes::install_github("Valerie1996Git/IRTistic")
 ```
 
