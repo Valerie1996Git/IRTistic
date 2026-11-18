@@ -1,6 +1,7 @@
 #' One-call analysis report
 #'
-#' Writes a complete, self-contained HTML report of a fitted model: overview
+#' Writes a complete report of a fitted model as an HTML page, a Word
+#' document or a PDF: overview
 #' and model fit, item parameters, reliability, item fit (infit/outfit and
 #' S-X2), local dependence, dimensionality, Wright map, item and test curves,
 #' summed-score conversion table and, when a grouping variable is given, an
@@ -11,10 +12,15 @@
 #' produced on its own with the functions it names.
 #'
 #' Requires the 'rmarkdown' and 'knitr' packages (and pandoc, which ships
-#' with RStudio).
+#' with RStudio). PDF output also needs a LaTeX installation; if you do not
+#' have one, run `install.packages("tinytex"); tinytex::install_tinytex()`
+#' once.
 #'
 #' @param x An `irtfit` or `mfrmfit`.
-#' @param file Output HTML file.
+#' @param file Output file. The extension sets the format when `format` is
+#'   not given: `.html`, `.docx` (Word) or `.pdf`.
+#' @param format `"html"`, `"word"` or `"pdf"`. Defaults to the format implied
+#'   by `file`, or HTML.
 #' @param title,author Report title and author.
 #' @param group Optional grouping vector for a DIF section (`irtfit` only).
 #' @param open Open the report in a browser when done.
@@ -23,28 +29,55 @@
 #' \dontrun{
 #' fit <- irt_fit(sim_irt(500, 12, "2pl"), "2pl")
 #' irt_report(fit, "my-analysis.html", group = rep(c("A", "B"), 250))
+#' irt_report(fit, "my-analysis.docx")          # Word
+#' irt_report(fit, "my-analysis.pdf")           # PDF
+#' irt_report(fit, format = "word")             # IRTistic-report.docx
 #' }
 #' @export
-irt_report <- function(x, file = "IRTistic-report.html", title = NULL, author = NULL, group = NULL,
-                       open = interactive()) {
+irt_report <- function(x, file = NULL, title = NULL, author = NULL, group = NULL,
+                       format = NULL, open = interactive()) {
   for (p in c("rmarkdown", "knitr"))
     if (!requireNamespace(p, quietly = TRUE)) stop("Install the '", p, "' package to build reports.", call. = FALSE)
   if (!inherits(x, c("irtfit", "mfrmfit"))) stop("'x' must be an irtfit or mfrmfit.", call. = FALSE)
+  ext_fmt <- c(html = "html", htm = "html", docx = "word", doc = "word", pdf = "pdf")
+  if (is.null(format)) {
+    ext <- if (is.null(file)) "html" else tolower(tools::file_ext(file))
+    if (!ext %in% names(ext_fmt))
+      stop("Unsupported file extension '.", ext, "'. Use .html, .docx or .pdf.", call. = FALSE)
+    format <- ext_fmt[[ext]]
+  }
+  format <- match.arg(format, c("html", "word", "pdf"))
+  if (is.null(file)) file <- paste0("IRTistic-report.", c(html = "html", word = "docx", pdf = "pdf")[[format]])
+  if (format == "pdf" && !nzchar(Sys.which("pdflatex")) && !nzchar(Sys.which("xelatex")) &&
+      !(requireNamespace("tinytex", quietly = TRUE) && tinytex::is_tinytex()))
+    stop("PDF reports need LaTeX. Run install.packages(\"tinytex\"); tinytex::install_tinytex() once, ",
+         "or use format = \"word\" or \"html\".", call. = FALSE)
   if (is.null(title)) title <- if (inherits(x, "irtfit")) "IRT analysis report" else "Many-facet Rasch analysis report"
   body <- if (inherits(x, "irtfit")) .report_irt(x, !is.null(group)) else .report_mfrm(x)
+  out_yaml <- switch(format,
+    html = c("  html_document:", "    toc: true", "    toc_depth: 2", "    df_print: default"),
+    word = c("  word_document:", "    toc: true", "    toc_depth: 2", "    pandoc_args: [\"--columns=1000\"]",
+                 sprintf("    reference_docx: \"%s\"", system.file("report", "reference.docx", package = "IRTistic"))),
+    pdf  = c("  pdf_document:", "    toc: true", "    toc_depth: 2", "    latex_engine: xelatex", "    pandoc_args: [\"--columns=1000\"]"))
+  tab_fmt <- if (format == "html") "html" else "markdown"
   yaml <- c("---", sprintf("title: \"%s\"", gsub("\"", "'", title)),
             if (!is.null(author)) sprintf("author: \"%s\"", gsub("\"", "'", author)),
             sprintf("date: \"%s\"", format(Sys.Date(), "%d %B %Y")),
-            "output:", "  html_document:", "    toc: true", "    toc_depth: 2", "    df_print: default",
+            "output:", out_yaml,
+            if (format == "pdf") c("geometry: margin=0.7in", "fontsize: 10pt",
+                                   "header-includes:", "  - \\usepackage{longtable}", "  - \\setlength{\\tabcolsep}{4pt}"),
             "---", "",
             "```{r setup, include = FALSE}",
-            "knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, fig.width = 8, fig.height = 4.8, dpi = 110)",
+            sprintf("knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, fig.width = %s, fig.height = 4.8, dpi = %d)",
+                    if (format == "html") "8" else "7", if (format == "html") 110L else 200L),
             "library(IRTistic)",
-            "tab <- function(z, ...) irt_table(z, format = 'html', ...)",
+            sprintf("tab <- function(z, ...) irt_table(z, format = '%s', ...)", tab_fmt),
             "```", "",
-            "<style>body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;max-width:1000px}",
-            "table{font-variant-numeric:tabular-nums;margin-bottom:1em} caption{text-align:left;font-weight:600;color:#0b0b0b}",
-            "th,td{padding:4px 12px} th{border-top:2px solid #0b0b0b;border-bottom:1px solid #0b0b0b} h2{margin-top:1.6em}</style>", "")
+            if (format == "html") c(
+              "<style>body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;max-width:1000px}",
+              "table{font-variant-numeric:tabular-nums;margin-bottom:1em} caption{text-align:left;font-weight:600;color:#0b0b0b}",
+              "th,td{padding:4px 12px} th{border-top:2px solid #0b0b0b;border-bottom:1px solid #0b0b0b} h2{margin-top:1.6em}</style>"),
+            "")
   rmd <- tempfile(fileext = ".Rmd")
   writeLines(c(yaml, body, "", "---", "",
                sprintf("*Generated with IRTistic %s on %s.*", utils::packageVersion("IRTistic"), format(Sys.time(), "%Y-%m-%d %H:%M"))),
@@ -53,6 +86,7 @@ irt_report <- function(x, file = "IRTistic-report.html", title = NULL, author = 
   out <- rmarkdown::render(rmd, output_file = basename(file), output_dir = dirname(normalizePath(file, mustWork = FALSE)),
                            envir = env, quiet = TRUE)
   if (open) utils::browseURL(out)
+  message("Report written to ", out)
   invisible(out)
 }
 

@@ -7,7 +7,7 @@
 #' estimates optionally combined with their standard errors as "1.23 (0.05)",
 #' and a caption and note attached. Tables can be returned as a data frame or
 #' rendered as Markdown, HTML or LaTeX (via 'knitr'), and written to `.csv`,
-#' `.html`, `.md` or `.tex` files.
+#' `.docx` (Word), `.html`, `.md` or `.tex` files.
 #'
 #' Supported inputs: `irtfit` (item parameters), `mfrmfit` / `mfrm_report`
 #' (facet measurement reports), and the outputs of [item_fit()],
@@ -19,7 +19,8 @@
 #' @param digits Number of decimals.
 #' @param format `"data.frame"` (default), `"markdown"`, `"html"` or `"latex"`.
 #' @param file Optional output file; the format is taken from the extension
-#'   (`.csv`, `.html`, `.md`, `.tex`).
+#'   (`.csv`, `.docx`, `.html`, `.md`, `.tex`). Word output needs pandoc,
+#'   which ships with RStudio.
 #' @param caption Table caption (a sensible default is used).
 #' @param ... Further arguments for specific methods: `se` (combine estimates
 #'   and SEs, default `TRUE`) for `irtfit`; `facet` for facet reports.
@@ -30,6 +31,9 @@
 #' fit <- irt_fit(sim_irt(500, 8, "2pl"), "2pl")
 #' irt_table(fit)
 #' irt_table(item_fit(fit), format = "markdown")
+#' \dontrun{
+#' irt_table(item_fit(fit), file = "item-fit.docx")   # Word table
+#' }
 #' @export
 irt_table <- function(x, digits = 2, format = c("data.frame", "markdown", "html", "latex"),
                       file = NULL, caption = NULL, ...) {
@@ -198,8 +202,9 @@ irt_table <- function(x, digits = 2, format = c("data.frame", "markdown", "html"
   if (!is.null(file)) {
     ext <- tolower(tools::file_ext(file))
     if (ext == "csv") { utils::write.csv(.plain_df(tb), file, row.names = FALSE); return(invisible(file)) }
+    if (ext == "docx") return(.table_docx(tb, file))
     format <- switch(ext, html = "html", htm = "html", md = "markdown", tex = "latex",
-                     stop("Unsupported file extension '.", ext, "'. Use .csv, .html, .md or .tex.", call. = FALSE))
+                     stop("Unsupported file extension '.", ext, "'. Use .csv, .docx, .html, .md or .tex.", call. = FALSE))
   }
   if (format == "data.frame" && is.null(file)) return(tb)
   if (!requireNamespace("knitr", quietly = TRUE))
@@ -217,6 +222,20 @@ irt_table <- function(x, digits = 2, format = c("data.frame", "markdown", "html"
     return(invisible(file))
   }
   k
+}
+
+# write one table to a Word document through pandoc
+.table_docx <- function(tb, file) {
+  for (p in c("rmarkdown", "knitr"))
+    if (!requireNamespace(p, quietly = TRUE)) stop("Install the '", p, "' package to write Word tables.", call. = FALSE)
+  if (!rmarkdown::pandoc_available())
+    stop("Word output needs pandoc, which ships with RStudio.", call. = FALSE)
+  md <- tempfile(fileext = ".md")
+  writeLines(as.character(.emit_table(tb, "markdown", NULL)), md, useBytes = TRUE)
+  out <- normalizePath(file, mustWork = FALSE)
+  rmarkdown::pandoc_convert(md, to = "docx", output = out, from = "markdown", options = c("--columns=1000", paste0("--reference-doc=",
+                            system.file("report", "reference.docx", package = "IRTistic"))))
+  invisible(file)
 }
 
 .html_table_head <- function() c(

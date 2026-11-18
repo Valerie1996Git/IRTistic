@@ -1,0 +1,18 @@
+test_that("irt_report writes HTML, Word and PDF", {
+  skip_on_cran()
+  skip_if_not_installed("rmarkdown")
+  skip_if_not(rmarkdown::pandoc_available())
+  set.seed(5)
+  fit <- irt_fit(sim_irt(300, 6, "2pl"), "2pl")
+  td <- tempfile(); dir.create(td)
+  h <- irt_report(fit, file.path(td, "r.html"), open = FALSE)
+  w <- irt_report(fit, file.path(td, "r.docx"), open = FALSE)
+  expect_true(file.exists(h)); expect_true(file.exists(w))
+  irt_table(item_fit(fit), file = file.path(td, "t.docx"))
+  expect_true(file.exists(file.path(td, "t.docx")))
+  if (nzchar(Sys.which("xelatex"))) {
+    p <- irt_report(fit, file.path(td, "r.pdf"), open = FALSE)
+    expect_true(file.exists(p))
+  }
+  expect_error(irt_report(fit, file.path(td, "r.txt"), open = FALSE), "Unsupported")
+})

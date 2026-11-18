@@ -33,8 +33,9 @@ irt_table(classification_accuracy(fit, theta_cuts = c(-0.5, 1)), format = "html"
 Write straight to a file for Word, Excel or a journal template:
 
 ```{r, eval = FALSE}
-irt_table(fit, file = "table2-item-parameters.csv")
-irt_table(sx2(fit), file = "table3-sx2.html")
+irt_table(fit, file = "table2-item-parameters.docx")   # Word
+irt_table(item_fit(fit), file = "table3-item-fit.csv")  # Excel
+irt_table(sx2(fit), file = "table4-sx2.html")
 ```
 
 ## Plots
@@ -56,11 +57,25 @@ ggplot2::ggsave("figure1-wright-map.png", plot_wright(fit), width = 7, height = 
 
 ## One-call reports
 
-`irt_report()` writes a self-contained HTML report with every table and
-figure for a model: overview, parameters, reliability, item fit, S-X²,
-local dependence, dimensionality, Wright map, curves, a score table and,
+`irt_report()` writes a complete report with every table and figure for a
+model: overview, parameters, reliability, item fit, S-X², local
+dependence, dimensionality, Wright map, curves, a score table and,
 optionally, DIF. Many-facet models get a FACETS-style report.
+
+The report can be an HTML page, a Word document or a PDF. The file
+extension picks the format:
 
 ```{r, eval = FALSE}
 irt_report(fit, "my-analysis.html", author = "Your Name", group = my_groups)
+irt_report(fit, "my-analysis.docx", author = "Your Name")   # Word
+irt_report(fit, "my-analysis.pdf",  author = "Your Name")   # PDF
+```
+
+You can also set the format directly with `format = "word"` or
+`format = "pdf"`. Word output only needs RStudio (which ships pandoc). PDF
+output also needs LaTeX; if you do not have it, run this once:
+
+```{r, eval = FALSE}
+install.packages("tinytex")
+tinytex::install_tinytex()
 ```

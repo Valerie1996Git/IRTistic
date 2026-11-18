@@ -126,16 +126,15 @@ recognise every table.</p>
 <code class="sourceCode R"><span><span class="va">rep</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/facet_report.html">facet_report</a></span><span class="op">(</span><span class="va">mf</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/irt_table.html">irt_table</a></span><span class="op">(</span><span class="va">rep</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Facet summary</span></span>
-<span><span class="co">#&gt; Warning in do.call(data.frame, c(x, alis)): unable to translate</span></span>
-<span><span class="co">#&gt; '&lt;U+03C7&gt;&lt;U+00B2&gt;' to native encoding</span></span>
-<span><span class="co">#&gt;      Facet Elements  Mean   SD Mean SE Separation Strata Reliability</span></span>
-<span><span class="co">#&gt;     person      120 -0.14 0.98    0.30       3.11   4.49        0.91</span></span>
-<span><span class="co">#&gt;      rater        6  0.00 0.60    0.06       9.72  13.29        0.99</span></span>
-<span><span class="co">#&gt;  criterion        4 -0.00 0.74    0.05      14.87  20.16        1.00</span></span>
-<span><span class="co">#&gt;  &lt;U+03C7&gt;&lt;U+00B2&gt;  df      p</span></span>
-<span><span class="co">#&gt;           1080.45 119 &lt; .001</span></span>
-<span><span class="co">#&gt;            450.27   5 &lt; .001</span></span>
-<span><span class="co">#&gt;            588.24   3 &lt; .001</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;      Facet Elements  Mean   SD Mean SE Separation Strata Reliability      χ²</span></span>
+<span><span class="co">#&gt;     person      120 -0.14 0.98    0.30       3.11   4.49        0.91 1080.45</span></span>
+<span><span class="co">#&gt;      rater        6  0.00 0.60    0.06       9.72  13.29        0.99  450.27</span></span>
+<span><span class="co">#&gt;  criterion        4 -0.00 0.74    0.05      14.87  20.16        1.00  588.24</span></span>
+<span><span class="co">#&gt;   df      p</span></span>
+<span><span class="co">#&gt;  119 &lt; .001</span></span>
+<span><span class="co">#&gt;    5 &lt; .001</span></span>
+<span><span class="co">#&gt;    3 &lt; .001</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Note. Separation, strata and reliability as in FACETS; chi-square tests that all elements</span></span>
 <span><span class="co">#&gt;       are equal.</span></span>
@@ -198,7 +197,7 @@ recognise every table.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bias</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mfrm_bias.html">mfrm_bias</a></span><span class="op">(</span><span class="va">mf</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"rater"</span>, <span class="st">"criterion"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/irt_table.html">irt_table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">bias</span>, <span class="fl">8</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Bias/interaction analysis: rater &lt;U+00D7&gt; criterion</span></span>
+<span><span class="co">#&gt; Bias/interaction analysis: rater × criterion</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  rater criterion Count Observed Expected Obs - Exp  Bias   SE     t df    p</span></span>
 <span><span class="co">#&gt;    R03        C2    79      197   208.81     -0.15 -0.20 0.13 -1.53 78 .130</span></span>

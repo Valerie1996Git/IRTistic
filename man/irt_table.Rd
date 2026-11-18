@@ -21,7 +21,8 @@ irt_table(
 \item{format}{\code{"data.frame"} (default), \code{"markdown"}, \code{"html"} or \code{"latex"}.}
 
 \item{file}{Optional output file; the format is taken from the extension
-(\code{.csv}, \code{.html}, \code{.md}, \code{.tex}).}
+(\code{.csv}, \code{.docx}, \code{.html}, \code{.md}, \code{.tex}). Word output needs pandoc,
+which ships with RStudio.}
 
 \item{caption}{Table caption (a sensible default is used).}
 
@@ -39,7 +40,7 @@ rounded to a fixed number of decimals, p-values in APA style ("< .001"),
 estimates optionally combined with their standard errors as "1.23 (0.05)",
 and a caption and note attached. Tables can be returned as a data frame or
 rendered as Markdown, HTML or LaTeX (via 'knitr'), and written to \code{.csv},
-\code{.html}, \code{.md} or \code{.tex} files.
+\code{.docx} (Word), \code{.html}, \code{.md} or \code{.tex} files.
 }
 \details{
 Supported inputs: \code{irtfit} (item parameters), \code{mfrmfit} / \code{mfrm_report}
@@ -52,4 +53,7 @@ Supported inputs: \code{irtfit} (item parameters), \code{mfrmfit} / \code{mfrm_r
 fit <- irt_fit(sim_irt(500, 8, "2pl"), "2pl")
 irt_table(fit)
 irt_table(item_fit(fit), format = "markdown")
+\dontrun{
+irt_table(item_fit(fit), file = "item-fit.docx")   # Word table
+}
 }

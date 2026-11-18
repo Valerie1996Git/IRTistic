@@ -116,9 +116,11 @@ for one dimension, 21 for two, 11 for three and 7 otherwise.</p></dd>
 
 <dt>priors</dt>
 <dd><p>Optional list of priors used for stabilisation:
-<code>g = c(alpha, beta)</code> a Beta prior on 3PL guessing (default <code>c(5, 17)</code>
-when any 3PL item is present) and <code>a = c(meanlog, sdlog)</code> a log-normal
-prior on slopes (default none).</p></dd>
+<code>g = c(alpha, beta)</code> a Beta prior on 3PL/4PL guessing (default <code>c(5, 17)</code>
+when any 3PL or 4PL item is present), <code>u = c(alpha, beta)</code> a Beta prior on
+the 4PL upper asymptote (default <code>c(17, 2)</code>) and <code>a = c(meanlog, sdlog)</code> a
+log-normal prior on slopes (default none). Set an element to <code>NULL</code> to
+switch that prior off.</p></dd>
 
 
 <dt>se</dt>

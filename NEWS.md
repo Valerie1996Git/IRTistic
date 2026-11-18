@@ -1,3 +1,9 @@
+# IRTistic (development version)
+
+* `irt_report()` can now write Word (`.docx`) and PDF reports as well as HTML. The format follows the file extension, or set it with `format = "word"` or `format = "pdf"`.
+* `irt_table()` can write a table straight to a Word file: `irt_table(x, file = "table.docx")`.
+* Clearer installation instructions.
+
 # IRTistic 0.1.0
 
 First release.

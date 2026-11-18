@@ -6,21 +6,26 @@
 \usage{
 irt_report(
   x,
-  file = "IRTistic-report.html",
+  file = NULL,
   title = NULL,
   author = NULL,
   group = NULL,
+  format = NULL,
   open = interactive()
 )
 }
 \arguments{
 \item{x}{An \code{irtfit} or \code{mfrmfit}.}
 
-\item{file}{Output HTML file.}
+\item{file}{Output file. The extension sets the format when \code{format} is
+not given: \code{.html}, \code{.docx} (Word) or \code{.pdf}.}
 
 \item{title, author}{Report title and author.}
 
 \item{group}{Optional grouping vector for a DIF section (\code{irtfit} only).}
+
+\item{format}{\code{"html"}, \code{"word"} or \code{"pdf"}. Defaults to the format implied
+by \code{file}, or HTML.}
 
 \item{open}{Open the report in a browser when done.}
 }
@@ -28,7 +33,8 @@ irt_report(
 The path to the report, invisibly.
 }
 \description{
-Writes a complete, self-contained HTML report of a fitted model: overview
+Writes a complete report of a fitted model as an HTML page, a Word
+document or a PDF: overview
 and model fit, item parameters, reliability, item fit (infit/outfit and
 S-X2), local dependence, dimensionality, Wright map, item and test curves,
 summed-score conversion table and, when a grouping variable is given, an
@@ -40,11 +46,16 @@ produced on its own with the functions it names.
 }
 \details{
 Requires the 'rmarkdown' and 'knitr' packages (and pandoc, which ships
-with RStudio).
+with RStudio). PDF output also needs a LaTeX installation; if you do not
+have one, run \verb{install.packages("tinytex"); tinytex::install_tinytex()}
+once.
 }
 \examples{
 \dontrun{
 fit <- irt_fit(sim_irt(500, 12, "2pl"), "2pl")
 irt_report(fit, "my-analysis.html", group = rep(c("A", "B"), 250))
+irt_report(fit, "my-analysis.docx")          # Word
+irt_report(fit, "my-analysis.pdf")           # PDF
+irt_report(fit, format = "word")             # IRTistic-report.docx
 }
 }
