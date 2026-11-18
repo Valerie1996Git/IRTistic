@@ -117,7 +117,7 @@ and logistic or ordinal logistic regression with the Jodoin and Gierl
 <span></span>
 <span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/irt_fit.html">irt_fit</a></span><span class="op">(</span><span class="va">dat</span>, <span class="st">"2pl"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/dif_test.html">dif_test</a></span><span class="op">(</span><span class="va">fit</span>, <span class="va">group</span>, method <span class="op">=</span> <span class="st">"lr"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; DIF analysis (lr): 1 item(s) with B/C-level DIF</span></span>
+<span><span class="co">#&gt; DIF analysis (logistic regression, matched on theta): 1 item(s) with B/C-level DIF</span></span>
 <span><span class="co">#&gt;  item uniform_chisq uniform_p nonuniform_chisq nonuniform_p statistic df     p</span></span>
 <span><span class="co">#&gt;   I01         0.359     0.549            1.109        0.292     1.467  2 0.480</span></span>
 <span><span class="co">#&gt;   I02         1.648     0.199            0.006        0.938     1.654  2 0.437</span></span>
@@ -144,6 +144,48 @@ and logistic or ordinal logistic regression with the Jodoin and Gierl
 <span><span class="co">#&gt;     0.001     A 0.681</span></span>
 <span><span class="co">#&gt;     0.001     A 0.681</span></span>
 <span><span class="co">#&gt;     0.001     A 0.681</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="purifying-the-matching-score">Purifying the matching score<a class="anchor" aria-label="anchor" href="#purifying-the-matching-score"></a>
+</h3>
+<p>When an item has DIF, it also contaminates the total score that every
+other item is matched on. Purification fixes this: items flagged in a
+first pass are dropped from the matching score and the analysis is
+repeated until the set of flagged items stops changing (Holland &amp;
+Thayer, 1988; Clauser &amp; Mazor, 1998). The studied item always stays
+in its own matching score. Set <code>purify = TRUE</code> for
+Mantel-Haenszel, or for logistic regression matched on the total
+score:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mh</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dif_test.html">dif_test</a></span><span class="op">(</span><span class="va">dat</span>, <span class="va">group</span>, method <span class="op">=</span> <span class="st">"mh"</span>, reference <span class="op">=</span> <span class="st">"reference"</span>, purify <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">mh</span></span>
+<span><span class="co">#&gt; DIF analysis (Mantel-Haenszel, matched on total): 1 item(s) with B/C-level DIF</span></span>
+<span><span class="co">#&gt; Purified matching score: 11 anchor item(s) after 3 round(s)</span></span>
+<span><span class="co">#&gt;  item alpha_MH delta_MH statistic df     p class p_adj anchor</span></span>
+<span><span class="co">#&gt;   I01    1.322   -0.656     2.689  1 0.101     A 0.280   TRUE</span></span>
+<span><span class="co">#&gt;   I02    0.869    0.330     0.658  1 0.417     A 0.626   TRUE</span></span>
+<span><span class="co">#&gt;   I03    0.921    0.193     0.301  1 0.583     A 0.726   TRUE</span></span>
+<span><span class="co">#&gt;   I04    0.784    0.572     1.580  1 0.209     A 0.417   TRUE</span></span>
+<span><span class="co">#&gt;   I05    3.143   -2.691    57.766  1 0.000     C 0.000  FALSE</span></span>
+<span><span class="co">#&gt;   I06    1.086   -0.194     0.233  1 0.630     A 0.726   TRUE</span></span>
+<span><span class="co">#&gt;   I07    1.276   -0.572     2.459  1 0.117     A 0.280   TRUE</span></span>
+<span><span class="co">#&gt;   I08    1.225   -0.477     1.053  1 0.305     A 0.522   TRUE</span></span>
+<span><span class="co">#&gt;   I09    0.702    0.831     6.799  1 0.009     A 0.055   TRUE</span></span>
+<span><span class="co">#&gt;   I10    1.286   -0.592     2.914  1 0.088     A 0.280   TRUE</span></span>
+<span><span class="co">#&gt;   I11    0.942    0.141     0.141  1 0.707     A 0.726   TRUE</span></span>
+<span><span class="co">#&gt;   I12    0.944    0.135     0.123  1 0.726     A 0.726   TRUE</span></span>
+<span><span class="fu"><a href="../reference/plot_dif.html">plot_dif</a></span><span class="op">(</span><span class="va">mh</span><span class="op">)</span></span></code></pre></div>
+<p><img src="dif-and-linking_files/figure-html/unnamed-chunk-2-1.png" width="880"></p>
+<p>The <code>anchor</code> column shows which items made up the final
+matching score. <code>attr(mh, "purification")</code> lists the items
+flagged at each round. An item flagged in one round can return to the
+matching score in the next if it no longer shows DIF once the score is
+cleaner.</p>
+<p>Mantel-Haenszel is built to detect uniform DIF. Item 9 here has
+non-uniform DIF (its slope differs between groups), which MH can miss;
+logistic regression and <code><a href="../reference/dif_irt.html">dif_irt()</a></code> test for it directly.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/dif_test.html">dif_test</a></span><span class="op">(</span><span class="va">dat</span>, <span class="va">group</span>, method <span class="op">=</span> <span class="st">"lr"</span>, match <span class="op">=</span> <span class="st">"total"</span>, purify <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+</div>
 </div>
 <div class="section level2">
 <h2 id="irt-based-dif-with-linking-and-purification">IRT-based DIF with linking and purification<a class="anchor" aria-label="anchor" href="#irt-based-dif-with-linking-and-purification"></a>
@@ -157,7 +199,7 @@ and unsigned areas and Meade’s (2010) SIDS/UIDS, which are expected
 score differences weighted by the focal group’s ability distribution and
 so are in score points. Their sum is the differential test functioning
 (DTF).</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dif_irt.html">dif_irt</a></span><span class="op">(</span><span class="va">fit</span>, <span class="va">group</span>, reference <span class="op">=</span> <span class="st">"reference"</span><span class="op">)</span></span>
 <span><span class="va">res</span></span>
 <span><span class="co">#&gt; IRT-based DIF (Lord's Wald test, Raju areas) | reference group: reference</span></span>
@@ -190,17 +232,17 @@ so are in score points. Their sum is the differential test functioning
 <span><span class="co">#&gt;  0.028   TRUE FALSE</span></span>
 <span><span class="co">#&gt;  0.030   TRUE FALSE</span></span>
 <span><span class="co">#&gt;  0.008   TRUE FALSE</span></span></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_dif.html">plot_dif</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
-<p><img src="dif-and-linking_files/figure-html/unnamed-chunk-3-1.png" width="880"></p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<p><img src="dif-and-linking_files/figure-html/unnamed-chunk-5-1.png" width="880"></p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_dif_curves.html">plot_dif_curves</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
-<p><img src="dif-and-linking_files/figure-html/unnamed-chunk-3-2.png" width="880"></p>
+<p><img src="dif-and-linking_files/figure-html/unnamed-chunk-5-2.png" width="880"></p>
 </div>
 <div class="section level2">
 <h2 id="linking-two-calibrations">Linking two calibrations<a class="anchor" aria-label="anchor" href="#linking-two-calibrations"></a>
 </h2>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sim_irt.html">sim_irt</a></span><span class="op">(</span><span class="fl">1000</span>, a <span class="op">=</span> <span class="va">tr</span><span class="op">$</span><span class="va">a</span>, b <span class="op">=</span> <span class="va">tr</span><span class="op">$</span><span class="va">b</span>, model <span class="op">=</span> <span class="st">"2pl"</span>, theta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">0.5</span>, <span class="fl">1.2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sim_irt.html">sim_irt</a></span><span class="op">(</span><span class="fl">1000</span>, a <span class="op">=</span> <span class="va">tr</span><span class="op">$</span><span class="va">a</span>, b <span class="op">=</span> <span class="va">tr</span><span class="op">$</span><span class="va">b</span>, model <span class="op">=</span> <span class="st">"2pl"</span>, theta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">fx</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/irt_fit.html">irt_fit</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">9</span><span class="op">]</span>, <span class="st">"2pl"</span>, se <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span>     <span class="co"># form X: items 1-9</span></span>
@@ -216,7 +258,7 @@ items.</p>
 <div class="section level2">
 <h2 id="true-score-equating-and-score-tables">True-score equating and score tables<a class="anchor" aria-label="anchor" href="#true-score-equating-and-score-tables"></a>
 </h2>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">eq</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/equate_true_score.html">equate_true_score</a></span><span class="op">(</span><span class="va">lk</span>, <span class="va">fy</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/irt_table.html">irt_table</a></span><span class="op">(</span><span class="va">eq</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  Form X score     θ Form Y equivalent</span></span>

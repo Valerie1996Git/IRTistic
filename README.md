@@ -1,5 +1,9 @@
 # IRTistic <img src="man/figures/logo.png" align="right" height="120" alt="" />
 
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/Valerie1996Git/IRTistic/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Valerie1996Git/IRTistic/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
+
 **IRT + artistic: item response theory and Rasch measurement in R, from model to publication-ready plot and table.**
 
 R has dozens of excellent IRT packages, but a real project usually means
@@ -33,6 +37,11 @@ install.packages("remotes")
 # Then install IRTistic from GitHub
 remotes::install_github("Valerie1996Git/IRTistic")
 ```
+
+Already installed IRTistic? Run the same `install_github()` line again to
+get the latest updates, then restart R. The
+[changelog](https://valerie1996git.github.io/IRTistic/news/) lists what
+has changed.
 
 ## A two-minute tour
 

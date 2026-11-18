@@ -139,8 +139,15 @@ irt_table <- function(x, digits = 2, format = c("data.frame", "markdown", "html"
 #' @export
 .as_irt_table.irt_dif <- function(x, digits, ...) {
   y <- x; class(y) <- "data.frame"
-  .tbl(y, paste0("Differential item functioning (", if (attr(x, "method") == "mh") "Mantel-Haenszel" else "logistic regression", ")"),
-       "Class A = negligible, B = moderate, C = large DIF.", digits)
+  if (!is.null(y$anchor)) y$anchor <- ifelse(y$anchor, "Yes", "No")
+  mh <- attr(x, "method") == "mh"
+  pur <- attr(x, "purification")
+  note <- paste0("Class A = negligible, B = moderate, C = large DIF.",
+                 if (mh) " Negative MH \u0394 = item favours the reference group." else "",
+                 if (!is.null(pur)) sprintf(" Matching score purified in %d round(s); Anchor = item in the final matching score.",
+                                            pur$rounds) else "")
+  .tbl(y, paste0("Differential item functioning (", if (mh) "Mantel-Haenszel" else "logistic regression", ")"),
+       note, digits)
 }
 
 #' @export

@@ -157,25 +157,46 @@
 
 # Prepare response data ---------------------------------------------------------
 .prep_data <- function(data) {
-  if (is.data.frame(data)) data <- as.matrix(data.frame(lapply(data, function(v) {
-    if (is.factor(v)) as.integer(v) - 1L else as.numeric(v)
-  }), check.names = FALSE))
+  if (is.data.frame(data)) {
+    txt <- names(data)[vapply(data, function(v) is.character(v), logical(1))]
+    if (length(txt))
+      stop("Column(s) ", paste0("'", utils::head(txt, 5), "'", collapse = ", "),
+           " contain text. Recode responses as numbers (for example 0/1 or 1-5) first.", call. = FALSE)
+    data <- as.matrix(data.frame(lapply(data, function(v) {
+      if (is.factor(v)) as.integer(v) - 1L else as.numeric(v)
+    }), check.names = FALSE))
+  }
   if (!is.matrix(data)) stop("'data' must be a matrix or data frame.", call. = FALSE)
   if (is.null(colnames(data))) colnames(data) <- paste0("Item", seq_len(ncol(data)))
   storage.mode(data) <- "double"
   J <- ncol(data)
   X <- matrix(NA_integer_, nrow(data), J, dimnames = list(rownames(data), colnames(data)))
   labels <- vector("list", J); names(labels) <- colnames(data)
+  nonint <- character(0)
   for (j in seq_len(J)) {
     v <- data[, j]
     u <- sort(unique(v[!is.na(v)]))
     if (length(u) < 2)
-      stop("Item '", colnames(data)[j], "' has fewer than two observed categories.",
-           call. = FALSE)
+      stop("Item '", colnames(data)[j], "' has only one observed value",
+           if (length(u) == 1) paste0(" (every response is ", u, ")") else " (all responses are missing)",
+           ", so it carries no information. Remove it before fitting.", call. = FALSE)
+    if (length(u) > 30)
+      stop("Column '", colnames(data)[j], "' has ", length(u), " different values. ",
+           "It looks like an ID, a total score or another variable, not an item. ",
+           "Keep only the item response columns.", call. = FALSE)
+    if (any(u != round(u))) nonint <- c(nonint, colnames(data)[j])
     X[, j] <- match(v, u) - 1L
     labels[[j]] <- u
   }
+  if (length(nonint))
+    warning("Non-integer responses in ", paste0("'", utils::head(nonint, 5), "'", collapse = ", "),
+            "; each distinct value is treated as an ordered category.", call. = FALSE)
   allna <- rowSums(!is.na(X)) == 0
-  if (any(allna)) stop("Some persons have no responses; remove them first.", call. = FALSE)
+  if (any(allna)) {
+    w <- which(allna)
+    stop(length(w), " person(s) have no responses (row", if (length(w) > 1) "s" else "", " ",
+         paste(utils::head(w, 10), collapse = ", "), if (length(w) > 10) ", ..." else "",
+         "). Remove them first.", call. = FALSE)
+  }
   list(X = X, labels = labels, K = vapply(labels, length, integer(1)))
 }

@@ -10,7 +10,10 @@ dif_test(
   method = c("lr", "mh"),
   match = NULL,
   reference = NULL,
-  p.adjust = "BH"
+  p.adjust = "BH",
+  purify = FALSE,
+  alpha = 0.05,
+  max_iter = 10
 )
 }
 \arguments{
@@ -26,9 +29,23 @@ dif_test(
 \item{reference}{Reference group level for MH (defaults to the first).}
 
 \item{p.adjust}{Multiple-comparison adjustment passed to \code{\link[stats:p.adjust]{stats::p.adjust()}}.}
+
+\item{purify}{Iteratively purify the matching score (MH, and LR with
+\code{match = "total"}). Items flagged for DIF are removed from the total
+score and the analysis is repeated until the set of flagged items no
+longer changes (Holland & Thayer, 1988; Clauser & Mazor, 1998). The
+studied item is always kept in its own matching score. Not available
+with \code{match = "theta"}; use \code{\link[=dif_irt]{dif_irt()}} for purified IRT-based DIF.}
+
+\item{alpha}{Significance level used to flag items during purification.}
+
+\item{max_iter}{Maximum number of purification rounds.}
 }
 \value{
-A data frame of class \code{irt_dif}, one row per item.
+A data frame of class \code{irt_dif}, one row per item. With
+\code{purify = TRUE}, the column \code{anchor} shows which items were in the final
+matching score, and \code{attr(, "purification")} holds the number of rounds,
+whether the flagged set converged, and the flagged items at each round.
 }
 \description{
 Screens items for DIF between two or more groups.
@@ -43,4 +60,27 @@ trait (EAP from \code{fit}) or on the total score. Reports uniform,
 non-uniform and total DIF likelihood-ratio tests and the change in
 Nagelkerke R-squared with the Jodoin-Gierl classification.
 }
+}
+\examples{
+set.seed(4)
+d <- sim_irt(1000, 12, "rasch")
+g <- rep(c("ref", "foc"), 500)
+th <- attr(d, "truth")$theta[, 1]
+foc <- g == "foc"
+d$I03[foc] <- rbinom(500, 1, plogis(th[foc] - 1.2))   # harder for focal
+d$I08[foc] <- rbinom(500, 1, plogis(th[foc] + 1.0))   # easier for focal
+dif_test(d, g, method = "mh", purify = TRUE)
+}
+\references{
+Holland, P. W., & Thayer, D. T. (1988). Differential item performance and
+the Mantel-Haenszel procedure. In H. Wainer & H. I. Braun (Eds.),
+\emph{Test validity} (pp. 129-145). Erlbaum.
+
+Clauser, B. E., & Mazor, K. M. (1998). Using statistical procedures to
+identify differentially functioning test items. \emph{Educational Measurement:
+Issues and Practice, 17}(1), 31-44.
+
+Zumbo, B. D. (1999). \emph{A handbook on the theory and methods of differential
+item functioning (DIF)}. Directorate of Human Resources Research and
+Evaluation, Department of National Defense.
 }

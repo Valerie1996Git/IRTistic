@@ -29,6 +29,35 @@ fit <- irt_fit(dat, "2pl")
 dif_test(fit, group, method = "lr")
 ```
 
+### Purifying the matching score
+
+When an item has DIF, it also contaminates the total score that every
+other item is matched on. Purification fixes this: items flagged in a first
+pass are dropped from the matching score and the analysis is repeated until
+the set of flagged items stops changing (Holland & Thayer, 1988; Clauser &
+Mazor, 1998). The studied item always stays in its own matching score.
+Set `purify = TRUE` for Mantel-Haenszel, or for logistic regression matched
+on the total score:
+
+```{r}
+mh <- dif_test(dat, group, method = "mh", reference = "reference", purify = TRUE)
+mh
+plot_dif(mh)
+```
+
+The `anchor` column shows which items made up the final matching score.
+`attr(mh, "purification")` lists the items flagged at each round. An item
+flagged in one round can return to the matching score in the next if it no
+longer shows DIF once the score is cleaner.
+
+Mantel-Haenszel is built to detect uniform DIF. Item 9 here has
+non-uniform DIF (its slope differs between groups), which MH can miss;
+logistic regression and `dif_irt()` test for it directly.
+
+```{r, eval = FALSE}
+dif_test(dat, group, method = "lr", match = "total", purify = TRUE)
+```
+
 ## IRT-based DIF with linking and purification
 
 `dif_irt()` calibrates each group separately, links the focal group to the
